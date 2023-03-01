@@ -8,6 +8,7 @@ Members
 - Nathan Mullins
 - Kelvin Narvaez Morales
 - Samuel Moody
+- Joel Robertson
 
 ## Development server
 
