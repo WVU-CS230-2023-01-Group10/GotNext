@@ -4,8 +4,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Members
 - Ian Jackson
+- Bryn Shunney
 - Nathan Mullins
--Grant Stumpf
+- Grant Stumpf
+- Kelvin Narvaez Morales
+- Samuel Moody
 
 ## Development server
 
