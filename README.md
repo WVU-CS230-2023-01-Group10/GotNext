@@ -6,6 +6,7 @@ Members
 - Ian Jackson
 - Bryn Shunney
 - Nathan Mullins
+- Grant Stumpf
 - Kelvin Narvaez Morales
 - Samuel Moody
 
