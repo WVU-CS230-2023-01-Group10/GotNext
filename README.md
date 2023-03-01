@@ -6,6 +6,7 @@ Members
 - Ian Jackson
 - Nathan Mullins
 - Kelvin Narvaez Morales
+- Samuel Moody
 
 ## Development server
 
