@@ -5,6 +5,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Members
 - Ian Jackson
 - Bryn Shunney
+- Nathan Mullins
+- Kelvin Narvaez Morales
+- Samuel Moody
 
 ## Development server
 
