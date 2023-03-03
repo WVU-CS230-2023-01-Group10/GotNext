@@ -1,4 +1,4 @@
-img{
+img {
     padding-top: 20px;
     padding-left: 25px;
     height: 300px;
@@ -9,14 +9,14 @@ img{
     height: 400px;
 }
 
-div{
+div {
     margin: auto;
     width: 50%;
     padding: 10px;
     width: 400px
-  }
+}
 
-.container{
+.container {
     justify-content: center;
 }
 
@@ -39,7 +39,7 @@ div{
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
     position: absolute;
     top: -2px;
-    left:-2px;
+    left: -2px;
     background-size: 400%;
     z-index: -1;
     filter: blur(5px);
@@ -76,7 +76,33 @@ div{
 }
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.fa-github {
+    color: white;
+}
+
+.footer {
+    background-color: lightgray;
+    color: black;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 110px;
+    padding-bottom: 0;
+}
+
+.btn-floating {
+    background-color: black;
 }
