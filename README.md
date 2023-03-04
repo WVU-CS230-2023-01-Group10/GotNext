@@ -6,6 +6,7 @@ Contributors
 - Ian Jackson
 - Bryn Shunney
 - Nathan Mullins
+- Daniel Mancini
 - Grant Stumpf
 - Kelvin Narvaez Morales
 - Samuel Moody
