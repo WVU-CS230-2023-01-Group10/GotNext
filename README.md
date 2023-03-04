@@ -2,10 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
 
-Members
+Contributors 
 - Ian Jackson
+- Bryn Shunney
 - Nathan Mullins
 - Daniel Mancini
+- Grant Stumpf
+- Kelvin Narvaez Morales
+- Samuel Moody
 
 ## Development server
 
