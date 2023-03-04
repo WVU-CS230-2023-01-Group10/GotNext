@@ -10,6 +10,7 @@ Contributors
 - Grant Stumpf
 - Kelvin Narvaez Morales
 - Samuel Moody
+- Joel Robertson
 
 ## Development server
 
