@@ -1,0 +1,10 @@
+<!-- only displays if fails to get myInfo -->
+<p *ngIf="UserInfo == undefined"> Failed fetching user info </p> 
+
+<div *ngIf="UserInfo != undefined">
+  <div class="container-fluid">
+      <div class="flex-column">
+        User: {{UserInfo.Username}}
+      </div>
+  </div>
+</div>
