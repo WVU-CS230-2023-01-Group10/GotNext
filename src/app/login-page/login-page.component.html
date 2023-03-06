@@ -1,8 +1,9 @@
 <div class="d-flex w-100 justify-content-center">
-    <div class="form-signin w-50 m-auto">
+  <div class="flex-column justify-content-center">
+    <div class="form-signin w-100  m-auto">
         <form #postForm="ngForm" (ngSubmit)="onUpdateUserInfo(postForm.value)">
-          <img class="mb-4" src="/assets/gotNextlogo.png" alt="" width="72" height="57">
-          <h1 class="h3 mb-3 fw-normal">Enter your username</h1>
+          <img src="./assets/gotNextLogo.png" alt="" width="370px" height="400px">
+          <h1 class="h4 mb-3 fw-normal" style="margin-top: 20px">Enter your username</h1>
       
         
           <div class="form-floating">
@@ -10,7 +11,8 @@
             <label for="floatingPassword">Username</label>
           </div>
       
-          <button class="w-100 glow-on-hover" type="submit" style="margin-top: 50px">Sign in</button>
+          <button class="w-100 btn glow-on-hover" type="submit" style="margin-top: 50px; margin-left: 0px;">Sign in</button>
         </form>
+      </div>
     </div>
     </div>
