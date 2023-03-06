@@ -91,6 +91,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "GotNext:build:production",
+            "firebaseProject": "got-next-app",
+            "firebaseHostingSite": "got-next-app"
+          }
         }
       }
     }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "got-next-app": {
+      "hosting": {
+        "GotNext": [
+          "got-next-app"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "got-next-app"
+  }
+}
