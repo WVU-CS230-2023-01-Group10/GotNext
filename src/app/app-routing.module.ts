@@ -19,12 +19,12 @@ const routes: Routes = [
     title: "User Login"
   },
   {
-    path: "player_party",
+    path: "playerparty",
     component: PlayerPartyPage,
     title: "Player Party Page"
   },
   {
-    path: "partyLogistics",
+    path: "partylogistics",
     component: PartyLogisticsPageComponent,
     title: "partyLogistics"
   },
