@@ -12,13 +12,15 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { PlayerPartyPage } from './player-path/player-party-page';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     UserInfoComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    PlayerPartyPage
   ],
   imports: [
     BrowserModule,
