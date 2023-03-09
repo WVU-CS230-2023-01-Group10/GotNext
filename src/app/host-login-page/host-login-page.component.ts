@@ -3,6 +3,7 @@ import { UserInfo } from '../Username-backend-info/user-info/user-info-model';
 import { UserInfoService } from '../Username-backend-info/user-info/user-info.service';
 import { PartyInfo } from '../Partyname-backend-info/party-info/party-info-model';
 import { PartyInfoService } from '../Partyname-backend-info/party-info/party-info.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-host-login-page',
@@ -12,7 +13,7 @@ import { PartyInfoService } from '../Partyname-backend-info/party-info/party-inf
 
 export class HostLoginPageComponent {
   
-  constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService) {
+  constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, private router: Router) {
 
   }
 
@@ -28,6 +29,8 @@ export class HostLoginPageComponent {
     this.partyInfoService.modifyPartyInfo(data).subscribe(data => {
       console.log("Updated party info sent to backend");
     });
+
+    this.router.navigate(['/partylogistics']);
   }
   
   onUpdateUserInfo(data:UserInfo) {
