@@ -1,0 +1,26 @@
+<div class="d-flex w-100 justify-content-center">
+  <div class="flex-column justify-content-center">
+    <div class="form-signin w-100 m-auto">
+        <form #postForm="ngForm" (ngSubmit)="onCreateParty(postForm.value)">
+          <img src="./assets/gotNextLogo.png" alt="" width="370px" height="400px">
+          <h1 class="h3 mb-3 fw-normal">Enter your username</h1>
+      
+        
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingPassword" placeholder="Password" ngModel name="Username">
+            <label for="floatingPassword">Username</label>
+          </div>
+
+          <h1 class="h3 mb-3 fw-normal">Enter the party name</h1>
+
+          <div class="form-floating">
+            <input type="text" class="form-control" placeholder="Password" ngModel name="Partyname">
+            <label>Party name</label>
+          </div>
+      
+          <button class="w-100 btn glow-on-hover" type="submit" style="margin-top: 50px; margin-left: 0px;">Create Party!</button>
+        </form>
+    </div>
+  </div>
+</div>
+    

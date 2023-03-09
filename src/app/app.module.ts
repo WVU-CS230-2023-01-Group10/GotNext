@@ -15,6 +15,8 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { PlayerPartyPage } from './player-path/player-party-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
+import { HostLoginPageComponent } from './host-login-page/host-login-page.component';
+import { PartyInfoComponent } from './Partyname-backend-info/party-info/party-info.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { QueuePageComponent } from './queue-page/queue-page.component';
     PartyLogisticsPageComponent,
     QueuePageComponent,
     PlayerPartyPage,
-    PartyLogisticsPageComponent
+    PartyLogisticsPageComponent,
+    HostLoginPageComponent,
+    PartyInfoComponent
   ],
   imports: [
     BrowserModule,
