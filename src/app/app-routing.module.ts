@@ -6,6 +6,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { PlayerPartyPage } from './player-path/player-party-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
+import { QrPageComponent } from './qr-page/qr-page.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,12 @@ const routes: Routes = [
     path: "hostlogin",
     component: HostLoginPageComponent,
     title: "Host Login"
+  },
+  {
+    path: "qrpage",
+    component: QrPageComponent,
+    title: "QR Page"
+
   }
 ];
 
