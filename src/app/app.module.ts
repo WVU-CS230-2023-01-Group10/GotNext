@@ -13,6 +13,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { PlayerPartyPage } from './player-path/player-party-page';
+import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PlayerPartyPage } from './player-path/player-party-page';
     HomePageComponent,
     UserInfoComponent,
     LoginPageComponent,
-    PlayerPartyPage
+    PlayerPartyPage,
+    PartyLogisticsPageComponent
   ],
   imports: [
     BrowserModule,
