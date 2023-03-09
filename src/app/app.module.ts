@@ -12,6 +12,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { PlayerPartyPage } from './player-path/player-party-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
 
@@ -22,7 +23,9 @@ import { QueuePageComponent } from './queue-page/queue-page.component';
     UserInfoComponent,
     LoginPageComponent,
     PartyLogisticsPageComponent,
-    QueuePageComponent
+    QueuePageComponent,
+    PlayerPartyPage,
+    PartyLogisticsPageComponent
   ],
   imports: [
     BrowserModule,
