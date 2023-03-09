@@ -4,6 +4,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { PlayerPartyPage } from './player-path/player-party-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
+import { QueuePageComponent } from './queue-page/queue-page.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
     path: "partyLogistics",
     component: PartyLogisticsPageComponent,
     title: "partyLogistics"
+  },
+  {
+    path: "queue",
+    component: QueuePageComponent,
+    title: "queuePage"
   }
 ];
 
