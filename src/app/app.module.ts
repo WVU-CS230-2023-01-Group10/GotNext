@@ -17,6 +17,7 @@ import { PartyLogisticsPageComponent } from './party-logistics-page/party-logist
 import { QueuePageComponent } from './queue-page/queue-page.component';
 import { HostLoginPageComponent } from './host-login-page/host-login-page.component';
 import { PartyInfoComponent } from './Partyname-backend-info/party-info/party-info.component';
+import { QrPageComponent } from './qr-page/qr-page.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PartyInfoComponent } from './Partyname-backend-info/party-info/party-in
     PlayerPartyPage,
     PartyLogisticsPageComponent,
     HostLoginPageComponent,
-    PartyInfoComponent
+    PartyInfoComponent,
+    QrPageComponent
   ],
   imports: [
     BrowserModule,
