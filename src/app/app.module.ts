@@ -12,6 +12,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { PlayerPartyPage } from './player-path/player-party-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { PartyLogisticsPageComponent } from './party-logistics-page/party-logist
     HomePageComponent,
     UserInfoComponent,
     LoginPageComponent,
+    PlayerPartyPage,
     PartyLogisticsPageComponent
   ],
   imports: [
