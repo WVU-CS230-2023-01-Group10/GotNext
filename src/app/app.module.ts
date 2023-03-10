@@ -19,6 +19,7 @@ import { HostLoginPageComponent } from './host-login-page/host-login-page.compon
 import { PartyInfoComponent } from './backend/Partyname-backend-info/party-info/party-info.component';
 import { QrPageComponent } from './qr-page/qr-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HostLoginPageComponent,
     PartyInfoComponent,
     QrPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
