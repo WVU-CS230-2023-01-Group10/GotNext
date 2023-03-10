@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { UserInfo } from '../Username-backend-info/user-info/user-info-model';
-import { UserInfoService } from '../Username-backend-info/user-info/user-info.service';
-import { PartyInfo } from '../Partyname-backend-info/party-info/party-info-model';
-import { PartyInfoService } from '../Partyname-backend-info/party-info/party-info.service';
+import { UserInfo } from '../backend/Username-backend-info/user-info/user-info-model';
+import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
+import { PartyInfo } from '../backend/Partyname-backend-info/party-info/party-info-model';
+import { PartyInfoService } from '../backend/Partyname-backend-info/party-info/party-info.service';
 import { Router } from '@angular/router';
 
 @Component({
