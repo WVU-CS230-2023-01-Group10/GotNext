@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfo } from '../Username-backend-info/user-info/user-info-model';
-import { UserInfoService } from '../Username-backend-info/user-info/user-info.service';
+import { UserInfo } from '../backend/Username-backend-info/user-info/user-info-model';
+import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 
 
 @Component({
