@@ -10,14 +10,15 @@ export class UserInfoService {
     
   }
 
-  getUserInfo() {
-    console.log(this.baseUrl + this.myInfoEndpoint);
-    return this.http.get<UserInfo>(this.baseUrl + this.myInfoEndpoint);
+  getUserInfo(username: string) {
+    console.log(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="username"&equalTo="${username}"`);
+    return this.http.get<UserInfo>(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="username"&equalTo="${username}"`);
   }
+  
 
   modifyUserInfo(data:UserInfo) {
    
-    return this.http.put(this.baseUrl + this.myInfoEndpoint, data);
+    return this.http.post(this.baseUrl + this.myInfoEndpoint, data);
 }
 
 }
