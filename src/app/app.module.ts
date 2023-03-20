@@ -8,11 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UserInfoComponent } from './backend/Username-backend-info/user-info/user-info.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { UserLoginPageComponent } from './user-login-page/user-login-page.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { PlayerPartyPage } from './player-party-page/player-party-page';
+import { GameListPage } from './game-list-page/game-list-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
 import { HostLoginPageComponent } from './host-login-page/host-login-page.component';
@@ -20,8 +20,6 @@ import { PartyInfoComponent } from './backend/Partyname-backend-info/party-info/
 import { QrPageComponent } from './qr-page/qr-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { HostGameViewPageComponent } from './host-game-view-page/host-game-view-page.component';
-import { UserGameViewPageComponent } from './user-game-view-page/user-game-view-page.component';
 import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.component';
 
 @NgModule({
@@ -29,18 +27,16 @@ import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.com
     AppComponent,
     HomePageComponent,
     UserInfoComponent,
-    LoginPageComponent,
+    UserLoginPageComponent,
     PartyLogisticsPageComponent,
     QueuePageComponent,
-    PlayerPartyPage,
+    GameListPage,
     PartyLogisticsPageComponent,
     HostLoginPageComponent,
     PartyInfoComponent,
     QrPageComponent,
     NavbarComponent,
     FooterComponent,
-    HostGameViewPageComponent,
-    UserGameViewPageComponent,
     PartyEntryPageComponent
   ],
   imports: [
