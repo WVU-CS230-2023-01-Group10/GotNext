@@ -20,6 +20,9 @@ import { PartyInfoComponent } from './backend/Partyname-backend-info/party-info/
 import { QrPageComponent } from './qr-page/qr-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { HostGameViewPageComponent } from './host-game-view-page/host-game-view-page.component';
+import { UserGameViewPageComponent } from './user-game-view-page/user-game-view-page.component';
+import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { FooterComponent } from './footer/footer.component';
     PartyInfoComponent,
     QrPageComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    HostGameViewPageComponent,
+    UserGameViewPageComponent,
+    PartyEntryPageComponent
   ],
   imports: [
     BrowserModule,
