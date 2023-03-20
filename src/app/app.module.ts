@@ -12,7 +12,7 @@ import { UserLoginPageComponent } from './user-login-page/user-login-page.compon
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { GameListPage } from './game-list-page/game-list-page';
+import { GameListComponent } from './game-list-page/game-list-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
 import { HostLoginPageComponent } from './host-login-page/host-login-page.component';
@@ -30,7 +30,7 @@ import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.com
     UserLoginPageComponent,
     PartyLogisticsPageComponent,
     QueuePageComponent,
-    GameListPage,
+    GameListComponent,
     PartyLogisticsPageComponent,
     HostLoginPageComponent,
     PartyInfoComponent,
