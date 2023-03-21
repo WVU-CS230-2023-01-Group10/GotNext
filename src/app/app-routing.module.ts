@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HostLoginPageComponent } from './host-login-page/host-login-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { PlayerPartyPage } from './player-party-page/player-party-page';
+import { UserLoginPageComponent } from './user-login-page/user-login-page.component';
+import { GameListComponent } from './game-list-page/game-list-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
 import { QrPageComponent } from './qr-page/qr-page.component';
@@ -16,12 +16,12 @@ const routes: Routes = [
   },
   {
     path: "userlogin",
-    component: LoginPageComponent,
+    component: UserLoginPageComponent,
     title: "User Login"
   },
   {
-    path: "playerparty",
-    component: PlayerPartyPage,
+    path: "gamelist",
+    component: GameListComponent,
     title: "Player Party Page"
   },
   {
@@ -43,7 +43,6 @@ const routes: Routes = [
     path: "qrpage",
     component: QrPageComponent,
     title: "QR Page"
-
   }
 ];
 
