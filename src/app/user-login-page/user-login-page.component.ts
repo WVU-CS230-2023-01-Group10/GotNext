@@ -23,6 +23,6 @@ export class UserLoginPageComponent {
       console.log("Updated info sent to backend");
     });
 
-    this.router.navigate(['/playerparty']);
+    this.router.navigate(['/gamelist']);
   }
 }

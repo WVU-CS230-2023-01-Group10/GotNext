@@ -7,6 +7,7 @@ import { GameListComponent } from './game-list-page/game-list-page';
 import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
 import { QrPageComponent } from './qr-page/qr-page.component';
+import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
     path: "qrpage",
     component: QrPageComponent,
     title: "QR Page"
+  },
+  {
+    path: "partyentry",
+    component: PartyEntryPageComponent,
+    title: "Choose Party"
   }
 ];
 
