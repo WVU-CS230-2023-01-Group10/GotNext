@@ -20,7 +20,9 @@ import { PartyInfoComponent } from './backend/Partyname-backend-info/party-info/
 import { QrPageComponent } from './qr-page/qr-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.component';
+import { PartyEntryPageComponent } from './party-entry/party-entry-page/party-entry-page.component';
+import { ScanQrComponent } from './party-entry/scan-qr/scan-qr.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.com
     QrPageComponent,
     NavbarComponent,
     FooterComponent,
-    PartyEntryPageComponent
+    PartyEntryPageComponent,
+    ScanQrComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { PartyEntryPageComponent } from './party-entry-page/party-entry-page.com
     HttpClientModule,
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase())
+    provideDatabase(() => getDatabase()),
+    NgxScannerQrcodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
