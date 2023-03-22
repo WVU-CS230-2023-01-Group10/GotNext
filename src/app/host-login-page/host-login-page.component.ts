@@ -22,13 +22,27 @@ export class HostLoginPageComponent {
     const partyname = data.Partyname;
 
     this.onUpdateUserInfo({ Username: username });
-    this.onUpdatePartyInfo({ Partyname: partyname });
+    this.onUpdatePartyInfo(partyname, username);
   }
 
-  onUpdatePartyInfo(data:PartyInfo) {
-    this.partyInfoService.modifyPartyInfo(data).subscribe(data => {
+
+  
+
+  onUpdatePartyInfo(partyname: string, username: string) {
+    const data: PartyInfo = {
+      Partyname: partyname,
+      User: username
+    };
+    this.partyInfoService.modifyPartyInfo(partyname, username).subscribe(data => {
       console.log("Updated party info sent to backend");
     });
+  
+  
+
+  // onUpdatePartyInfo(data:PartyInfo) {
+  //   this.partyInfoService.modifyPartyInfo(partyname, username).subscribe(data => {
+  //     console.log("Updated party info sent to backend");
+  //   });
 
     this.router.navigate(['/partylogistics']);
   }
