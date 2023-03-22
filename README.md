@@ -17,4 +17,5 @@ Contributors
 npm install bootstrap
 npm install firebase
 npm i bootstrap-icons
-npm install ngx-scanner-qrcode --save
+npm install ngx-scanner-
+qrcode --save
