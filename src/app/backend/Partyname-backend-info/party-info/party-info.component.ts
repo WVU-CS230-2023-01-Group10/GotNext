@@ -20,7 +20,8 @@ export class PartyInfoComponent {
   }
 
   showPartyInfo() {
-    this.partyInfoService.getPartyInfo().subscribe((data: PartyInfo) => {
+    const currentParty = {partyname: '' };
+    this.partyInfoService.getPartyInfo(currentParty.partyname).subscribe((data: PartyInfo) => {
       console.log(data);
       this.myInfo = data;
     })
