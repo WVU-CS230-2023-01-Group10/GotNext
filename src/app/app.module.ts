@@ -22,6 +22,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { PartyEntryPageComponent } from './party-entry/party-entry-page/party-entry-page.component';
 import { ScanQrComponent } from './party-entry/scan-qr/scan-qr.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ScanQrComponent } from './party-entry/scan-qr/scan-qr.component';
     HttpClientModule,
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase())
+    provideDatabase(() => getDatabase()),
+    NgxScannerQrcodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

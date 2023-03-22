@@ -1,1 +1,22 @@
 
+
+<div class="d-flex w-100 justify-content-center">
+    <div class="flex-column justify-content-center">
+        <div class="form-signin w-100  m-auto"  style="margin-top: 30px">
+            <!-- start -->
+            <button class="w-100 btn glow-on-hover" (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Turn Off Camera' : 'Turn On Camera'}}</button>
+
+            <!-- Loading -->
+            <p *ngIf="action.isLoading">Loading...</p>
+        </div>
+    </div>
+</div>
+
+<!-- For camera -->
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col">
+        <ngx-scanner-qrcode #action="scanner" (event)="onEvent($event)"></ngx-scanner-qrcode>
+    </div>
+    <div class="col-3"></div>
+</div>
