@@ -24,6 +24,7 @@ import { PartyEntryPageComponent } from './party-entry/party-entry-page/party-en
 import { ScanQrComponent } from './party-entry/scan-qr/scan-qr.component';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { QRCodeModule } from 'angularx-qrcode';
+import { PartycodeBackendComponent } from './backend/partycode-backend/partycode-backend.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     NavbarComponent,
     FooterComponent,
     PartyEntryPageComponent,
-    ScanQrComponent
+    ScanQrComponent,
+    PartycodeBackendComponent
   ],
   imports: [
     BrowserModule,
