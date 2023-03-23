@@ -5,7 +5,7 @@ import { PartyInfo } from "./party-info-model";
 @Injectable({providedIn: 'root'})
 export class PartyInfoService {
   private baseUrl: string = 'https://got-next-app-default-rtdb.firebaseio.com/';
-  private myInfoEndpoint = '.json';
+  private myInfoEndpoint = 'Party.json';
   constructor(private http:HttpClient) {
     
   }
