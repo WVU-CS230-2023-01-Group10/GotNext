@@ -57,6 +57,11 @@ export class Queue<T> {
         return front;
     }
     
+    /**
+     * removes a specified entry from the queue
+     * @param entry entry to be removed
+     * @returns boolean value if the value was removed
+     */
     public remove(entry: T) : boolean {
         var curNode: NodeI<T> | null = this.firstNode;
         var prevNode: NodeI<T> | null = null;
