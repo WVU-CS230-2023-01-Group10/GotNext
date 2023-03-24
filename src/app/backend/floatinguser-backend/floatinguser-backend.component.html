@@ -1,0 +1,10 @@
+<!-- only displays if fails to get myInfo -->
+<p *ngIf="FloatingUserInfo == undefined"> Failed fetching party info </p> 
+
+<div *ngIf="FloatingUserInfo != undefined">
+  <div class="container-fluid">
+      <div class="flex-column">
+        FloatingUser: {{FloatingUserInfo.FloatingUser}}
+      </div>
+  </div>
+</div>

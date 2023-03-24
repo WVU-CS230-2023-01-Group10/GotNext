@@ -29,8 +29,17 @@ export class HostLoginPageComponent {
     this.onUpdatePartyInfo(partyname, username, partycode);
   }
 
+   PartyName: string = '';
+   Host: string = '';
+   PartyCode: string = '';
 
-  
+  onSubmit() {
+    const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
+    this.partyInfoService.addHost(PartyNameInfo);
+    this.partyInfoService.addPartyName(PartyNameInfo);
+    this.partyInfoService.addPartyCode(PartyNameInfo);
+    this.router.navigate(['/gamelist']);
+  }
 
   onUpdatePartyInfo(partyname: string, host: string, partycode: string) {
     const data: PartyInfo = {
