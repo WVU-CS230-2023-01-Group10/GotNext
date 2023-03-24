@@ -4,6 +4,9 @@
             <img src="./assets/cup.png" alt="" width="370px" height="400px">
 
             <form class="form-inline">
+                <div *ngIf="showError">
+                    <p class="error">Invalid Party Code</p>
+                </div>
                 <div class="input-group" style="margin-top: 20px;">
                     <input type="text" class="form-control" id="partyCode" placeholder="Party Code" style="height: 50px;" value="">
                     <div class="input-group-append">

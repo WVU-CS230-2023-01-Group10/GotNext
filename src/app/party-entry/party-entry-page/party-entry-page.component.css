@@ -66,3 +66,9 @@
         background-position: 0 0;
     }
 }
+
+.error {
+    text-align: center;
+    color: red;
+    margin: 0px;
+}
