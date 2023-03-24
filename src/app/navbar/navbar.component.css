@@ -3,3 +3,12 @@ nav{
     background-repeat: repeat-x;
     background-size: contain;
 }
+
+img{
+    height: 50px;
+}
+
+h5{
+    padding-top: 10px;
+    padding-right: 5px;
+}

@@ -6,22 +6,31 @@
     <div class="d-flex flex-column">
       <div class="p-2">
         <div class="d-flex flex-row justify-content-center">
-              <!-- Default dropright button -->
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Choose Gameplay Style
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" >Queue</a>
-                  <a class="dropdown-item">Round Robin</a>
-                  <a class="dropdown-item">Tournament</a>
-                </div>
-              </div>
+          <div class="p-2">
+             <html>
+          <body>
+                <select id="s1">
+                  <option value="green">Choose Gameplay Style</option>
+                   <option value="green">Queue</option>
+                   <option value="blue">Round Robin</option>
+                   <option value="purple">Tournament</option>
+                </select>
+            
+             <script type="text/javascript">
+                function selOpt() {
+                   selEl = document.querySelector('#s1');
+                   op = selEl.value;
+                   document.querySelector('.op').textContent = op;
+                }
+             </script>
+          </body>
+          </html>
+          </div>
+    
           <div class="p-2">
             <button class="glow-on-hover" type="button" routerLink="/gamelist">Create Game</button>
           </div>
         </div>
-
       </div>
       <div>
         <div class="p-2">
