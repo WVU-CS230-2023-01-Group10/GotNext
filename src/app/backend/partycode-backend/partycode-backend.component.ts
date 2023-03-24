@@ -14,16 +14,5 @@ export class PartycodeBackendComponent {
   constructor(private codeInfoService: CodeInfoService) {
 
   }
-  ngOnInit(): void {
-    console.log("Sending a get request to the server");
-    this.showCodeInfo();
-  }
-
-  showCodeInfo() {
-    const partyCode = { PartyCode: '' };
-    this.codeInfoService.getCodeInfo(partyCode.PartyCode).subscribe((data: CodeInfo) => {
-      console.log(data);
-      this.myInfo = data;
-    })
-  }
+  
 }

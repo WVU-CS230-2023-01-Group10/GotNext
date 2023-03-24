@@ -10,15 +10,4 @@ export class CodeInfoService {
     
   }
 
-  getCodeInfo(partycode: string) {
-    console.log(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="PartyCode"&equalTo="${partycode}"`);
-    return this.http.get<CodeInfo>(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="PartyCode"&equalTo="${partycode}"`);
-  }
-  
-
-  modifyCodeInfo(data:CodeInfo) {
-   
-    return this.http.post(this.baseUrl + this.myInfoEndpoint, data);
-}
-
 }
