@@ -26,23 +26,23 @@
 
         <!-- can select but it does not match the style -->
         <html>
-                <body>
-                      <select id="s1">
-                        <option value="green">Choose Gameplay Style</option>
-                         <option value="green">Queue</option>
-                         <option value="blue">Round Robin</option>
-                         <option value="purple">Tournament</option>
-                      </select>
-                  
-                   <script type="text/javascript">
-                      function selOpt() {
-                         selEl = document.querySelector('#s1');
-                         op = selEl.value;
-                         document.querySelector('.op').textContent = op;
-                      }
-                   </script>
-                </body>
-                </html>
+          <body>
+                <select id="s1">
+                  <option value="green">Choose Gameplay Style</option>
+                   <option value="green">Queue</option>
+                   <option value="blue">Round Robin</option>
+                   <option value="purple">Tournament</option>
+                </select>
+            
+             <script type="text/javascript">
+                function selOpt() {
+                   selEl = document.querySelector('#s1');
+                   op = selEl.value;
+                   document.querySelector('.op').textContent = op;
+                }
+             </script>
+          </body>
+          </html>
 
 
       </div>
