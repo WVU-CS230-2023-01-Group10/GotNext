@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfo } from '../backend/Username-backend-info/user-info/user-info-model';
-import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
+import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
+import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
 
 
 @Component({
@@ -14,15 +14,25 @@ import { UserInfoService } from '../backend/Username-backend-info/user-info/user
 
 export class UserLoginPageComponent {
   
-  constructor(private infoService: UserInfoService, private router: Router) {
+  constructor(private FloatingUserinfoService: FloatingUserInfoService, private router: Router) {
 
   }
 
-  onUpdateUserInfo(data:UserInfo) {
-    this.infoService.modifyUserInfo(data).subscribe(data => {
+  floatingUser: string = '';
+
+  onSubmit() {
+    const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
+    this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
+    this.router.navigate(['/gamelist']);
+  }
+  
+  onUpdateFloatingUserInfo(data:FloatingUserInfo) {
+    this.FloatingUserinfoService.modifyFloatingUserInfo(data).subscribe(data => {
       console.log("Updated info sent to backend");
     });
 
-    this.router.navigate(['/gamelist']);
+   this.router.navigate(['/gamelist']);
   }
+
 }
+
