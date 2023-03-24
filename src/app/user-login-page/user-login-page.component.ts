@@ -20,18 +20,14 @@ export class UserLoginPageComponent {
 
   floatingUser: string = '';
 
+  /**
+   * allows entered usernames to be stored as floating users for a party
+   */
   onSubmit() {
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
+    // calls addFloatinUser method to store user name in database
     this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
     this.router.navigate(['/gamelist']);
-  }
-  
-  onUpdateFloatingUserInfo(data:FloatingUserInfo) {
-    this.FloatingUserinfoService.modifyFloatingUserInfo(data).subscribe(data => {
-      console.log("Updated info sent to backend");
-    });
-
-   this.router.navigate(['/gamelist']);
   }
 
 }
