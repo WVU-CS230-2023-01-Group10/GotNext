@@ -20,7 +20,8 @@ export class UserInfoComponent {
   }
 
   showUserInfo() {
-    this.userInfoService.getUserInfo().subscribe((data: UserInfo) => {
+    const currentUser = { username: '' };
+    this.userInfoService.getUserInfo(currentUser.username).subscribe((data: UserInfo) => {
       console.log(data);
       this.myInfo = data;
     })

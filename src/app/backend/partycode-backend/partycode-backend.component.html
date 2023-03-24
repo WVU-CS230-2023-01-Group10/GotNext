@@ -1,0 +1,10 @@
+<!-- only displays if fails to get myInfo -->
+<p *ngIf="CodeInfo == undefined"> Failed fetching party info </p> 
+
+<div *ngIf="CodeInfo != undefined">
+  <div class="container-fluid">
+      <div class="flex-column">
+        PartyCode: {{CodeInfo.PartyCode}}
+      </div>
+  </div>
+</div>
