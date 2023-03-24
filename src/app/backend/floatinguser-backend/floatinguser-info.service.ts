@@ -12,18 +12,10 @@ export class FloatingUserInfoService {
     
   }
 
-  getFloatingUserInfo(floatinguser: string) {
-    console.log(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="FloatingUser"&equalTo="${floatinguser}"`);
-    return this.http.get<FloatingUserInfo>(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="FloatingUser"&equalTo="${floatinguser}"`);
-  }
-  
-// sends data to backend
-  modifyFloatingUserInfo(data:FloatingUserInfo) {
-   
-    return this.http.post(this.baseUrl + this.myInfoEndpoint, data);
-}
-
-// try and send data to backend using firebase
+/**
+ * adds user to chosen party under FloatingUser node
+ * @param FloatingUser user in a specific party who has not chosen a game
+ */
 addFloatingUser(FloatingUser: FloatingUserInfo) {
   var ref = this.db.list<FloatingUserInfo>("Party/FloatingUsers/").query.ref;
   ref.child(FloatingUser.FloatingUser).set(FloatingUser);
