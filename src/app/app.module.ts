@@ -23,6 +23,12 @@ import { FooterComponent } from './footer/footer.component';
 import { PartyEntryPageComponent } from './party-entry/party-entry-page/party-entry-page.component';
 import { ScanQrComponent } from './party-entry/scan-qr/scan-qr.component';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
+import { PartycodeBackendComponent } from './backend/partycode-backend/partycode-backend.component';
+import { FloatinguserBackendComponent } from './backend/floatinguser-backend/floatinguser-backend.component';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 @NgModule({
   declarations: [
@@ -40,7 +46,9 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     NavbarComponent,
     FooterComponent,
     PartyEntryPageComponent,
-    ScanQrComponent
+    ScanQrComponent,
+    PartycodeBackendComponent,
+    FloatinguserBackendComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,10 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    QRCodeModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [],
   bootstrap: [AppComponent]

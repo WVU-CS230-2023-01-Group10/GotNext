@@ -1,4 +1,5 @@
 export interface PartyInfo {
-    Partyname: string;
-    User: string
+    PartyName: string;
+    Host: string;
+    PartyCode: string
   }
