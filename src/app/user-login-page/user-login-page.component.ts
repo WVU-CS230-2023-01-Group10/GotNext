@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
@@ -13,6 +14,10 @@ import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatin
 
 
 export class UserLoginPageComponent {
+  isValid: boolean = false;
+  isTaken: boolean = false;
+  showInputError: boolean = false;
+  showTakenError: boolean = false;
   
   constructor(private FloatingUserinfoService: FloatingUserInfoService, private router: Router) {
 
@@ -25,9 +30,68 @@ export class UserLoginPageComponent {
    */
   onSubmit() {
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
-    // calls addFloatinUser method to store user name in database
-    this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
-    this.router.navigate(['/gamelist']);
+
+    this.isValid = this.validateInput(this.floatingUser);
+    this.isTaken = this.checkIfTaken(this.floatingUser);
+
+    // if valid, pass input to Realtime database
+    if (this.isValid && this.isTaken) {
+      this.showInputError = false;
+      this.showTakenError = false;
+
+      // calls addFloatinUser method to store user name in database
+      this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
+      this.router.navigate(['/gamelist']);
+    }
+
+    if (!this.isValid) {
+      // if not valid after check, show error
+      this.showInputError = true
+    } else if (!this.isTaken) {
+      // if taken, show error
+      this.showTakenError = true;
+    }
+    
+  }
+
+  /**
+   * Checks if the username input does not contain special characters, is not empty,
+   * or (optionally) larger than a specified length
+   * @param user username string to be checked
+   * @param size optional character limit size
+   * @returns a boolean value if the username is a valid input
+   */
+  validateInput(user: string, size?: number) : boolean {
+    // Check if the input string is null or empty
+    if (!user || user.length === 0) {
+      return false;
+    }
+
+    // checks if input string is larger than optional length
+    if (size != undefined) {
+      if (user.length > size) {
+        return false;
+      }
+    }
+
+    // Check if the input string contains any special characters
+    const specialCharsRegex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if (specialCharsRegex.test(user)) {
+      return false;
+    }
+
+    // Return true if the input string passes both checks
+    return true;
+  }
+
+  /**
+   * Cross references current users in party with inputted and checks if there is overlap
+   * @param user username to be checked
+   * @returns a boolean value on if the username is already taken
+   */
+  checkIfTaken(user: string) : boolean {
+    // TODO: implement
+    return true;
   }
 
 }
