@@ -15,18 +15,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./host-login-page.component.css']
 })
 
-export class HostLoginPageComponent implements OnInit, OnDestroy {
+export class HostLoginPageComponent implements OnInit {
   isUserValid: boolean = false;
   isCodeValid: boolean = false;
   isUserTaken: boolean = false;
   isCodeTaken: boolean = false;
+  isPartyValid: boolean = false;
   showUserError: boolean = false;
   showCodeError: boolean = false;
   showUserTakenError: boolean = false;
   showCodeTakenError: boolean = false;
+  showPartyError: boolean = false;
 
   validPartyCodes: string[] = [];
-  subscription: Subscription | any;
   
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient) {
 
@@ -39,13 +40,6 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
     this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party.json').subscribe(data => {
       this.validPartyCodes = Object.keys(data);
     });
-  }
-
-  /**
-   * Cleans up memory, prevent data leaks
-   */
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
    PartyName: string = '';
@@ -61,15 +55,12 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
     // do checks on username and code
     this.isUserValid = this.validateInput(this.Host);
     this.isCodeValid = this.validateCode(this.PartyCode);
+    this.isPartyValid = this.validateInput(this.PartyName);
     this.isUserTaken = this.checkIfTaken(this.Host);
     this.isCodeTaken = this.checkIfCodeTaken(this.PartyCode);
 
-    // submit on all empty inputs
-    console.log(this.Host, this.PartyCode) // -""
-    console.log(this.isUserTaken, this.isUserValid, this.isCodeTaken, this.isCodeValid) // false - false - true - false
-
     // if valid, pass info to Realtime Database
-    if(this.isUserValid && this.isCodeValid && this.isUserTaken && this.isCodeTaken) {
+    if(this.isUserValid && this.isCodeValid && this.isUserTaken && this.isCodeTaken && this.isPartyValid) {
       this.showCodeError = false;
       this.showCodeTakenError = false;
       this.showUserError = false;
@@ -81,7 +72,7 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
     }
 
     // if code not valid, show error
-    this.showCodeError = this.isUserValid ? false : true;
+    this.showCodeError = this.isCodeValid ? false : true;
 
     // if code taken, show error
     this.showCodeTakenError = this.isCodeTaken ? false : true;
@@ -91,6 +82,9 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
 
     // if user taken, show error
     this.showUserTakenError = this.isUserTaken ? false : true;
+
+    // if party invalid, show error
+    this.showPartyError = this.isPartyValid ? false : true;
   }
 
   /**
@@ -114,7 +108,7 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
     }
 
     // Check if the input string contains any special characters
-    const specialCharsRegex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const specialCharsRegex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     if (specialCharsRegex.test(user)) {
       return false;
     }
@@ -130,7 +124,7 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
    */
   checkIfTaken(user: string) : boolean {
     // TODO: implement
-    return false;
+    return true;
   }
 
   validateCode(code: string) : boolean {
@@ -155,6 +149,11 @@ export class HostLoginPageComponent implements OnInit, OnDestroy {
   }
 
   checkIfCodeTaken(code: string) : boolean {
+    // Check if the input string is null or empty
+    if (!code || code.length === 0) {
+      return true;
+    }
+
     // check all available codes
     for (let aCode of this.validPartyCodes) {
       // if inputted code matches a used code, then not valid
