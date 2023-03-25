@@ -43,12 +43,14 @@ export class UserLoginPageComponent {
       this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
       this.router.navigate(['/gamelist']);
     }
-
+    
+    // if not valid after check, show error
     if (!this.isValid) {
-      // if not valid after check, show error
       this.showInputError = true
-    } else if (!this.isTaken) {
-      // if taken, show error
+    } 
+
+    // if taken, show error
+    if (!this.isTaken) {
       this.showTakenError = true;
     }
     

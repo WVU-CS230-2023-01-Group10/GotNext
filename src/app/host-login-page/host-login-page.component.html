@@ -5,7 +5,14 @@
           <img src="./assets/cup.png" alt="" width="400px" height="400px">
           <h1 class="h3 mb-3 fw-normal">Enter your username</h1>
       
-        
+          <div *ngIf="isUserValid">
+            <p class="error">Username cannot contain spaces or special characters</p>
+          </div>
+
+          <div *ngIf="isUserTaken">
+            <p class="error">Username already taken</p>
+          </div>
+
           <div class="form-floating">
             <input type="text" class="form-control" id="floatingPassword" placeholder="Password" [(ngModel)]="Host" name="Host">
             <label for="floatingPassword">Username</label>
@@ -19,6 +26,14 @@
           </div>
 
           <h1 class="h3 mb-3 fw-normal">Enter a 4-6 digit party code</h1>
+
+          <div *ngIf="isCodeValid">
+            <p class="error">Code must contain only numbers and be 4-6 numbers long</p>
+          </div>
+
+          <div *ngIf="isCodeTaken">
+            <p class="error">Code already taken</p>
+          </div>
 
           <div class="form-floating">
             <input type="text" class="form-control" placeholder="Password" [(ngModel)]="PartyCode" name="PartyCode">
