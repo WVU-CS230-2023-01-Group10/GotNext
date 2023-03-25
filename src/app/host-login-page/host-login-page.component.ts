@@ -18,12 +18,10 @@ import { Subscription } from 'rxjs';
 export class HostLoginPageComponent implements OnInit {
   isUserValid: boolean = false;
   isCodeValid: boolean = false;
-  isUserTaken: boolean = false;
   isCodeTaken: boolean = false;
   isPartyValid: boolean = false;
   showUserError: boolean = false;
   showCodeError: boolean = false;
-  showUserTakenError: boolean = false;
   showCodeTakenError: boolean = false;
   showPartyError: boolean = false;
 
@@ -56,15 +54,13 @@ export class HostLoginPageComponent implements OnInit {
     this.isUserValid = this.validateInput(this.Host);
     this.isCodeValid = this.validateCode(this.PartyCode);
     this.isPartyValid = this.validateInput(this.PartyName);
-    this.isUserTaken = this.checkIfTaken(this.Host);
     this.isCodeTaken = this.checkIfCodeTaken(this.PartyCode);
 
     // if valid, pass info to Realtime Database
-    if(this.isUserValid && this.isCodeValid && this.isUserTaken && this.isCodeTaken && this.isPartyValid) {
+    if(this.isUserValid && this.isCodeValid && this.isCodeTaken && this.isPartyValid) {
       this.showCodeError = false;
       this.showCodeTakenError = false;
       this.showUserError = false;
-      this.showUserTakenError = false;
 
       // calls addParty to add party info to database
       this.partyInfoService.addParty(PartyNameInfo);
@@ -79,9 +75,6 @@ export class HostLoginPageComponent implements OnInit {
 
     // if user not valid, show error
     this.showUserError = this.isUserValid ? false : true;
-
-    // if user taken, show error
-    this.showUserTakenError = this.isUserTaken ? false : true;
 
     // if party invalid, show error
     this.showPartyError = this.isPartyValid ? false : true;
@@ -114,16 +107,6 @@ export class HostLoginPageComponent implements OnInit {
     }
 
     // Return true if the input string passes both checks
-    return true;
-  }
-
-  /**
-   * Cross references current users in party with inputted and checks if there is overlap
-   * @param user username to be checked
-   * @returns a boolean value on if the username is already taken
-   */
-  checkIfTaken(user: string) : boolean {
-    // TODO: implement
     return true;
   }
 
