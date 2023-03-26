@@ -9,12 +9,14 @@
           <div class="p-2">
              <html>
           <body>
-                <select id="s1">
-                  <option value="green">Choose Gameplay Style</option>
-                   <option value="green">Queue</option>
-                   <option value="blue">Round Robin</option>
-                   <option value="purple">Tournament</option>
-                </select>
+            <!-- ngModel messes with initial display of dropdown -->
+            <select id="s1" [(ngModel)]="selectedGameType">
+              <option value="Blank" selected>Choose Gameplay Style</option>
+              <option value="Queue">Queue</option>
+              <option value="Round Robin">Round Robin</option>
+              <option value="Tournament">Tournament</option>
+            </select>
+            
             
              <script type="text/javascript">
                 function selOpt() {
@@ -28,7 +30,7 @@
           </div>
     
           <div class="p-2">
-            <button class="glow-on-hover" type="button" routerLink="/gamelist">Create Game</button>
+            <button class="glow-on-hover" type="button" routerLink="/gamelist" (click)="onSubmit()">Create Game</button>
           </div>
         </div>
       </div>
