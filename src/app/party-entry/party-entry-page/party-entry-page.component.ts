@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CodeInfoService } from 'src/app/backend/partycode-backend/code-info.service';
+import { UserService } from 'src/app/services/user.service';
 import { CodeServiceService } from '../code-service.service';
 import { PartyCodeModel } from './partycode.model';
 
@@ -18,7 +19,7 @@ export class PartyEntryPageComponent implements OnInit, OnDestroy {
   validPartyCodes: string[] = [];
   subscription: Subscription|any;
 
-  constructor(private router: Router, private codeService: CodeServiceService, private http: HttpClient, private CodeInfoService: CodeInfoService) {
+  constructor(private router: Router, private codeService: CodeServiceService, private http: HttpClient, private CodeInfoService: CodeInfoService, private userService: UserService) {
 
   }
 
@@ -81,10 +82,10 @@ export class PartyEntryPageComponent implements OnInit, OnDestroy {
       // set code = party code so it can be used to sort users
       this.CodeInfoService.code = partyCode;
 
+      this.userService.updatePartyCode(this.partyCode);
+
       this.showError = false;
       this.router.navigate(['/userlogin']);
-
-      //TODO: send valid inputted code to the user-login
     } else {
       this.showError = true;
     }
