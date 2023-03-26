@@ -2,6 +2,8 @@ import { Component, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
+import { CodeInfo } from '../backend/partycode-backend/code-info-model';
+import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatin
 
 export class UserLoginPageComponent {
   
-  constructor(private FloatingUserinfoService: FloatingUserInfoService, private router: Router) {
+  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router) {
 
   }
 
@@ -25,8 +27,10 @@ export class UserLoginPageComponent {
    */
   onSubmit() {
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
-    // calls addFloatinUser method to store user name in database
-    this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
+    const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
+    // calls addFloatinUser and addAllUser methods to store username in database nodes
+    this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
+    this.FloatingUserinfoService.addAllUser(floatingUserInfo);
     this.router.navigate(['/gamelist']);
   }
 
