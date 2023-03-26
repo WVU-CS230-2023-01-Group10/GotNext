@@ -27,8 +27,8 @@ addFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: FloatingUserInfo) {
  * adds user to a node containing all users 
  * @param FloatingUser 
  */
-addAllUser(AllUsers: FloatingUserInfo) {
-  var ref = this.db.list<FloatingUserInfo>("Party/AllUsers/").query.ref;
+addAllUser(partyCodeInfo: CodeInfo, AllUsers: FloatingUserInfo) {
+  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
   ref.child(AllUsers.FloatingUser).set(AllUsers);
 }
 

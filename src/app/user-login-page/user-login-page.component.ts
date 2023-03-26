@@ -44,7 +44,7 @@ export class UserLoginPageComponent {
 
       // calls addFloatinUser and addAllUser methods to store username in database nodes
       this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
-      this.FloatingUserinfoService.addAllUser(floatingUserInfo);
+      this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
       this.router.navigate(['/gamelist']);
     }
     
