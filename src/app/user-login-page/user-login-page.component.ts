@@ -1,10 +1,13 @@
-import { Component, NgModule } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -15,14 +18,37 @@ import { CodeInfoService } from '../backend/partycode-backend/code-info.service'
 
 
 
-export class UserLoginPageComponent {
+export class UserLoginPageComponent implements OnInit, OnDestroy {
   isValid: boolean = false;
   isTaken: boolean = false;
   showInputError: boolean = false;
   showTakenError: boolean = false;
-  
-  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router) {
 
+  partyCode: string = '';
+  usernames: string[] | undefined = [];
+
+  subscription: Subscription | any;
+  
+  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient) {
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    // get party code from service
+    this.subscription = this.userService.currentPartyCode.subscribe(partyCode => {
+      this.partyCode = partyCode;
+
+      // get all users frm party
+      this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party/' + this.partyCode + '/AllUsers.json').subscribe(data => {
+        this.usernames = Object.keys(data);
+      });
+    })
+
+    
   }
 
   floatingUser: string = '';
@@ -31,6 +57,7 @@ export class UserLoginPageComponent {
    * allows entered usernames to be stored as floating users for a party
    */
   onSubmit() {
+
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
     const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
 
@@ -49,14 +76,10 @@ export class UserLoginPageComponent {
     }
     
     // if not valid after check, show error
-    if (!this.isValid) {
-      this.showInputError = true
-    } 
+    this.showInputError = this.isValid ? false : true;
 
     // if taken, show error
-    if (!this.isTaken) {
-      this.showTakenError = true;
-    }
+    this.showTakenError = this.isTaken ? false : true;
     
   }
 
@@ -96,7 +119,13 @@ export class UserLoginPageComponent {
    * @returns a boolean value on if the username is already taken
    */
   checkIfTaken(user: string) : boolean {
-    // TODO: implement
+    for (let aUser of this.usernames!) {
+      if (aUser === user) {
+        return false;
+        break;
+      }
+    }
+
     return true;
   }
 
