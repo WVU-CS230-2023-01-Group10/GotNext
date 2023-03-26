@@ -30,7 +30,7 @@ export class HostLoginPageComponent {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
     // calls addParty to add party info to database
     this.partyInfoService.addParty(PartyNameInfo);
-    this.router.navigate(['/gamelist']);
+    this.router.navigate(['/partylogistics']);
   }
 
 }
