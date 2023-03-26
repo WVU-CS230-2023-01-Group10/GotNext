@@ -110,6 +110,11 @@ export class HostLoginPageComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Checks if inputted code is numeric between 4-6 characters
+   * @param code code to be checked
+   * @returns boolean value if code is a valid input
+   */
   validateCode(code: string) : boolean {
     // Check if the input string is null or empty
     if (!code || code.length === 0) {
@@ -131,6 +136,11 @@ export class HostLoginPageComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Checks if inputted code is taken
+   * @param code code to be checked
+   * @returns boolean value if the code is available
+   */
   checkIfCodeTaken(code: string) : boolean {
     // Check if the input string is null or empty
     if (!code || code.length === 0) {

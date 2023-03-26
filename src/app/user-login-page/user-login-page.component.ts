@@ -33,10 +33,16 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Runs on page close, cleans up data
+   */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
+  /**
+   * Runs on initialization, grabs code passed from party entry page and party data from Realtime database
+   */
   ngOnInit(): void {
     // get party code from service
     this.subscription = this.userService.currentPartyCode.subscribe(partyCode => {
