@@ -3,6 +3,8 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
+import { CodeInfo } from '../backend/partycode-backend/code-info-model';
+import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class UserLoginPageComponent {
   showInputError: boolean = false;
   showTakenError: boolean = false;
   
-  constructor(private FloatingUserinfoService: FloatingUserInfoService, private router: Router) {
+  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router) {
 
   }
 
@@ -30,6 +32,7 @@ export class UserLoginPageComponent {
    */
   onSubmit() {
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
+    const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
 
     this.isValid = this.validateInput(this.floatingUser);
     this.isTaken = this.checkIfTaken(this.floatingUser);
@@ -39,8 +42,9 @@ export class UserLoginPageComponent {
       this.showInputError = false;
       this.showTakenError = false;
 
-      // calls addFloatinUser method to store user name in database
-      this.FloatingUserinfoService.addFloatingUser(floatingUserInfo);
+      // calls addFloatinUser and addAllUser methods to store username in database nodes
+      this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
+      this.FloatingUserinfoService.addAllUser(floatingUserInfo);
       this.router.navigate(['/gamelist']);
     }
     
