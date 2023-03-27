@@ -22,7 +22,7 @@ export class GameInfoService {
 addGame(partyCodeInfo: CodeInfo, gameInfo: GameInfo) {
   console.log(partyCodeInfo.Partycode);
   const ref = this.db.list<GameInfo>(`Party/${partyCodeInfo.Partycode}/Games`).query.ref;
-  ref.child(gameInfo.Game).set(gameInfo);
+  ref.child(gameInfo.Style).set(gameInfo);
 }
 
 }

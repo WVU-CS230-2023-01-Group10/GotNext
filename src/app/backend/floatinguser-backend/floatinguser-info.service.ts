@@ -12,6 +12,8 @@ export class FloatingUserInfoService {
   constructor(private http:HttpClient, private db:AngularFireDatabase) {
     
   }
+  // var to update username in navbar
+  Username: string='';
 
 /**
  * adds user to chosen party under FloatingUser node within a specific party

@@ -1,3 +1,3 @@
 export interface GameInfo {
-  Game: string;
+  Style: string;
 }

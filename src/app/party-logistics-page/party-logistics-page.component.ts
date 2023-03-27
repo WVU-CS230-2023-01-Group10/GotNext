@@ -14,11 +14,13 @@ export class PartyLogisticsPageComponent {
 selectedGameType: string = 'Blank';
 
 constructor(private GameInfoService: GameInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router) {
-
+  
 }
 
+
+
 onSubmit() {
-  const gameInfo: GameInfo = { Game: this.selectedGameType };
+  const gameInfo: GameInfo = { Style: this.selectedGameType };
   const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
   this.GameInfoService.addGame(partyCodeInfo, gameInfo);
   this.router.navigate(['/gamelist']);
