@@ -15,3 +15,24 @@
     color: rgb(255, 234, 0);
     text-align: center;
 }
+
+.radio-button {
+   float: right;
+}
+
+.party-name {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.game-type {
+    display:inline-block; 
+    margin-left: 100px;
+}
+
+.player-number {
+    margin-left: 100px;
+}
+
+.partner-un {
+    text-align: center;
+}

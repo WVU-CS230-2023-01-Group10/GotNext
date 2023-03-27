@@ -1,25 +1,59 @@
 <!-- Use *ngIf component to show host privileges -->
 
 <div class="d-flex bd-highlight">
-    <div class="p-2 flex-fill bd-highlight"><ul class="list-group">
-        <li class="list-group-item title">User1234's Party</li>
-        <li class="list-group-item">User1234</li>
-        <li class="list-group-item">User1234</li>
-        <li class="list-group-item">User1234</li>
-        <li class="list-group-item">User1234</li>
+    <div class="p-2 flex-fill bd-highlight">
+      <ul class="list-group">
+        <li class="list-group-item title">Current Parties</li>
+        <li class="list-group-item">
+         <span class="party-name">CupSniper's Party</span>
+             <span class="game-type">Round Robin</span> 
+             <span class="player-number">10/20</span> 
+          <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+        
+        </li>
+        <li class="list-group-item">
+          <span class="party-name">CupSniper's Party</span>
+              <span class="game-type">Round Robin</span> 
+              <span class="player-number">10/20</span> 
+           <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+         
+         </li>
+         <li class="list-group-item">
+          <span class="party-name">CupSniper's Party</span>
+              <span class="game-type">Round Robin</span> 
+              <span class="player-number">10/20</span> 
+           <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+         
+         </li>
+         <li class="list-group-item">
+          <span class="party-name">CupSniper's Party</span>
+              <span class="game-type">Round Robin</span> 
+              <span class="player-number">10/20</span> 
+           <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+         
+         </li>
       </ul>
     </div>
     <div class="p-2 flex-fill bd-highlight">
         <ul class="list-group">
             <li class="list-group-item title" >Players looking for a Partner</li>
-            <li class="list-group-item">User1234</li>
-            <li class="list-group-item">User1234</li>
-            <li class="list-group-item">User1234</li>
-            <li class="list-group-item">User1234</li>
+            <li class="list-group-item partner-un"> PongGod12
+              <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+            </li>
+            <li class="list-group-item partner-un"> PongGod12
+              <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+            </li>
+            <li class="list-group-item partner-un"> PongGod12
+              <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+            </li>
+            <li class="list-group-item partner-un"> PongGod12
+              <input class="form-check-input me-1 radio-button" type="checkbox" value="" aria-label="...">
+            </li>
           </ul>
-          <div class="container">
-            <button routerLink="/queue" class="glow-on-hover" type="button">Add Partner</button>
-          </div>
           
     </div>
+  </div>
+
+  <div class="container">
+    <button routerLink="/queue" class="glow-on-hover" type="button">Join Game</button>
   </div>
