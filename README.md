@@ -30,7 +30,7 @@ GotNext is a web application created by our development team to improve the way 
 ## Required Packages 
 - `npm install bootstrap`
 - `npm install firebase`
-- `npm i bootstrap-icons`
+- `npm install bootstrap-icons`
 - `npm install ngx-scanner-qrcode --save`
 - `npm install angularx-qrcode --save`
 
