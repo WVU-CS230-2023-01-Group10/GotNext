@@ -28,10 +28,11 @@ GotNext is a web application created by our development team to improve the way 
         - View Players, Order, and Progress of Joined Game
 
 ## Required Packages 
-- npm install bootstrap
-- npm install firebase
-- npm i bootstrap-icons
-- npm install ngx-scanner-qrcode --save
+- `npm install bootstrap`
+- `npm install firebase`
+- `npm i bootstrap-icons`
+- `npm install ngx-scanner-qrcode --save`
+- `npm install angularx-qrcode --save`
 
 ## Deployment
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app automatically updates if you change any of the source files.
