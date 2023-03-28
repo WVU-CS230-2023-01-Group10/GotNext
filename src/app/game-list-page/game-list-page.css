@@ -36,3 +36,11 @@
 .partner-un {
     text-align: center;
 }
+
+form {
+    background-color: #f0f0f0;
+    height: 90%;
+}
+#thelist {
+    height: 100%;
+}
