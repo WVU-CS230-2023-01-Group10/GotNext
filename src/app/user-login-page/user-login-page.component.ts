@@ -78,6 +78,8 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
       // calls addFloatinUser and addAllUser methods to store username in database nodes
       this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
       this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
+      // set username for game list page
+      this.FloatingUserinfoService.FloatingUser = this.floatingUser;
       this.router.navigate(['/gamelist']);
     }
     
