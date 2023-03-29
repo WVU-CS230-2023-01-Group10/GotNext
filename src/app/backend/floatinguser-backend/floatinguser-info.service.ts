@@ -7,13 +7,11 @@ import { CodeInfo } from "../partycode-backend/code-info-model";
 
 @Injectable({providedIn: 'root'})
 export class FloatingUserInfoService {
-  private baseUrl: string = 'https://got-next-app-default-rtdb.firebaseio.com/';
-  private myInfoEndpoint = 'Party/FloatingUsers.json';
   constructor(private http:HttpClient, private db:AngularFireDatabase) {
     
   }
   // var to update username in navbar
-  Username: string='';
+  FloatingUser: string='Not set yet';
 
 /**
  * adds user to chosen party under FloatingUser node within a specific party
