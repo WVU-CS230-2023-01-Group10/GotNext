@@ -1,3 +1,10 @@
+img{
+    padding-left: 75px;
+    padding-right: 10px;
+    width: 300px;
+    height: 200px;
+}
+
 .glow-on-hover {
     width: 150px;
     height: 50px;
