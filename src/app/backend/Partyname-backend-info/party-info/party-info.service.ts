@@ -13,46 +13,14 @@ export class PartyInfoService {
 
   }
 
-  // addPartyStuff(HostName: PartyInfo, PartyCode: PartyInfo, PartyName: PartyInfo) {
-  //   var ref = this.db.list<PartyInfo>("Party/").query.ref;
-  //   ref.child(HostName.Host).set(HostName);
-
-  //   var ref2 = this.db.list<PartyInfo>("Party/").query.ref;
-  //   ref2.child(PartyCode.PartyCode).set(PartyCode);
-
-  //   var ref3 = this.db.list<PartyInfo>("Party/").query.ref;
-  //   ref3.child(PartyName.Host).set(PartyName);
-  // }
-
-  addHost(HostName: PartyInfo) {
-    var ref = this.db.list<PartyInfo>(" ").query.ref;
-    ref.child(HostName.Host).set(HostName);
-  }
-
-  addPartyCode(PartyCode: PartyInfo) {
+  /**
+   * adds Party information under Party node in the database. 
+   * @param Party contains party name, party code, and host name
+   * 
+   */
+  addParty(Party: PartyInfo) {
     var ref = this.db.list<PartyInfo>("Party/").query.ref;
-    ref.child(PartyCode.PartyCode).set(PartyCode);
-  }
-
-  addPartyName(PartyName: PartyInfo) {
-    var ref = this.db.list<PartyInfo>(" ").query.ref;
-    ref.child(PartyName.Host).set(PartyName);
-  }
-
-  getPartyInfo(partyname: string) {
-    console.log(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="Partyname"&equalTo="${partyname}"`);
-    return this.http.get<PartyInfo>(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="Partyname"&equalTo="${partyname}"`);
+    ref.child(Party.PartyCode).set(Party);
   }
   
-
-  modifyPartyInfo(partyname: string, host: string, partycode: string) {
-    const data: PartyInfo = {
-      PartyName: partyname,
-      Host: host,
-      PartyCode: partycode
-    };
-    return this.http.post(`${this.baseUrl}${this.myInfoEndpoint}`, data);
-  }
-  
-
 }

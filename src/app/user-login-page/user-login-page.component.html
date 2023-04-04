@@ -3,6 +3,15 @@
     <div class="form-signin w-100  m-auto"  style="margin-top: 30px">
         <form (ngSubmit)="onSubmit()">
           <img src="./assets/cup.png" alt="" width="450px" height="400px">
+
+          <div *ngIf="showInputError">
+            <p class="error">Username cannot contain spaces or special characters</p>
+          </div>
+
+          <div *ngIf="showTakenError">
+            <p class="error">Username already taken</p>
+          </div>
+
           <h1 class="h4 mb-3 fw-normal" style="margin-top: 20px">Enter your username</h1>
           
           <div class="form-floating">

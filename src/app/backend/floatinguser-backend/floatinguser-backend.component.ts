@@ -14,16 +14,5 @@ export class FloatinguserBackendComponent {
   constructor(private floatinguserInfoService: FloatingUserInfoService) {
 
   }
-  ngOnInit(): void {
-    console.log("Sending a get request to the server");
-    this.showFloatingUserInfo();
-  }
-
-  showFloatingUserInfo() {
-    const FloatingUser = { FloatingUser: '' };
-    this.floatinguserInfoService.getFloatingUserInfo(FloatingUser.FloatingUser).subscribe((data: FloatingUserInfo) => {
-      console.log(data);
-      this.myInfo = data;
-    })
-  }
+ 
 }

@@ -3,30 +3,33 @@ import { Injectable } from "@angular/core";
 import { FloatingUserInfo } from "./floatinguser-info.model";
 import { AngularFireDatabase } from "@angular/fire/compat/database";
 import {query, ref, set} from 'firebase/database';
+import { CodeInfo } from "../partycode-backend/code-info-model";
 
 @Injectable({providedIn: 'root'})
 export class FloatingUserInfoService {
-  private baseUrl: string = 'https://got-next-app-default-rtdb.firebaseio.com/';
-  private myInfoEndpoint = 'Party/FloatingUsers.json';
   constructor(private http:HttpClient, private db:AngularFireDatabase) {
     
   }
+  // var to update username in navbar
+  FloatingUser: string='Not set yet';
 
-  getFloatingUserInfo(floatinguser: string) {
-    console.log(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="FloatingUser"&equalTo="${floatinguser}"`);
-    return this.http.get<FloatingUserInfo>(`${this.baseUrl}${this.myInfoEndpoint}?orderBy="FloatingUser"&equalTo="${floatinguser}"`);
-  }
-  
-// sends data to backend
-  modifyFloatingUserInfo(data:FloatingUserInfo) {
-   
-    return this.http.post(this.baseUrl + this.myInfoEndpoint, data);
+/**
+ * adds user to chosen party under FloatingUser node within a specific party
+ * @param FloatingUser user in a specific party who has not chosen a game
+ */
+addFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: FloatingUserInfo) {
+  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/FloatingUsers`).query.ref;
+  ref.child(floatingUserInfo.FloatingUser).set(floatingUserInfo);
 }
 
-// try and send data to backend using firebase
-addFloatingUser(FloatingUser: FloatingUserInfo) {
-  var ref = this.db.list<FloatingUserInfo>("Party/FloatingUsers/").query.ref;
-  ref.child(FloatingUser.FloatingUser).set(FloatingUser);
+
+/**
+ * adds user to a node containing all users 
+ * @param FloatingUser 
+ */
+addAllUser(partyCodeInfo: CodeInfo, AllUsers: FloatingUserInfo) {
+  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
+  ref.child(AllUsers.FloatingUser).set(AllUsers);
 }
 
 }

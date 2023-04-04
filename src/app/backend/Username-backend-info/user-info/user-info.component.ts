@@ -14,16 +14,5 @@ export class UserInfoComponent {
   constructor(private userInfoService: UserInfoService) {
 
   }
-  ngOnInit(): void {
-    console.log("Sending a get request to the server");
-    this.showUserInfo();
-  }
-
-  showUserInfo() {
-    const currentUser = { username: '' };
-    this.userInfoService.getUserInfo(currentUser.username).subscribe((data: UserInfo) => {
-      console.log(data);
-      this.myInfo = data;
-    })
-  }
+ 
 }
