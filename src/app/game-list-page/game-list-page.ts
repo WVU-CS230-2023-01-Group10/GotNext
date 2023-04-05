@@ -6,6 +6,8 @@ import { GameInfo } from '../backend/game-backend/game-info.model';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { GameInfoService } from '../backend/game-backend/game-info.service';
+import { TeamInfoService } from '../backend/team-backend/team-info.service';
+import { TeamInfo } from '../backend/team-backend/team-info.model';
 
 @Component({
   selector: 'game-list-page',
@@ -15,10 +17,17 @@ import { GameInfoService } from '../backend/game-backend/game-info.service';
 export class GameListComponent implements OnInit {
   games: GameInfo[] = [];
   users: FloatingUserInfo[] = [];
-  selectedGameType: string = 'Blank';
-  selectedGameName: string = 'Blank Name';
+  selectedGameType: string = 'Blank'; // creating game
+  selectedGameName: string = 'Blank Name'; // creating game
+  selectedFloatingUser: string = 'Null User'; // adding teammate
+  chosenGameName: string = 'Game for Queue'; // adding team to queue
 
-  constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService) {}
+  constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService) {}
+
+  // getting selected game to join with teammate
+  chosenGame(gameName: string) {
+    this.chosenGameName = gameName;
+  }
 
   ngOnInit(): void {
     const partyCode = this.partyCodeService.code;
@@ -40,4 +49,15 @@ export class GameListComponent implements OnInit {
     // console.log(this.selectedGameName, this.selectedGameType);
     // this.router.navigate(['/gamelist']);
   }
+  
+  joinGame() {
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    const gameName = this.chosenGameName;
+    const team: TeamInfo = {
+      User1: this.userInfoService.FloatingUser,
+      User2: this.selectedFloatingUser,
+    };
+    this.teamInfoService.addTeam(partyCodeInfo, team, gameName);
+  }
+  
 }

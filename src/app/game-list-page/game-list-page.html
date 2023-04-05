@@ -8,7 +8,7 @@
        <span class="party-name">{{game.GameName}}</span>
            <span class="game-type">{{game.Style}}</span>
            <span class="player-number">10/20</span>
-        <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="...">
+        <input class="form-check-input me-1 radio-button" name="party" type="radio" [value]="game.GameName" (click)="chosenGame(game.GameName)" aria-label="...">
      
       </li>
     </ul>
@@ -19,7 +19,7 @@
           <li class="list-group-item title" >Players looking for a Partner</li>
           <ng-container *ngFor="let user of users">
           <li class="list-group-item partner-un"> {{user.FloatingUser}}
-            <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} aria-label="...">
+            <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} [(ngModel)]="selectedFloatingUser" aria-label="...">
           </li>
           </ng-container>
         </ul>    
@@ -28,7 +28,7 @@
 
 
 <div class="container">
-  <button routerLink="/queue" class="glow-on-hover mx-5" type="button">Join Game</button>
+  <button routerLink="/queue" class="glow-on-hover mx-5" type="button" (click)="joinGame()">Join Game</button>
 </div>
 
 
