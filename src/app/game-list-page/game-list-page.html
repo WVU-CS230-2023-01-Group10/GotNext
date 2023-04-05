@@ -27,20 +27,40 @@
 </div>
 
 
-<div class="container">
-  <button routerLink="/queue" class="glow-on-hover mx-5" type="button">Join Game</button>
+
+<div class="d-flex flex-row bd-highlight mb-3" style="justify-content: center;">
+  <div class="p-2 bd-highlight"> 
+    <button routerLink="/queue" class="glow-on-hover mx-5" type="button">Join Game</button> 
+  </div>
+
+  <div class="p-2 bd-highlight">
+    <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
+  </div>
+  <div class="p-2 bd-highlight">
+    
+  <button class="glow-on-hover mx-5" type="button">Delete Game</button>
+  </div>
+  <div class="p-2 bd-highlight">
+     <!-- Button trigger modal -->
+<button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
+  </div>
+  <div class="p-2 bd-highlight">
+    
+    <button class="glow-on-hover mx-5" type="button">Generate QR Code</button>
+    </div>
+    
 </div>
 
 
 <div class="container">
-  <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
+
+  
+
+  
 
 
-  <button class="glow-on-hover mx-5" type="button">Delete Game</button>
 
-
-  <!-- Button trigger modal -->
-<button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
+ 
 
 
 <!-- Modal -->
@@ -48,10 +68,12 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Create New Game</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
+      <p>Game Name</p>
+      <input type="text" id="playernum" name="playernum"><br><br>
       <p>Game Type:</p>
       <select id="s1" >
         <option value="Blank" selected>Choose Gameplay Style</option>
@@ -60,8 +82,7 @@
         <option value="Tournament">Tournament</option>
       </select>
       <br><br>
-      <p>Max Number of Players</p>
-      <input type="number" id="playernum" name="playernum"><br><br>
+     
 
 
     </div>
