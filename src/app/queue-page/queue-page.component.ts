@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { TeamInfo } from '../backend/team-backend/team-info.model';
 
 @Component({
   selector: 'app-queue-page',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./queue-page.component.css']
 })
 export class QueuePageComponent {
-
+  @Input() team!: TeamInfo;
 }

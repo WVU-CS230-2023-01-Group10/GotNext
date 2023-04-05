@@ -20,7 +20,7 @@ export class TeamInfoService {
  */
 addTeam(partyCodeInfo: CodeInfo, team: TeamInfo, gameName: string) {
   const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/Teams`).query.ref;
-  ref.push(team);
+  ref.child(team.User1).set(team);
 }
 
 
