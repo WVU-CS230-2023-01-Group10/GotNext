@@ -66,7 +66,7 @@ export class HostLoginPageComponent implements OnInit {
       this.partyInfoService.addParty(PartyNameInfo);
       // sets code to be used to sort games
       this.codeInfoService.code = this.PartyCode;
-      this.router.navigate(['/partylogistics']);
+      this.router.navigate(['/gamelist']);
     }
 
     // if code not valid, show error

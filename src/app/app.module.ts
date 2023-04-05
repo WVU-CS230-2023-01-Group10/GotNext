@@ -29,6 +29,7 @@ import { FloatinguserBackendComponent } from './backend/floatinguser-backend/flo
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { TeamBackendComponent } from './backend/team-backend/team-backend.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
     PartyEntryPageComponent,
     ScanQrComponent,
     PartycodeBackendComponent,
-    FloatinguserBackendComponent
+    FloatinguserBackendComponent,
+    TeamBackendComponent
   ],
   imports: [
     BrowserModule,

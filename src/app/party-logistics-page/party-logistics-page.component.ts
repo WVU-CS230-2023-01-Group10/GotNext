@@ -12,6 +12,7 @@ import { CodeInfoService } from '../backend/partycode-backend/code-info.service'
 })
 export class PartyLogisticsPageComponent {
 selectedGameType: string = 'Blank';
+selectedGameName: string = 'Blank name';
 
 constructor(private GameInfoService: GameInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router) {
   
@@ -20,9 +21,9 @@ constructor(private GameInfoService: GameInfoService, private PartyCodeInfoServi
 
 
 onSubmit() {
-  const gameInfo: GameInfo = { Style: this.selectedGameType };
+  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName };
   const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
-  this.GameInfoService.addGame(partyCodeInfo, gameInfo);
+  this.GameInfoService.addGameStyle(partyCodeInfo, gameInfo);
   this.router.navigate(['/gamelist']);
 }
 
