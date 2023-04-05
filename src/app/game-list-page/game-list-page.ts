@@ -8,6 +8,7 @@ import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { GameInfoService } from '../backend/game-backend/game-info.service';
 import { TeamInfoService } from '../backend/team-backend/team-info.service';
 import { TeamInfo } from '../backend/team-backend/team-info.model';
+import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.service';
 
 @Component({
   selector: 'game-list-page',
@@ -22,11 +23,11 @@ export class GameListComponent implements OnInit {
   selectedFloatingUser: string = 'Null User'; // adding teammate
   chosenGameName: string = 'Game for Queue'; // adding team to queue
 
-  constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService) {}
+  constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
-    this.chosenGameName = gameName;
+    this.queuePageService.setSelectedGameName(gameName);
   }
 
   ngOnInit(): void {
@@ -39,6 +40,7 @@ export class GameListComponent implements OnInit {
     this.gamePageService.getFloatingUsers(partyCode, username).subscribe((users) => {
       this.users = users;
     });
+    
   }
 
   addNewGame() {
@@ -52,12 +54,15 @@ export class GameListComponent implements OnInit {
   
   joinGame() {
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
-    const gameName = this.chosenGameName;
+    const gameName = this.queuePageService.getSelectedGameName();
     const team: TeamInfo = {
       User1: this.userInfoService.FloatingUser,
       User2: this.selectedFloatingUser,
     };
     this.teamInfoService.addTeam(partyCodeInfo, team, gameName);
+    // save users to display in queue
+    this.teamInfoService.User1 = this.userInfoService.FloatingUser;
+    this.teamInfoService.User2 = this.selectedFloatingUser;
   }
   
 }
