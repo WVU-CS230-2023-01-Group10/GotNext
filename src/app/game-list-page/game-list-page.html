@@ -5,7 +5,7 @@
     <ul class="list-group">
       <li class="list-group-item title">Current Games</li>
       <li class="list-group-item" *ngFor="let game of games">
-       <span class="party-name">CupSniper's Game</span>
+       <span class="party-name">{{game.GameName}}</span>
            <span class="game-type">{{game.Style}}</span>
            <span class="player-number">10/20</span>
         <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="...">
@@ -53,21 +53,23 @@
     </div>
     <div class="modal-body">
       <p>Game Type:</p>
-      <select id="s1" >
+      <select id="s1" [(ngModel)]="selectedGameType">
         <option value="Blank" selected>Choose Gameplay Style</option>
         <option value="Queue">Queue</option>
         <option value="Round Robin">Round Robin</option>
         <option value="Tournament">Tournament</option>
       </select>
+      
       <br><br>
-      <p>Max Number of Players</p>
-      <input type="number" id="playernum" name="playernum"><br><br>
+      <p>Game Name</p>
+      <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
+      <br><br>
 
 
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary">Add New Game</button>
+      <button type="button" class="btn btn-primary" (click)="addNewGame()">Add New Game</button>
     </div>
   </div>
 </div>
