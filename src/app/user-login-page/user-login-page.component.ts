@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
@@ -8,6 +7,7 @@ import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatin
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 import { UserService } from '../services/user.service';
+import { HostService } from '../services/host.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
 
   subscription: Subscription | any;
   
-  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient) {
+  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient, private hostService: HostService) {
 
   }
 
@@ -80,6 +80,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
       this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
       // set username for game list page
       this.FloatingUserinfoService.FloatingUser = this.floatingUser;
+      this.hostService.setIsHost(false);
       this.router.navigate(['/gamelist']);
     }
     

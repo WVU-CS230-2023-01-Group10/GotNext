@@ -9,6 +9,8 @@ import { GameInfoService } from '../backend/game-backend/game-info.service';
 import { TeamInfoService } from '../backend/team-backend/team-info.service';
 import { TeamInfo } from '../backend/team-backend/team-info.model';
 import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.service';
+import { HostService } from '../services/host.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'game-list-page',
@@ -18,12 +20,17 @@ import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.
 export class GameListComponent implements OnInit {
   games: GameInfo[] = [];
   users: FloatingUserInfo[] = [];
+  host: string[] = [];
   selectedGameType: string = 'Blank'; // creating game
   selectedGameName: string = 'Blank Name'; // creating game
   selectedFloatingUser: string = 'Null User'; // adding teammate
   chosenGameName: string = 'Game for Queue'; // adding team to queue
 
-  constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService) {}
+  isHost: boolean = false;
+
+  constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
+    private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
+    private hostService: HostService, private http: HttpClient) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
@@ -40,7 +47,11 @@ export class GameListComponent implements OnInit {
     this.gamePageService.getFloatingUsers(partyCode, username).subscribe((users) => {
       this.users = users;
     });
-    
+
+    // get host username and party code from host login
+    this.hostService.getIsHost().subscribe(bool => {
+      this.isHost = bool;
+    });
   }
 
   addNewGame() {
