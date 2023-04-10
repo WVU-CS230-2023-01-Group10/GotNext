@@ -48,13 +48,18 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.currentPartyCode.subscribe(partyCode => {
       this.partyCode = partyCode;
 
-      // get all users frm party
-      this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party/' + this.partyCode + '/AllUsers.json').subscribe(data => {
-        this.usernames = Object.keys(data);
-      });
+      // if partyCode is null for any reason, navigate back to the party entry page
+      if (!this.partyCode) {
+      this.router.navigate(['/partyentry']);
+      return;
+    }
+      else {
+        // get all users from party
+        this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party/' + this.partyCode + '/AllUsers.json').subscribe(data => {
+          this.usernames = Object.keys(data);
+        });
+      }
     })
-
-    
   }
 
   floatingUser: string = '';
