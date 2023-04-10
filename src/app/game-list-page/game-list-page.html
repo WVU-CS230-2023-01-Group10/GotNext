@@ -5,10 +5,10 @@
     <ul class="list-group">
       <li class="list-group-item title">Current Games</li>
       <li class="list-group-item" *ngFor="let game of games">
-       <span class="party-name">CupSniper's Game</span>
+       <span class="party-name">{{game.GameName}}</span>
            <span class="game-type">{{game.Style}}</span>
            <span class="player-number">10/20</span>
-        <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="...">
+        <input class="form-check-input me-1 radio-button" name="party" type="radio" [value]="game.GameName" (click)="chosenGame(game.GameName)" aria-label="...">
      
       </li>
     </ul>
@@ -19,7 +19,7 @@
           <li class="list-group-item title" >Players looking for a Partner</li>
           <ng-container *ngFor="let user of users">
           <li class="list-group-item partner-un"> {{user.FloatingUser}}
-            <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} aria-label="...">
+            <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} [(ngModel)]="selectedFloatingUser" aria-label="...">
           </li>
           </ng-container>
         </ul>    
@@ -33,34 +33,16 @@
     <button routerLink="/queue" class="glow-on-hover mx-5" type="button">Join Game</button> 
   </div>
 
-  <div class="p-2 bd-highlight">
-    <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
-  </div>
-  <div class="p-2 bd-highlight">
-    
-  <button class="glow-on-hover mx-5" type="button">Delete Game</button>
-  </div>
-  <div class="p-2 bd-highlight">
-     <!-- Button trigger modal -->
-<button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
-  </div>
-  <div class="p-2 bd-highlight">
-    
-    <button class="glow-on-hover mx-5" type="button">Generate QR Code</button>
-    </div>
-    
-</div>
-
 
 <div class="container">
-
-  
-
-  
+  <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
 
 
+  <button class="glow-on-hover mx-5" type="button">Delete Game</button>
 
- 
+
+  <!-- Button trigger modal -->
+<button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
 
 
 <!-- Modal -->
@@ -68,12 +50,10 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Create New Game</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-      <p>Game Name</p>
-      <input type="text" id="playernum" name="playernum"><br><br>
       <p>Game Type:</p>
       <select id="s1" >
         <option value="Blank" selected>Choose Gameplay Style</option>
@@ -82,7 +62,8 @@
         <option value="Tournament">Tournament</option>
       </select>
       <br><br>
-     
+      <p>Max Number of Players</p>
+      <input type="number" id="playernum" name="playernum"><br><br>
 
 
     </div>
@@ -93,6 +74,8 @@
   </div>
 </div>
 </div>
+</div>
+
 </div>
 
 

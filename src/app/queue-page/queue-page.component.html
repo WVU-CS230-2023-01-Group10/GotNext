@@ -13,10 +13,15 @@
     <div class="d-flex">
       <ul class="list-group">
         <p class="p-2"> Next up: </p>
-        <li class="list-group-item border-0">Team 1</li>
-        <li class="list-group-item border-0">Team 2</li>
-        <li class="list-group-item border-0">Team 3</li>
-        <li class="list-group-item border-0">Team 4</li>
       </ul>
+    </div>
+
+    <div class="d-flex bd-highlight">
+      <div class="p-2 flex-fill bd-highlight">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let team of teams">
+           <span class="party-name">{{team.User1}} & {{team.User2}}</span>        
+          </li>
+        </ul>
     </div>
 </div>

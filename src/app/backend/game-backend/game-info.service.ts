@@ -10,7 +10,7 @@ import { GameInfo } from "./game-info.model";
 @Injectable({providedIn: 'root'})
 export class GameInfoService {
 
-  constructor(private http:HttpClient, private db:AngularFireDatabase) {
+  constructor(private db:AngularFireDatabase) {
     
   }
 
@@ -19,10 +19,16 @@ export class GameInfoService {
  * @param partyCodeInfo provides code for specific party
  * @param gameInfo contains type of game selection
  */
-addGame(partyCodeInfo: CodeInfo, gameInfo: GameInfo) {
+addGameStyle(partyCodeInfo: CodeInfo, gameInfo: GameInfo) {
   console.log(partyCodeInfo.Partycode);
   const ref = this.db.list<GameInfo>(`Party/${partyCodeInfo.Partycode}/Games`).query.ref;
   ref.child(gameInfo.Style).set(gameInfo);
+}
+
+addGameName(partyCodeInfo: CodeInfo, gameInfo: GameInfo) {
+  console.log(partyCodeInfo.Partycode);
+  const ref = this.db.list<GameInfo>(`Party/${partyCodeInfo.Partycode}/Games`).query.ref;
+  ref.child(gameInfo.GameName).set(gameInfo);
 }
 
 }

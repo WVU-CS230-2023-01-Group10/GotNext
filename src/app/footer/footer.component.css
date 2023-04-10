@@ -1,19 +1,10 @@
-img {
-    padding-top: 20px;
-    padding-left: 25px;
-    height: 300px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 370px;
-    height: 400px;
-}
+
 
 div {
     margin: auto;
     width: 50%;
     padding: 10px;
-    width: 400px
+    width: 400px;
 }
 
 .container {
@@ -99,7 +90,7 @@ div {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 110px;
+    height: 100px;
     padding-bottom: 0;
 }
 

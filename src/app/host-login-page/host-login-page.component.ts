@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserInfo } from '../backend/Username-backend-info/user-info/user-info-model';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { PartyInfo } from '../backend/Partyname-backend-info/party-info/party-info-model';
 import { PartyInfoService } from '../backend/Partyname-backend-info/party-info/party-info.service';
 import { Router } from '@angular/router';
-import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { HostService } from '../services/host.service';
 
 @Component({
   selector: 'app-host-login-page',
@@ -27,7 +25,9 @@ export class HostLoginPageComponent implements OnInit {
 
   validPartyCodes: string[] = [];
   
-  constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient) {
+  constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
+    private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
+    private hostService: HostService) {
 
   }
 
@@ -66,7 +66,9 @@ export class HostLoginPageComponent implements OnInit {
       this.partyInfoService.addParty(PartyNameInfo);
       // sets code to be used to sort games
       this.codeInfoService.code = this.PartyCode;
-      this.router.navigate(['/partylogistics']);
+      // sends username and party code to service to be checked for host validity 
+      this.hostService.setIsHost(true);
+      this.router.navigate(['/gamelist']);
     }
 
     // if code not valid, show error
