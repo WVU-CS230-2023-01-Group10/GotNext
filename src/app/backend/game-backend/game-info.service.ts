@@ -14,6 +14,12 @@ export class GameInfoService {
     
   }
 
+  selectedGameName: string ='';
+
+  setSelectedGameName(gameName: string) {
+    this.selectedGameName = gameName;
+  }
+
 /**
  * adds game to specific party
  * @param partyCodeInfo provides code for specific party
@@ -29,6 +35,10 @@ addGameName(partyCodeInfo: CodeInfo, gameInfo: GameInfo) {
   console.log(partyCodeInfo.Partycode);
   const ref = this.db.list<GameInfo>(`Party/${partyCodeInfo.Partycode}/Games`).query.ref;
   ref.child(gameInfo.GameName).set(gameInfo);
+}
+
+deleteGame(partyCodeInfo: CodeInfo){
+  this.db.object('Party/' + partyCodeInfo.Partycode + '/Games/' + this.selectedGameName).remove();
 }
 
 }

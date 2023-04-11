@@ -35,7 +35,7 @@
 <div *ngIf="isHost">
   <div class="container">
     <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
-    <button class="glow-on-hover mx-5" type="button">Delete Game</button>
+    <button class="glow-on-hover mx-5" type="button" (click)="getRidOfGame()">Delete Game</button>
   
     <!-- Button trigger modal -->
     <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>

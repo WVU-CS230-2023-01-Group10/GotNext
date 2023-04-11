@@ -35,6 +35,7 @@ export class GameListComponent implements OnInit {
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
     this.queuePageService.setSelectedGameName(gameName);
+    this.GameInfoService.setSelectedGameName(gameName);
   }
 
   ngOnInit(): void {
@@ -74,6 +75,11 @@ export class GameListComponent implements OnInit {
     // save users to display in queue
     this.teamInfoService.User1 = this.userInfoService.FloatingUser;
     this.teamInfoService.User2 = this.selectedFloatingUser;
+  }
+
+  getRidOfGame(){
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    this.GameInfoService.deleteGame(partyCodeInfo);
   }
   
 }
