@@ -1,104 +1,97 @@
-<!-- Use *ngIf component to show host privileges -->
 <!-- updated to use ng for loop to create a new line for each game and for each floating user -->
 <div class="d-flex bd-highlight">
+  <!-- List of current games -->
   <div class="p-2 flex-fill bd-highlight">
     <ul class="list-group">
       <li class="list-group-item title">Current Games</li>
       <li class="list-group-item" *ngFor="let game of games">
-       <span class="party-name">CupSniper's Game</span>
-           <span class="game-type">{{game.Style}}</span>
-           <span class="player-number">10/20</span>
+       <span class="party-name">{{game.GameName}}</span>
+          <span class="game-type">{{game.Style}}</span>
+          <span class="player-number">10/20</span>
         <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="...">
-     
       </li>
     </ul>
-</div>
+  </div>
  
+  <!-- List of players looking for a partner -->
   <div class="p-2 flex-fill bd-highlight">
-      <ul class="list-group">
-          <li class="list-group-item title" >Players looking for a Partner</li>
-          <ng-container *ngFor="let user of users">
-          <li class="list-group-item partner-un"> {{user.FloatingUser}}
-            <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} aria-label="...">
-          </li>
-          </ng-container>
-        </ul>    
+    <ul class="list-group">
+      <li class="list-group-item title" >Players looking for a Partner</li>
+      <ng-container *ngFor="let user of users">
+        <li class="list-group-item partner-un"> {{user.FloatingUser}}
+          <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} aria-label="...">
+        </li>
+      </ng-container>
+    </ul>    
   </div>
 </div>
 
 
-
+<!-- Buttons -->
 <div class="d-flex flex-row bd-highlight mb-3" style="justify-content: center;">
+  <!-- Join Game -->
   <div class="p-2 bd-highlight"> 
     <button routerLink="/queue" class="glow-on-hover mx-5" type="button">Join Game</button> 
   </div>
 
-<div *ngIf="isHost">
+  <!-- Terminate Party -->
+  <div *ngIf="isHost">
     <div class="p-2 bd-highlight">
       <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
     </div>
-</div>
+  </div>
 
-<div *ngIf="isHost">
+  <!-- Delete Game -->
+  <div *ngIf="isHost">
     <div class="p-2 bd-highlight">
-    <button class="glow-on-hover mx-5" type="button">Delete Game</button>
+      <button class="glow-on-hover mx-5" type="button">Delete Game</button>
     </div>
-</div>
+  </div>
 
-<div *ngIf="isHost">
+  <!-- Create New Game -->
+  <div *ngIf="isHost">
     <div class="p-2 bd-highlight">
       <!-- Button trigger modal -->
-  <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
+      <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
     </div>
-</div>
-</div>
+  </div>
+
+  <!-- Gen QR Code -->
   <div class="p-2 bd-highlight">
     <button class="glow-on-hover mx-5" type="button">Generate QR Code</button>
-    </div>
-
+  </div> 
+</div>
 
 <div class="container">
-
-  
-
-  
-
-
-
- 
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create a New Game</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Game Type:</p>
-        <select id="s1" [(ngModel)]="selectedGameType">
-          <option value="Blank" selected>Choose Gameplay Style</option>
-          <option value="Queue">Queue</option>
-          <option value="Round Robin">Round Robin</option>
-          <option value="Tournament">Tournament</option>
-        </select>
-        
-        <br><br>
-        <p>Game Name</p>
-        <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
-        <br><br>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addNewGame()">Add New Game</button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create a New Game</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Game Type:</p>
+          <select id="s1" [(ngModel)]="selectedGameType">
+            <option value="Blank" selected>Choose Gameplay Style</option>
+            <option value="Queue">Queue</option>
+            <option value="Round Robin">Round Robin</option>
+            <option value="Tournament">Tournament</option>
+          </select>
+          
+          <br><br>
+          <p>Game Name</p>
+          <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
+          <br><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addNewGame()">Add New Game</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 
