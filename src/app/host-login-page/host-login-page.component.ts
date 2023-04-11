@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 import { HttpClient } from '@angular/common/http';
 import { HostService } from '../services/host.service';
+import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
+import { CodeInfo } from '../backend/partycode-backend/code-info-model';
+import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 
 @Component({
   selector: 'app-host-login-page',
@@ -27,7 +30,7 @@ export class HostLoginPageComponent implements OnInit {
   
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
-    private hostService: HostService) {
+    private hostService: HostService, private floatingUserInfo: FloatingUserInfoService) {
 
   }
 
@@ -66,6 +69,11 @@ export class HostLoginPageComponent implements OnInit {
       this.partyInfoService.addParty(PartyNameInfo);
       // sets code to be used to sort games
       this.codeInfoService.code = this.PartyCode;
+      // add host to users
+      const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.Host };
+      const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
+      this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo );
+      this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
       // sends username and party code to service to be checked for host validity 
       this.hostService.setIsHost(true);
       this.router.navigate(['/gamelist']);

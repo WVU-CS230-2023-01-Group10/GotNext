@@ -15,9 +15,14 @@ export class GameInfoService {
   }
 
   selectedGameName: string ='dont';
+  selectedUserName: string ='Teammate';
 
   setSelectedGameName(gameName: string) {
     this.selectedGameName = gameName;
+  }
+
+  setSelectedUserName(User2: string) {
+    this.selectedUserName = User2;
   }
 
 /**

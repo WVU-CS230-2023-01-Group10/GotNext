@@ -13,6 +13,7 @@ export class QueuePageService {
   constructor(private db: AngularFireDatabase) {}
 
   selectedGameName: string ='';
+  selectedUser: string = '';
 
   setSelectedGameName(gameName: string) {
     this.selectedGameName = gameName;
@@ -20,6 +21,14 @@ export class QueuePageService {
 
   getSelectedGameName() {
     return this.selectedGameName;
+  }
+
+  setSelectedUser(User2: string) {
+    this.selectedUser = User2;
+  }
+
+  getSelectedUser() {
+    return this.selectedUser;
   }
 
 

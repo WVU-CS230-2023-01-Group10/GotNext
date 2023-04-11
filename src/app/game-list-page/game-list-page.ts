@@ -38,6 +38,13 @@ export class GameListComponent implements OnInit {
     this.GameInfoService.setSelectedGameName(gameName);
   }
 
+  // getting selected user as teammate
+  chosenUser(User2: string) {
+    this.queuePageService.setSelectedUser(User2);
+    this.GameInfoService.setSelectedUserName(User2);
+    this.selectedFloatingUser = User2;
+  }
+
   ngOnInit(): void {
     this.chosenGame('nullGameName');
     const partyCode = this.partyCodeService.code;
@@ -54,6 +61,9 @@ export class GameListComponent implements OnInit {
     this.hostService.getIsHost().subscribe(bool => {
       this.isHost = bool;
     });
+
+    // listen for trigger
+    // this.teamRequest.listenForTeamRequests();
   }
 
   addNewGame() {
@@ -68,6 +78,7 @@ export class GameListComponent implements OnInit {
   joinGame() {
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     const gameName = this.queuePageService.getSelectedGameName();
+    const User2 = this.queuePageService.getSelectedUser();
     const team: TeamInfo = {
       User1: this.userInfoService.FloatingUser,
       User2: this.selectedFloatingUser,
@@ -75,8 +86,25 @@ export class GameListComponent implements OnInit {
     this.teamInfoService.addTeam(partyCodeInfo, team, gameName);
     // save users to display in queue
     this.teamInfoService.User1 = this.userInfoService.FloatingUser;
-    this.teamInfoService.User2 = this.selectedFloatingUser;
+    this.teamInfoService.User2 = User2;
   }
+
+  //   joinGame() {
+  //   const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+  //   const gameName = this.queuePageService.getSelectedGameName();
+  //   const User2 = this.queuePageService.getSelectedUser();
+  //   const request: PendingTeamInfo = {
+  //     Requester: this.userInfoService.FloatingUser,
+  //     Recipient: this.selectedFloatingUser,
+  //     Game: gameName,
+  //     Status: 'pending'
+  //   };
+  //   //this.teamInfoService.addTeam(partyCodeInfo, reques, gameName);
+  //   this.teamInfoService.addPendingTeam(partyCodeInfo,request,gameName);
+  //   // save users to display in queue
+  //   this.teamInfoService.User1 = this.userInfoService.FloatingUser;
+  //   this.teamInfoService.User2 = User2;
+  // }
 
   getRidOfGame(){
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
