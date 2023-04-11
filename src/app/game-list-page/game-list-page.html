@@ -8,7 +8,7 @@
        <span class="party-name">{{game.GameName}}</span>
           <span class="game-type">{{game.Style}}</span>
           <span class="player-number">10/20</span>
-        <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="...">
+        <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="..." (click)="chosenGame(game.GameName)">
       </li>
     </ul>
   </div>

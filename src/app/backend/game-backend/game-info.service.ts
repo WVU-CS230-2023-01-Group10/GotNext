@@ -14,7 +14,7 @@ export class GameInfoService {
     
   }
 
-  selectedGameName: string ='';
+  selectedGameName: string ='dont';
 
   setSelectedGameName(gameName: string) {
     this.selectedGameName = gameName;
