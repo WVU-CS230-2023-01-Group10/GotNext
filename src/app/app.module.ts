@@ -62,7 +62,7 @@ import { TeamBackendComponent } from './backend/team-backend/team-backend.compon
     NgxScannerQrcodeModule,
     QRCodeModule,
     AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent]

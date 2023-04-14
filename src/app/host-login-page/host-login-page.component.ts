@@ -74,6 +74,9 @@ export class HostLoginPageComponent implements OnInit {
       const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
       this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo );
       this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
+      // set host as floating user for game selection page
+      this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
+      console.log(this.userInfoService.username);
       // sends username and party code to service to be checked for host validity 
       this.hostService.setIsHost(true);
       this.router.navigate(['/gamelist']);

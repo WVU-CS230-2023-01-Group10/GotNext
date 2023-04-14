@@ -1,4 +1,5 @@
 <!-- updated to use ng for loop to create a new line for each game and for each floating user -->
+<div class="flex-container">
 <div class="d-flex bd-highlight">
   <!-- List of current games -->
   <div class="p-2 flex-fill bd-highlight">
@@ -12,9 +13,10 @@
       </li>
     </ul>
   </div>
+</div>
  
   <!-- List of players looking for a partner -->
-  <div class="p-2 flex-fill bd-highlight">
+  <!-- <div class="p-2 flex-fill bd-highlight">
     <ul class="list-group">
       <li class="list-group-item title" >Players looking for a Partner</li>
       <ng-container *ngFor="let user of users">
@@ -24,7 +26,7 @@
       </ng-container>
     </ul>    
   </div>
-</div>
+</div> -->
 
 
 <!-- Buttons -->
@@ -87,7 +89,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="addNewGame()">Add New Game</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addNewGame()">Add New Game</button>
         </div>
       </div>
     </div>
