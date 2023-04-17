@@ -9,7 +9,7 @@ import { GamePageService } from '../backend/fetching-data/game-list-page-data/ga
 import { GameInfo } from '../backend/game-backend/game-info.model';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.service';
-
+import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 @Component({
   selector: 'app-queue-page',
   templateUrl: './queue-page.component.html',
@@ -20,7 +20,8 @@ export class QueuePageComponent implements OnInit{
   users: FloatingUserInfo[] = [];
   teams: TeamInfo[] = [];
 
-  constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService) {}
+  constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
+    private gameInfoService: GameInfoService) {}
 
   ngOnInit(): void {
     const partyCode = this.partyCodeService.code;
@@ -29,6 +30,22 @@ export class QueuePageComponent implements OnInit{
       this.teams = teams;
       console.log(this.teams);
     });
+  }
+
+  /**
+   * remove Team from Queue back to game list page & floating users node
+   */
+  exitQueue() {
+    // get information on party, game, and team
+    const gameName = this.gameInfoService.selectedGameName;
+    const partyCode = this.partyCodeService.code;
+    const user = this.teamInfoService.User1;
+    // first add user back to floating users
+    const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.userInfoService.FloatingUser };
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    this.userInfoService.addFloatingUser(partyCodeInfo,floatingUserInfo);
+    // call method to exit Queue
+    this.teamInfoService.exitQueue(partyCode,user,gameName);
   }
   
   }
