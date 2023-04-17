@@ -160,9 +160,6 @@ addNewGame(event: MouseEvent) {
     if(this.selectedGameType === "Choose Gameplay Style" || this.selectedGameType === "Blank") {
       return false;
     }
-    // else if(this.selectedGameType === "Queue" || this.selectedGameType === "Round Robin" || this.selectedGameType === "Tournament") {
-    //   return true;
-    // }
     else {
       return true;
     }
