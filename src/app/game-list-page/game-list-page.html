@@ -3,6 +3,7 @@
 <div class="d-flex bd-highlight">
   <!-- List of current games -->
   <div class="p-2 flex-fill bd-highlight">
+
     <ul class="list-group">
       <li class="list-group-item title">Current Games</li>
       <li class="list-group-item" *ngFor="let game of games">
@@ -14,26 +15,16 @@
     </ul>
   </div>
 </div>
- 
-  <!-- List of players looking for a partner -->
-  <!-- <div class="p-2 flex-fill bd-highlight">
-    <ul class="list-group">
-      <li class="list-group-item title" >Players looking for a Partner</li>
-      <ng-container *ngFor="let user of users">
-        <li class="list-group-item partner-un"> {{user.FloatingUser}}
-          <input class="form-check-input me-1 radio-button" name="player" type="radio" value={{user.FloatingUser}} aria-label="..." (click)="chosenUser(user.FloatingUser)">
-        </li>
-      </ng-container>
-    </ul>    
-  </div>
-</div> -->
 
+<div *ngIf="showGameError">
+  <p class="error">Please Select a game before entering the Queue</p>
+</div>
 
 <!-- Buttons -->
 <div class="d-flex flex-row bd-highlight mb-3" style="justify-content: center;">
   <!-- Join Game -->
   <div class="p-2 bd-highlight"> 
-    <button routerLink="/queue" class="glow-on-hover mx-5" type="button" (click)="joinGame()">Join Game</button> 
+    <button class="glow-on-hover mx-5" type="button" (click)="joinGame()">Join Game</button> 
   </div>
 
   <!-- Terminate Party -->
@@ -87,6 +78,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <div *ngIf="showGameStyleError">
+            <p class="error">Please Select a game type</p>
+          </div>
+
           <p>Game Type:</p>
           <select id="s1" [(ngModel)]="selectedGameType">
             <option value="Blank" selected>Choose Gameplay Style</option>
@@ -96,13 +91,17 @@
           </select>
           
           <br><br>
+          <div *ngIf="showGameNameError">
+            <p class="error">Pick a valid name</p>
+          </div>
+          
           <p>Game Name</p>
           <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
           <br><br>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addNewGame()">Add New Game</button>
+          <button type="button" class="btn btn-primary" (click)="addNewGame($event)">Add New Game</button>
         </div>
       </div>
     </div>
