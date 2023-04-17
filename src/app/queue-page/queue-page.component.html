@@ -21,7 +21,6 @@
       <div class="p-2 flex-fill bd-highlight">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let team of teams">
-           <!-- <span class="party-name">{{team.User1}} & {{team.User2}}</span>         -->
            <span class="party-name">{{team.User1}}</span> 
           </li>
         </ul>
@@ -64,7 +63,8 @@
 
         </div> -->
         <div class="modal-footer">
-          <p class="mx-auto"> User1 & User2 </p>
+          <p class="mx-auto" *ngIf="teams.length < 2">Game starting soon!</p>
+          <p class="mx-auto" *ngIf="teams.length >= 2">{{ teams[0].User1 }} & {{ teams[1].User1 }}</p>
         </div>
       </div>
     </div>

@@ -29,7 +29,10 @@ export class QueuePageComponent implements OnInit{
     this.queuePageService.getTeams(partyCode, gamename).subscribe((teams) => {
       this.teams = teams;
       console.log(this.teams);
+      this.getFirstUser();
+      this.getSecondUser();
     });
+  
   }
 
   /**
@@ -46,6 +49,26 @@ export class QueuePageComponent implements OnInit{
     this.userInfoService.addFloatingUser(partyCodeInfo,floatingUserInfo);
     // call method to exit Queue
     this.teamInfoService.exitQueue(partyCode,user,gameName);
+  }
+
+  // set first user in queue as currently playing
+  getFirstUser() {
+      // get information on party, game, and team
+      const gameName = this.gameInfoService.selectedGameName;
+      const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+      const firstTeam = this.teams[0].User1;
+      this.teamInfoService.addCurrentlyPlaying(partyCodeInfo, firstTeam, gameName);
+  }
+
+  // set second user in queue as currently playing
+  getSecondUser() {
+    if(this.teams.length >= 2) {
+      // get information on party, game, and team
+      const gameName = this.gameInfoService.selectedGameName;
+      const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+      const secondTeam = this.teams[1].User1;
+      this.teamInfoService.addCurrentlyPlaying(partyCodeInfo, secondTeam, gameName);
+    }
   }
   
   }

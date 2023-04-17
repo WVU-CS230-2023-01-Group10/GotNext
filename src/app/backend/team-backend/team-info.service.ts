@@ -48,4 +48,15 @@ exitQueue(partyCodeInfo: string, team: string, gameName: string) {
   //ref.child(floatingUserInfo.User2).remove();
 }
 
+/**
+ * adds the two teams who are currently playing to a separate node
+ * @param partyCodeInfo 
+ * @param team 
+ * @param gameName 
+ */
+addCurrentlyPlaying(partyCodeInfo: CodeInfo, team: string, gameName: string) {
+  const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/CurrentlyPlaying`).query.ref;
+  ref.child(team).set(team);
+}
+
 }
