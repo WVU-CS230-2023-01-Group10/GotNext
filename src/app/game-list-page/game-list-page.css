@@ -53,8 +53,8 @@ form {
     margin-right: auto;
   }
 
-  
-.bd-highlight{
-    width: 500px;
-  }
-  
+.list-group{
+    width:500px;
+    margin-left: auto;
+    margin-right: auto;
+}
