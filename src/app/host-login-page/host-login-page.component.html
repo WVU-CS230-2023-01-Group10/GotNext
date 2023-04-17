@@ -3,7 +3,7 @@
     <div class="form-signin w-100 m-auto">
         <form (ngSubmit)="onSubmit()">
           <img src="./assets/cup.png" alt="">
-          <h1 class="h3 mb-3 fw-normal">Enter your username</h1>
+          <h1 class="h3 mb-3 fw-normal">Enter your Username</h1>
       
           <div *ngIf="showUserError">
             <p class="error">Username cannot contain special characters</p>
@@ -14,7 +14,7 @@
             <label for="floatingPassword">Username</label>
           </div>
 
-          <h1 class="h3 mb-3 fw-normal">Enter the party name</h1>
+          <h1 class="h3 mb-3 fw-normal">Enter the Party Name</h1>
 
           <div *ngIf="showPartyError">
             <p class="error">Party name cannot contain special characters</p>
@@ -25,7 +25,7 @@
             <label>Party name</label>
           </div>
 
-          <h1 class="h3 mb-3 fw-normal">Enter a 4-6 digit party code</h1>
+          <h1 class="h3 mb-3 fw-normal">Enter a 4-6 Digit Party Code</h1>
 
           <div *ngIf="showCodeError">
             <p class="error">Code must contain only numbers and be 4-6 numbers long</p>
