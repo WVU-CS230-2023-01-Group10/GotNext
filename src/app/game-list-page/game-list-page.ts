@@ -13,6 +13,7 @@ import { HostService } from '../services/host.service';
 import { HttpClient } from '@angular/common/http';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../services/settings.service';
 
 
 @Component({
@@ -36,12 +37,14 @@ export class GameListComponent implements OnInit {
   showGameNameError: boolean = false; // game name invalid
   showGameStyleError: boolean = false; // game style invalid
   errorOccuredCreatingGame: boolean = false; // 
+  selectedCheckInTime: number = 300;
 
   isHost: boolean = false;
 
   constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
     private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
-    private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService, private router: Router) {}
+    private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService, private router: Router,
+    private settingsService: SettingsService) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
@@ -147,6 +150,11 @@ addNewGame(event: MouseEvent) {
     this.GameInfoService.deleteGame(partyCodeInfo);
   }
   
+  changeCheckInTime(){
+    const partyCode = this.partyCodeService.code;
+    this.settingsService.setCheckInTime(partyCode, this.selectedCheckInTime);
+  }
+
   validateGameSelection() {
     if(this.queuePageService.getSelectedGameName() != "nullGameName" && this.queuePageService.getSelectedGameName() != "Blank Name") {
       return true;
