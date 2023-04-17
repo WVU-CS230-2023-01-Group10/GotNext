@@ -12,6 +12,7 @@ import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.
 import { HostService } from '../services/host.service';
 import { HttpClient } from '@angular/common/http';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
+import { SettingsService } from '../services/settings.service';
 
 
 @Component({
@@ -27,12 +28,14 @@ export class GameListComponent implements OnInit {
   selectedGameName: string = 'Blank Name'; // creating game
   selectedFloatingUser: string = 'Null User'; // adding teammate
   chosenGameName: string = 'Game for Queue'; // adding team to queue
+  selectedCheckInTime: number = 300;
 
   isHost: boolean = false;
 
   constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
     private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
-    private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService) {}
+    private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService,
+    private settingsService: SettingsService) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
@@ -96,6 +99,11 @@ export class GameListComponent implements OnInit {
   getRidOfGame(){
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.GameInfoService.deleteGame(partyCodeInfo);
+  }
+
+  changeCheckInTime(){
+    const partyCode = this.partyCodeService.code;
+    this.settingsService.setCheckInTime(partyCode, this.selectedCheckInTime);
   }
 
   
