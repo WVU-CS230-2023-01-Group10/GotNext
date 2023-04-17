@@ -1,3 +1,6 @@
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+
 <!-- Use *ngIf component to show host privileges -->
 <!-- updated to use ng for loop to create a new line for each game and for each floating user -->
 <div class="d-flex bd-highlight">
@@ -34,7 +37,7 @@
 <!-- host buttons -->
 <div *ngIf="isHost">
   <div class="container">
-    <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
+    <button  (click)="deleteParty(partyCodeService.code)" class="glow-on-hover mx-5" type="button">Terminate Party</button>
     <button class="glow-on-hover mx-5" type="button">Delete Game</button>
   
     <!-- Button trigger modal -->

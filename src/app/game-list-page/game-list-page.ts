@@ -11,6 +11,7 @@ import { TeamInfo } from '../backend/team-backend/team-info.model';
 import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.service';
 import { HostService } from '../services/host.service';
 import { HttpClient } from '@angular/common/http';
+import * as firebase from 'firebase/compat';
 
 @Component({
   selector: 'game-list-page',
@@ -75,5 +76,15 @@ export class GameListComponent implements OnInit {
     this.teamInfoService.User1 = this.userInfoService.FloatingUser;
     this.teamInfoService.User2 = this.selectedFloatingUser;
   }
+  deleteParty(partyCode: string) {
+    const db = firebase.database();
+    const partyRef = db.ref(`parties/${partyCode}`);
+    partyRef.remove()
+      .then(() => console.log(`Party ${partyCode} successfully deleted from the database.`))
+      .catch((error) => console.error(error));
+  }
+
   
 }
+  
+
