@@ -13,6 +13,7 @@ export class QueuePageService {
   constructor(private db: AngularFireDatabase) {}
 
   selectedGameName: string ='';
+  selectedUser: string = '';
 
   setSelectedGameName(gameName: string) {
     this.selectedGameName = gameName;
@@ -22,9 +23,21 @@ export class QueuePageService {
     return this.selectedGameName;
   }
 
+  setSelectedUser(User2: string) {
+    this.selectedUser = User2;
+  }
+
+  getSelectedUser() {
+    return this.selectedUser;
+  }
+
 
   getTeams(partyCode: string, GameName: string): Observable<TeamInfo[]> {
     return this.db.list<TeamInfo>(`Party/${partyCode}/Games/${GameName}/Teams`).valueChanges();
+  }
+
+  getCurrentPlayers(partyCode: string, GameName: string): Observable<TeamInfo[]> {
+    return this.db.list<TeamInfo>(`Party/${partyCode}/Games/${GameName}/CurrentlyPlaying`).valueChanges();
   }
   
   

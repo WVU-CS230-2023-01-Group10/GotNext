@@ -30,6 +30,7 @@ import { FloatinguserBackendComponent } from './backend/floatinguser-backend/flo
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { TeamBackendComponent } from './backend/team-backend/team-backend.component';
+import { CurrentlyPlayingPageComponent } from './currently-playing-page/currently-playing-page.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { TeamBackendComponent } from './backend/team-backend/team-backend.compon
     ScanQrComponent,
     PartycodeBackendComponent,
     FloatinguserBackendComponent,
-    TeamBackendComponent
+    TeamBackendComponent,
+    CurrentlyPlayingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,7 @@ import { TeamBackendComponent } from './backend/team-backend/team-backend.compon
     NgxScannerQrcodeModule,
     QRCodeModule,
     AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent]

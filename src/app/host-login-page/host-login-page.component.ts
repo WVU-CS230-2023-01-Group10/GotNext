@@ -6,6 +6,10 @@ import { Router } from '@angular/router';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 import { HttpClient } from '@angular/common/http';
 import { HostService } from '../services/host.service';
+import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
+import { CodeInfo } from '../backend/partycode-backend/code-info-model';
+import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
+import { SettingsService } from '../services/settings.service';
 
 @Component({
   selector: 'app-host-login-page',
@@ -27,7 +31,8 @@ export class HostLoginPageComponent implements OnInit {
   
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
-    private hostService: HostService) {
+    private hostService: HostService, private floatingUserInfo: FloatingUserInfoService,
+    private settingsService: SettingsService) {
 
   }
 
@@ -64,8 +69,21 @@ export class HostLoginPageComponent implements OnInit {
 
       // calls addParty to add party info to database
       this.partyInfoService.addParty(PartyNameInfo);
+
       // sets code to be used to sort games
       this.codeInfoService.code = this.PartyCode;
+
+      // add host to users
+      const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.Host };
+      const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
+      this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo);
+      this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
+
+      this.settingsService.addInitSettings(PartyNameInfo.PartyCode); //adds default party settings
+      // set host as floating user for game selection page
+      this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
+      console.log(this.userInfoService.username);
+
       // sends username and party code to service to be checked for host validity 
       this.hostService.setIsHost(true);
       this.router.navigate(['/gamelist']);
