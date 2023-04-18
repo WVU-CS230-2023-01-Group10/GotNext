@@ -11,13 +11,10 @@ import { TeamInfo } from '../backend/team-backend/team-info.model';
 import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.service';
 import { HostService } from '../services/host.service';
 import { HttpClient } from '@angular/common/http';
-<<<<<<< HEAD
 import * as firebase from 'firebase/compat';
-=======
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { Router } from '@angular/router';
 
->>>>>>> ebe58d16cd6b0918627b8fdb148a3e043562e754
 
 @Component({
   selector: 'game-list-page',
@@ -204,8 +201,5 @@ addNewGame(event: MouseEvent) {
     }
   }
 }
-<<<<<<< HEAD
   
-=======
->>>>>>> ebe58d16cd6b0918627b8fdb148a3e043562e754
 
