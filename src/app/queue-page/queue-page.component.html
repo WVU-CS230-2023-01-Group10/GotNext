@@ -13,8 +13,8 @@
 <hr>
 
 <div *ngIf="displayCheckInMessage">
-  <p class="error text-center text-danger">You are up! Please Check in to play!</p>
-  <button (click)="checkIn()">Check In</button>
+  <p class="error text-center text-danger">You are up! Check in {{remainingTime}} to play!</p>
+  <button (click)="checkIn()" id="checkIn">Check In</button>
 </div>
 
 <div class="flex-container">
