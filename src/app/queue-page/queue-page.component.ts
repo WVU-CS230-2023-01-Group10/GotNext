@@ -48,7 +48,8 @@ export class QueuePageComponent implements OnInit{
       console.log(this.users);
     });
     this.queuePageService.getTeams(partyCode, gamename).subscribe(async (teams) => {
-      this.teams = teams;
+      this.teams = teams.sort((a, b) => a.timestamp - b.timestamp);;
+      // console.log(this.teams);
       // if there are 2 or more teams and no users currently playing
       if (this.teams.length > 1 && this.users.length == 0) {
         this.getFirstUser();

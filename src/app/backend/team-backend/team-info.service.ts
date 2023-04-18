@@ -23,6 +23,8 @@ export class TeamInfoService {
   User1: string='Not set yet';
   // int value to keep track of # of players in each game
   playerCount: number = 0;
+
+  timestamp: number = 0;
  // User2: string='Not set yet';
 
 /**
