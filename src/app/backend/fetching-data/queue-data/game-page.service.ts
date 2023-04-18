@@ -35,6 +35,10 @@ export class QueuePageService {
   getTeams(partyCode: string, GameName: string): Observable<TeamInfo[]> {
     return this.db.list<TeamInfo>(`Party/${partyCode}/Games/${GameName}/Teams`).valueChanges();
   }
+
+  getCurrentPlayers(partyCode: string, GameName: string): Observable<TeamInfo[]> {
+    return this.db.list<TeamInfo>(`Party/${partyCode}/Games/${GameName}/CurrentlyPlaying`).valueChanges();
+  }
   
   
 }

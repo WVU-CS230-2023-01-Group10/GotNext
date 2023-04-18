@@ -12,6 +12,11 @@
 
 <hr>
 
+<div *ngIf="displayCheckInMessage">
+  <p class="error text-center text-danger">You are up! Please Check in to play!</p>
+  <button (click)="checkIn()">Check In</button>
+</div>
+
 <div class="flex-container">
   <div class="d-flex bd-highlight">
     <div class="p-2 flex-fill bd-highlight" justify-content = "center">
@@ -67,8 +72,11 @@
 
         </div> -->
         <div class="modal-footer">
-          <p class="mx-auto" *ngIf="teams.length < 2">Game starting soon!</p>
-          <p class="mx-auto" *ngIf="teams.length >= 2">{{ teams[0].User1 }} & {{ teams[1].User1 }}</p>
+          <p class="mx-auto" *ngIf="users.length < 2">Game starting soon!</p>
+          <ng-container *ngIf="users.length >= 2">
+            <p class="mx-auto">{{ users[0] }} &amp; {{ users[1] }}</p>
+          </ng-container>
+          
         </div>
       </div>
     </div>

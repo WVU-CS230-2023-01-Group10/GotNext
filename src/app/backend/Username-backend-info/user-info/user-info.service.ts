@@ -9,4 +9,5 @@ export class UserInfoService {
   }
 
   username: string ='';
+  currentUser: string = 'urmumbruv';
 }

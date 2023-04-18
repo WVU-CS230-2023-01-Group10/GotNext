@@ -119,7 +119,6 @@ addNewGame(event: MouseEvent) {
   joinGame() {
     const gameName = this.queuePageService.getSelectedGameName();
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
-   // const User2 = this.queuePageService.getSelectedUser();
     const team: TeamInfo = {
       User1: this.userInfoService.FloatingUser,
     };
@@ -128,6 +127,7 @@ addNewGame(event: MouseEvent) {
     this.isGameSelected = this.validateGameSelection();
 
     if (this.isGameSelected === true) {
+      this.floatingUserInfo.currentUser = this.userInfoService.FloatingUser;
       this.teamInfoService.addTeam(partyCodeInfo, team, gameName);
       // save users to display in queue
       this.teamInfoService.User1 = this.userInfoService.FloatingUser;
