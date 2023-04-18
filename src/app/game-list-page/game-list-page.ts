@@ -69,7 +69,7 @@ export class GameListComponent implements OnInit {
 }
 
 addNewGame(event: MouseEvent) {
-  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName, NumPlayers: 0};
   const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
 
   // get all games from party

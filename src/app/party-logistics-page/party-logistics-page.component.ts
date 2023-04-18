@@ -23,7 +23,7 @@ constructor(private GameInfoService: GameInfoService, private PartyCodeInfoServi
 
 
 onSubmit() {
-  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName, NumPlayers: 0};
   const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
   this.GameInfoService.addGameStyle(partyCodeInfo, gameInfo);
   this.router.navigate(['/gamelist']);
