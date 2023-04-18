@@ -121,6 +121,7 @@ addNewGame(event: MouseEvent) {
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     const team: TeamInfo = {
       User1: this.userInfoService.FloatingUser,
+      timestamp: Date.now(),
     };
 
     // validate game selection
