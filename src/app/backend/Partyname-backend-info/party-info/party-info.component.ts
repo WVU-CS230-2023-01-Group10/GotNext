@@ -14,16 +14,5 @@ export class PartyInfoComponent {
   constructor(private partyInfoService: PartyInfoService) {
 
   }
-  ngOnInit(): void {
-    console.log("Sending a get request to the server");
-    this.showPartyInfo();
-  }
-
-  showPartyInfo() {
-    const currentParty = {partyname: '' };
-    this.partyInfoService.getPartyInfo(currentParty.partyname).subscribe((data: PartyInfo) => {
-      console.log(data);
-      this.myInfo = data;
-    })
-  }
+  
 }

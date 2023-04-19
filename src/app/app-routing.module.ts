@@ -9,6 +9,7 @@ import { QueuePageComponent } from './queue-page/queue-page.component';
 import { QrPageComponent } from './qr-page/qr-page.component';
 import { PartyEntryPageComponent } from './party-entry/party-entry-page/party-entry-page.component';
 import { ScanQrComponent } from './party-entry/scan-qr/scan-qr.component';
+import { CurrentlyPlayingPageComponent } from './currently-playing-page/currently-playing-page.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,11 @@ const routes: Routes = [
     path: "scanqr",
     component: ScanQrComponent,
     title: "Scan Party Code"
+  },
+  {
+    path: "currentlyPlaying",
+    component: CurrentlyPlayingPageComponent,
+    title: "Playing Game"
   }
 ];
 

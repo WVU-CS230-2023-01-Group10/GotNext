@@ -1,13 +1,22 @@
 <div class="d-flex w-100 justify-content-center">
   <div class="flex-column justify-content-center">
     <div class="form-signin w-100  m-auto"  style="margin-top: 30px">
-        <form #postForm="ngForm" (ngSubmit)="onUpdateUserInfo(postForm.value)">
-          <img src="./assets/gotNextLogo.png" alt="" width="370px" height="400px">
+        <form (ngSubmit)="onSubmit()">
+          <img src="./assets/cup.png" alt="" width="450px" height="400px">
+
+          <div *ngIf="showInputError">
+            <p class="error">Username cannot contain spaces or special characters</p>
+          </div>
+
+          <div *ngIf="showTakenError">
+            <p class="error">Username already taken</p>
+          </div>
+
           <h1 class="h4 mb-3 fw-normal" style="margin-top: 20px">Enter your username</h1>
           
           <div class="form-floating">
-            <input type="text" class="form-control" id="floatingPassword" placeholder="Password" ngModel name="Username">
-            <label for="floatingPassword">Username</label>
+            <input type="text" class="form-control" id="floatingUser" placeholder="Username" [(ngModel)]="floatingUser" name="floatingUser">
+            <label for="floatingUser">Username</label>
           </div>
       
           <button class="w-100 btn glow-on-hover" type="submit" style="margin: 30px auto 30px 0px">Sign in</button>

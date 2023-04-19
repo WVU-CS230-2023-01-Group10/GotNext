@@ -1,9 +1,12 @@
 <div class="d-flex w-100 justify-content-center">
     <div class="flex-column justify-content-center">
         <div class="form-signin w-100  m-auto"  style="margin-top: 30px">
-            <img src="./assets/gotNextLogo.png" alt="" width="370px" height="400px">
+            <img src="./assets/cup.png" alt="" width="450px" height="400px">
 
             <form class="form-inline">
+                <div *ngIf="showError">
+                    <p class="error">Invalid Party Code</p>
+                </div>
                 <div class="input-group" style="margin-top: 20px;">
                     <input type="text" class="form-control" id="partyCode" placeholder="Party Code" style="height: 50px;" value="">
                     <div class="input-group-append">

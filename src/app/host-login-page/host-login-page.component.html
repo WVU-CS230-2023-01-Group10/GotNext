@@ -1,23 +1,45 @@
 <div class="d-flex w-100 justify-content-center">
   <div class="flex-column justify-content-center">
     <div class="form-signin w-100 m-auto">
-        <form #postForm="ngForm" (ngSubmit)="onCreateParty(postForm.value)">
-          <img src="./assets/gotNextLogo.png" alt="" width="370px" height="400px">
-          <h1 class="h3 mb-3 fw-normal">Enter your username</h1>
+        <form (ngSubmit)="onSubmit()">
+          <img src="./assets/cup.png" alt="">
+          <h1 class="h3 mb-3 fw-normal">Enter your Username</h1>
       
-        
+          <div *ngIf="showUserError">
+            <p class="error">Username cannot contain special characters</p>
+          </div>
+
           <div class="form-floating">
-            <input type="text" class="form-control" id="floatingPassword" placeholder="Password" ngModel name="Username">
+            <input type="text" class="form-control" id="floatingPassword" placeholder="Password" [(ngModel)]="Host" name="Host">
             <label for="floatingPassword">Username</label>
           </div>
 
-          <h1 class="h3 mb-3 fw-normal">Enter the party name</h1>
+          <h1 class="h3 mb-3 fw-normal">Enter the Party Name</h1>
+
+          <div *ngIf="showPartyError">
+            <p class="error">Party name cannot contain special characters</p>
+          </div>
 
           <div class="form-floating">
-            <input type="text" class="form-control" placeholder="Password" ngModel name="Partyname">
+            <input type="text" class="form-control" placeholder="Password" [(ngModel)]="PartyName" name="PartyName">
             <label>Party name</label>
           </div>
-      
+
+          <h1 class="h3 mb-3 fw-normal">Enter a 4-6 Digit Party Code</h1>
+
+          <div *ngIf="showCodeError">
+            <p class="error">Code must contain only numbers and be 4-6 numbers long</p>
+          </div>
+
+          <div *ngIf="showCodeTakenError">
+            <p class="error">Code already taken</p>
+          </div>
+
+          <div class="form-floating">
+            <input type="text" class="form-control" placeholder="Password" [(ngModel)]="PartyCode" name="PartyCode">
+            <label>Party Code</label>
+          </div>
+          
           <button class="w-100 btn glow-on-hover" type="submit" style="margin-top: 50px; margin-left: 0px;">Create Party!</button>
         </form>
     </div>

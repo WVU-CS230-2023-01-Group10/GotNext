@@ -1,11 +1,33 @@
 <div class="d-flex w-100 justify-content-center">
     <div class="flex-column justify-content-center" style="margin-top: 30px;">
-      
+        <h1 style="text-align: center;">Scan This QR Code to Join the Party</h1>
 
-            <img src="./assets/sampleQR.png" alt="" width="400px" height="400px">
-            <h1 class="h4 mb-3 fw-normal" style="margin-top: 20px; width: 400px; text-align: center;">This is a QR code for the <i>sampleParty</i> Party</h1>
-            
-            
-        
+        <div class="qrcodeImage center">
+            <qrcode
+                #parent
+              [qrdata]="partyCode"
+              [allowEmptyString]="true"
+              [ariaLabel]="'QR Code image with the following content...'"
+              [cssClass]="'center'"
+              [colorDark]="'#000000ff'"
+              [colorLight]="'#ffffffff'"
+              [elementType]="'canvas'"
+              [errorCorrectionLevel]="'M'"
+              [imageSrc]="'./assets/IMG_4037.PNG'"
+              [imageHeight]="125"
+              [imageWidth]="125"
+              [margin]="2"
+              [scale]="1"
+              [title]="'A custom title attribute'"
+              [width]="400"
+            ></qrcode>
+        </div>
+
+        <div class="container">
+        <button class="btn glow-on-hover" (click)="saveAsImage(parent)">Download</button>
+
+        </div>
+
+
     </div>
 </div>

@@ -1,3 +1,10 @@
+img{
+    padding-left: 75px;
+    padding-right: 10px;
+    width: 300px;
+    height: 200px;
+}
+
 .glow-on-hover {
     width: 150px;
     height: 50px;
@@ -65,4 +72,10 @@
     100% {
         background-position: 0 0;
     }
+}
+
+.error {
+    text-align: center;
+    color: red;
+    margin: 0px;
 }
