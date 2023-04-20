@@ -61,7 +61,6 @@ exitQueue(partyCodeInfo: string, team: string, gameName: string) {
   ref.child(team).remove();
   // update player count
   this.playerCount = this.playerCount--;
-  //ref.child(floatingUserInfo.User2).remove();
 }
 
 /**

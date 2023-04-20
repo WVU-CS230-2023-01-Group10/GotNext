@@ -5,7 +5,6 @@
     </div>
     <div class="d-flex flex-row">
       <div class="col-3 pt-3"><button class="glow-on-hover" type="button" data-bs-toggle="modal" data-bs-target="#progressModal">Game Progress</button> </div>
-      <!-- <div class="col-3 pt-3"><button class="glow-on-hover" type="button" routerLink="/gamelist" (click)="exitQueue()">Exit Queue</button> </div> -->
       <div class="col-3 pt-3"><button class="glow-on-hover" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Exit Queue</button> </div>
   </div>
 </div>
@@ -14,7 +13,7 @@
 
 <div *ngIf="displayCheckInMessage">
   <p class="error text-center text-danger">You are up! Check in {{remainingTime}} to play!</p>
-  <button (click)="checkIn()" id="checkIn">Check In</button>
+  <button class = "glow-on-hover" (click)="checkIn()" id="checkIn">Check In</button>
 </div>
 
 <div class="flex-container">
@@ -50,8 +49,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" routerLink="/gamelist" (click)="exitQueue()">Yes</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-dark" routerLink="/gamelist" (click)="exitQueue()">Yes</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
         </div>
       </div>
     </div>
@@ -68,9 +67,6 @@
           <h5 class="modal-title" id="exampleModalLabel">Currently Playing</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <!-- <div class="modal-body">
-
-        </div> -->
         <div class="modal-footer">
           <p class="mx-auto" *ngIf="users.length < 2">Game starting soon!</p>
           <ng-container *ngIf="users.length >= 2">

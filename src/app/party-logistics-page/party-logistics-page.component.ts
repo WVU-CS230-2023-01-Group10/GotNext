@@ -20,8 +20,6 @@ constructor(private GameInfoService: GameInfoService, private PartyCodeInfoServi
   
 }
 
-
-
 onSubmit() {
   const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
   const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
