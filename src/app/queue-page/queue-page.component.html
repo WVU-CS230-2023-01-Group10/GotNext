@@ -11,6 +11,11 @@
 
 <hr>
 
+<div *ngIf="displayCheckInMessage">
+  <p class="error text-center text-danger">You are up! Please Check in to play!</p>
+  <button (click)="checkIn()">Check In</button>
+</div>
+
 <div class="flex-container">
   <div class="d-flex bd-highlight">
     <div class="p-2 flex-fill bd-highlight" justify-content = "center">
@@ -44,8 +49,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-dark" routerLink="/gamelist" (click)="exitQueue()">Yes</button>
-          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" routerLink="/gamelist" (click)="exitQueue()">Yes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
         </div>
       </div>
     </div>
@@ -63,7 +68,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-footer">
-          <p class="mx-auto"> User1 & User2 </p>
+          <p class="mx-auto" *ngIf="users.length < 2">Game starting soon!</p>
+          <ng-container *ngIf="users.length >= 2">
+            <p class="mx-auto">{{ users[0] }} &amp; {{ users[1] }}</p>
+          </ng-container>
+          
         </div>
       </div>
     </div>

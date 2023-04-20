@@ -30,7 +30,6 @@ addFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: FloatingUserInfo) {
 deleteFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: TeamInfo) {
   const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/FloatingUsers`).query.ref;
   ref.child(floatingUserInfo.User1).remove();
-  //ref.child(floatingUserInfo.User2).remove();
 }
 
 
@@ -42,6 +41,16 @@ deleteFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: TeamInfo) {
 addAllUser(partyCodeInfo: CodeInfo, AllUsers: FloatingUserInfo) {
   const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
   ref.child(AllUsers.FloatingUser).set(AllUsers);
+}
+
+/**
+ * remove user from AllUser node
+ * @param partyCodeInfo 
+ * @param floatingUserInfo 
+ */
+deleteAllUser(partyCodeInfo: CodeInfo, floatingUserInfo: string) {
+  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
+  ref.child(floatingUserInfo).remove();
 }
 
 

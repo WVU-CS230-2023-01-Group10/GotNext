@@ -53,6 +53,16 @@
   <div class="p-2 bd-highlight">
     <button class="glow-on-hover mx-5" type="button">Generate QR Code</button>
   </div> 
+
+  <!-- Party Settings -->
+  <div *ngIf="isHost">
+    <div class="p-2 bd-highlight">
+      <!-- Button trigger modal -->
+      <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#settingsModal" type="button">Party
+        Settings</button>
+    </div>
+  </div>
+
 </div>
 
 <div class="container">
@@ -89,6 +99,34 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-dark" (click)="addNewGame($event)">Add New Game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Party Settings Modal -->
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="sampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Apply Party Settings</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Check-In Time Allowed:</p>
+          <select id="s1" [(ngModel)]="selectedCheckInTime">
+            <option value="30" selected>30 seconds</option>
+            <option value="60">1 minute</option>
+            <option value="180">3 minutes</option>
+            <option value="300">5 minutes</option>
+            <option value="600">10 minutes</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="changeCheckInTime()">Apply Party Settings</button>
         </div>
       </div>
     </div>

@@ -127,4 +127,23 @@ export class Queue<T> {
 
         return count;
     }
+
+    /**
+     * Exports the queue elements into an array
+     * @returns an array containing the queue elements in order
+     */
+    public toArray(): T[] {
+        const arr: T[] = [];
+        let curNode: NodeI<T> | null = this.firstNode;
+
+        while (curNode != null) {
+            const data = curNode.getData();
+            if (data != null) {
+                arr.push(data);
+            }
+            curNode = curNode.getNextNode();
+        }
+
+        return arr;
+    }
 }
