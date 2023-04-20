@@ -5,7 +5,6 @@
     </div>
     <div class="d-flex flex-row">
       <div class="col-3 pt-3"><button class="glow-on-hover" type="button" data-bs-toggle="modal" data-bs-target="#progressModal">Game Progress</button> </div>
-      <!-- <div class="col-3 pt-3"><button class="glow-on-hover" type="button" routerLink="/gamelist" (click)="exitQueue()">Exit Queue</button> </div> -->
       <div class="col-3 pt-3"><button class="glow-on-hover" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Exit Queue</button> </div>
   </div>
 </div>
@@ -25,7 +24,6 @@
       <div class="p-2 flex-fill bd-highlight">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let team of teams">
-           <!-- <span class="party-name">{{team.User1}} & {{team.User2}}</span>         -->
            <span class="party-name">{{team.User1}}</span> 
           </li>
         </ul>
@@ -64,9 +62,6 @@
           <h5 class="modal-title" id="exampleModalLabel">Currently Playing</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <!-- <div class="modal-body">
-
-        </div> -->
         <div class="modal-footer">
           <p class="mx-auto"> User1 & User2 </p>
         </div>

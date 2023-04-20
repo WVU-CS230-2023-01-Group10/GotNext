@@ -22,7 +22,6 @@ export class TeamInfoService {
   User1: string='Not set yet';
   // int value to keep track of # of players in each game
   playerCount: number = 0;
- // User2: string='Not set yet';
 
 /**
  * adds user to chosen party under FloatingUser node within a specific party
@@ -45,7 +44,6 @@ exitQueue(partyCodeInfo: string, team: string, gameName: string) {
   ref.child(team).remove();
   // update player count
   this.playerCount = this.playerCount--;
-  //ref.child(floatingUserInfo.User2).remove();
 }
 
 }

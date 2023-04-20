@@ -16,9 +16,6 @@ export class linkedList<T> {
         this.size = 0;
     }
 
-
-
-
 /**
  * adds an element to the end of the list
  * 
