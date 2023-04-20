@@ -22,5 +22,13 @@ export class PartyInfoService {
     var ref = this.db.list<PartyInfo>("Party/").query.ref;
     ref.child(Party.PartyCode).set(Party);
   }
+
+  /**
+   * delete party from database
+   * @param partyCodeInfo 
+   */
+  deleteParty(partyCodeInfo: string){
+    this.db.object('Party/' + partyCodeInfo).remove();
+  }
   
 }
