@@ -36,6 +36,7 @@ export class GameListComponent implements OnInit {
   isGameTypeValid: boolean = false; // variable for selecting game type
   showGameNameError: boolean = false; // game name invalid
   showGameStyleError: boolean = false; // game style invalid
+  showGameNameLengthError: boolean = false; // length of game name too long
   errorOccuredCreatingGame: boolean = false; // 
   selectedCheckInTime: number = 300;
 
@@ -99,9 +100,16 @@ addNewGame(event: MouseEvent) {
     errorOccurred = true;
   }
 
+  // validate game name length
+  if(this.validateGameNameLength() === true) {
+    this.showGameNameLengthError = true;
+    errorOccurred = true;
+  }
+
   // if no errors occured
   if (!errorOccurred) {
     // send game data to back end
+    this.showGameNameLengthError = false;
     this.GameInfoService.addGameName(partyCodeInfo, gameInfo);
 
     this.selectedGameType = 'Blank';
@@ -196,12 +204,18 @@ addNewGame(event: MouseEvent) {
     if(this.selectedGameName.trim() === "") {
       return false;
     } 
-    // check that name is no more than 15 characters
-    if(this.selectedGameName.length > 15) {
-      return false;
-    }
     // only reached if name passes all 3 validation tests above
     return true;
+  }
+
+  validateGameNameLength() {
+    const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+    if(this.selectedGameName.length > 15) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
 

@@ -9,6 +9,10 @@
             <p class="error">Username cannot contain special characters</p>
           </div>
 
+          <div *ngIf="showHostInputLengthError">
+            <p class="error">Username cannot exceed 15 characters</p>
+          </div>
+
           <div class="form-floating">
             <input type="text" class="form-control" id="floatingPassword" placeholder="Password" [(ngModel)]="Host" name="Host">
             <label for="floatingPassword">Username</label>
@@ -18,6 +22,10 @@
 
           <div *ngIf="showPartyError">
             <p class="error">Party name cannot contain special characters</p>
+          </div>
+
+          <div *ngIf="showPartyInputLengthError">
+            <p class="error">Party name cannot exceed 15 characters</p>
           </div>
 
           <div class="form-floating">
