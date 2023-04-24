@@ -109,6 +109,7 @@ addNewGame(event: MouseEvent) {
   // if no errors occured
   if (!errorOccurred) {
     // send game data to back end
+    this.showGameNameLengthError = false;
     this.GameInfoService.addGameName(partyCodeInfo, gameInfo);
 
     this.selectedGameType = 'Blank';
