@@ -12,6 +12,10 @@
   border-radius: 10px;
 }
 
+.btn-dark{
+  background-color: black;
+}
+
 .col-3{
   padding-right: 200px;
 }

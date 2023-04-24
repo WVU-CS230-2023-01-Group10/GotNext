@@ -24,6 +24,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
   isTaken: boolean = false;
   showInputError: boolean = false;
   showTakenError: boolean = false;
+  showNameLengthError: boolean = false;
   partyCode: string = '';
   usernames: string[] | undefined = [];
 
@@ -75,9 +76,10 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
 
     this.isValid = this.validateInput(this.floatingUser);
     this.isTaken = this.checkIfTaken(this.floatingUser);
+    this.showNameLengthError = this.validateUserNameLength();
 
     // if valid, pass input to Realtime database
-    if (this.isValid && this.isTaken) {
+    if (this.isValid && this.isTaken && (!this.showNameLengthError)) {
       this.showInputError = false;
       this.showTakenError = false;
 
@@ -143,6 +145,16 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
     }
 
     return true;
+  }
+
+  validateUserNameLength() {
+    const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
+    if(floatingUserInfo.FloatingUser.length > 15) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
 }
