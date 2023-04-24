@@ -14,6 +14,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
+import { PartyInfoService } from '../backend/Partyname-backend-info/party-info/party-info.service';
+import { PartyInfo } from '../backend/Partyname-backend-info/party-info/party-info-model';
 
 
 @Component({
@@ -23,6 +25,7 @@ import { SettingsService } from '../services/settings.service';
 })
 export class GameListComponent implements OnInit {
   games: GameInfo[] = [];
+  parties!: PartyInfo[];
   users: FloatingUserInfo[] = [];
   host: string[] = [];
   gameNames: string[] | undefined = [];
@@ -37,6 +40,7 @@ export class GameListComponent implements OnInit {
   showGameNameError: boolean = false; // game name invalid
   showGameStyleError: boolean = false; // game style invalid
   showGameNameLengthError: boolean = false; // length of game name too long
+  showPartyTerminatedMessage: boolean = false;
   errorOccuredCreatingGame: boolean = false; // 
   selectedCheckInTime: number = 300;
 
@@ -45,7 +49,7 @@ export class GameListComponent implements OnInit {
   constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
     private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
     private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService, private router: Router,
-    private settingsService: SettingsService) {}
+    private settingsService: SettingsService, private partyInfoService: PartyInfoService) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
@@ -53,7 +57,7 @@ export class GameListComponent implements OnInit {
     this.GameInfoService.setSelectedGameName(gameName);
   }
 
-  ngOnInit(): void {
+  ngOnInit() : void {
     this.chosenGame('nullGameName');
     const partyCode = this.partyCodeService.code;
     const username = this.userInfoService.FloatingUser;
@@ -66,6 +70,19 @@ export class GameListComponent implements OnInit {
     this.hostService.getIsHost().subscribe(bool => {
       this.isHost = bool;
     });    
+
+   // console.log('isPartyTerminated():', await this.isPartyTerminated());
+
+   this.partyInfoService.getParties(partyCode).subscribe(async (parties) => {
+    this.parties = parties;
+
+    // checks if party has been terminated
+  if(await this.isPartyTerminated()) {
+    this.showPartyTerminatedMessage = true;
+  } else {
+    this.showPartyTerminatedMessage = false;
+  }
+  });
     
 }
 
@@ -218,5 +235,31 @@ addNewGame(event: MouseEvent) {
       return false;
     }
   }
+
+  // checks if party has been terminated
+  async isPartyTerminated() {
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    console.log(this.partyCodeService.code);
+    // if party no longer exists
+    if(await this.partyInfoService.checkIfPartyTerminated(partyCodeInfo)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  // when user prompted to leave because host terminated party, reroutes user back to home page
+  exitPartyTermination() {
+    this.router.navigate(['']);
+  }
+
+  // delete party
+  terminateParty() {
+    const partyCode = this.partyCodeService.code;
+    this.partyInfoService.deleteParty(partyCode);
+    this.router.navigate(['']);
+  }
+
 }
 
