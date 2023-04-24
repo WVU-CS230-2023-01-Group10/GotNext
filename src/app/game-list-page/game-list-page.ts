@@ -27,7 +27,7 @@ export class GameListComponent implements OnInit {
   host: string[] = [];
   gameNames: string[] | undefined = [];
   selectedGameType: string = 'Blank'; // creating game
-  selectedGameName: string = 'Blank Name'; // creating game
+  selectedGameName: string = ''; // creating game
   selectedFloatingUser: string = 'Null User'; // adding teammate
   chosenGameName: string = 'Game for Queue'; // adding team to queue
   isGameSelected: boolean = false; // variable for game selection validation
@@ -36,6 +36,7 @@ export class GameListComponent implements OnInit {
   isGameTypeValid: boolean = false; // variable for selecting game type
   showGameNameError: boolean = false; // game name invalid
   showGameStyleError: boolean = false; // game style invalid
+  showGameNameLengthError: boolean = false; // length of game name too long
   errorOccuredCreatingGame: boolean = false; // 
   selectedCheckInTime: number = 300;
 
@@ -99,9 +100,16 @@ addNewGame(event: MouseEvent) {
     errorOccurred = true;
   }
 
+  // validate game name length
+  if(this.validateGameNameLength() === true) {
+    this.showGameNameLengthError = true;
+    errorOccurred = true;
+  }
+
   // if no errors occured
   if (!errorOccurred) {
     // send game data to back end
+    this.showGameNameLengthError = false;
     this.GameInfoService.addGameName(partyCodeInfo, gameInfo);
 
     this.selectedGameType = 'Blank';
@@ -188,7 +196,7 @@ addNewGame(event: MouseEvent) {
 
   validateGameName() {
     // Check if the input string contains any special characters
-    const specialCharsRegex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const specialCharsRegex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     if (specialCharsRegex.test(this.selectedGameName)) {
       return false;
     }
@@ -198,6 +206,16 @@ addNewGame(event: MouseEvent) {
     } 
     else {
       return true;
+    }
+  }
+
+  validateGameNameLength() {
+    const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+    if(this.selectedGameName.length > 15) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
 }
