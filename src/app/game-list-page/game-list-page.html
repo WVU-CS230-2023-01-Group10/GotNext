@@ -98,6 +98,10 @@
               <p class="error">Pick a valid name</p>
             </div>
 
+            <div *ngIf="showGameNameLengthError">
+              <p class="error">Pick a Game name less than 15 characters</p>
+            </div>
+
             <p>Game Name:</p>
             <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
             <br><br>
