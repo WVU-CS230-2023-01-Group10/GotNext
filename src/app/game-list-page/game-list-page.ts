@@ -27,7 +27,7 @@ export class GameListComponent implements OnInit {
   host: string[] = [];
   gameNames: string[] | undefined = [];
   selectedGameType: string = 'Blank'; // creating game
-  selectedGameName: string = 'Blank Name'; // creating game
+  selectedGameName: string = ''; // creating game
   selectedFloatingUser: string = 'Null User'; // adding teammate
   chosenGameName: string = 'Game for Queue'; // adding team to queue
   isGameSelected: boolean = false; // variable for game selection validation
@@ -69,7 +69,7 @@ export class GameListComponent implements OnInit {
 }
 
 addNewGame(event: MouseEvent) {
-  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName.trim()};
   const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
 
   // get all games from party
@@ -91,7 +91,7 @@ addNewGame(event: MouseEvent) {
   }
 
   // validate game name
-  if(this.checkIfGameNameTaken(gameInfo.GameName) === true && this.validateGameName() === true) {
+  if(this.validateGameName() === true && this.checkIfGameNameTaken(gameInfo.GameName) === true) {
     this.isGameNameValid = true;
     this.showGameNameError = false;
   } else {
@@ -188,17 +188,20 @@ addNewGame(event: MouseEvent) {
 
   validateGameName() {
     // Check if the input string contains any special characters
-    const specialCharsRegex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    if (specialCharsRegex.test(this.selectedGameName)) {
+    const specialCharsRegex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if(specialCharsRegex.test(this.selectedGameName)) {
       return false;
     }
     // check for default names
-    if(this.selectedGameName === "Blank Name" || this.selectedGameName === "") {
+    if(this.selectedGameName.trim() === "") {
       return false;
     } 
-    else {
-      return true;
+    // check that name is no more than 15 characters
+    if(this.selectedGameName.length > 15) {
+      return false;
     }
+    // only reached if name passes all 3 validation tests above
+    return true;
   }
 }
 
