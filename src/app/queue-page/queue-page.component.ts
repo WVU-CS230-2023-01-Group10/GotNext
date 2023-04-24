@@ -23,11 +23,11 @@ export class QueuePageComponent implements OnInit{
   teams: TeamInfo[] = [];
   displayCheckInMessage: boolean = false;
   isCheckedIn: boolean = false;
-  checkInTime: number = 0; // time user has to check in 
+  checkInTime: number = 999999; // time user has to check in 
   // ID to start/stop timer user has to check in
-  checkInTimerId: ReturnType<typeof setTimeout> | undefined;
+  // checkInTimerId: ReturnType<typeof setTimeout> | undefined;
   // remaining time to check in
-  public remainingTime: number = 0;
+  // public remainingTime: number = 0;
 
 
   constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
@@ -56,32 +56,30 @@ export class QueuePageComponent implements OnInit{
         this.getSecondUser();
         const firstTeam = this.teams[0].User1;
         const isUpNow = await this.teamInfoService.checkIfInUpNow(partyCodeInfo, firstTeam, gamename);
-        if (isUpNow) {
-          console.log(`${firstTeam} is up now!`);
-        }
       }
 
-      // check if current user is up to play
-      if (await this.amIUpNow()) {
-        this.displayCheckInMessage = true;
-        // time until check in expires
-        this.remainingTime = this.checkInTime;
-        // count down check in time, if check in time hits 0 user is kicked
-        this.checkInTimerId = setInterval(() => {
-          if (this.remainingTime > 0) {
-            this.remainingTime--;
-          } else {
-            this.checkInTimerId && clearInterval(this.checkInTimerId);
-            // if user does not check in, remove them from party
-            // remove user from UpNow node, Teams node, and AllUsers node
-            this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
-            this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
-            this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
-            this.router.navigate(['']);
-          }
-        }, 1000);
-      }
-      console.log(this.displayCheckInMessage);
+      // // check if current user is up to play
+       if (await this.amIUpNow()) {
+         this.displayCheckInMessage = true;
+       }
+      //   this.remainingTime = this.checkInTime;
+      //   const countdown = () => {
+      //     if (this.remainingTime > 0) {
+      //       this.remainingTime--;
+      //       setTimeout(countdown, 1000);
+      //     } else {
+      //       // if user does not check in, remove them from party
+      //       // remove user from UpNow node, Teams node, and AllUsers node
+      //       this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+      //       this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+      //       this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
+      //       this.router.navigate(['']);
+      //     }
+      //   };
+      //   countdown();
+      // }
+      // console.log(this.displayCheckInMessage);
+      
       
     });
   
@@ -148,9 +146,16 @@ export class QueuePageComponent implements OnInit{
     // remove team from queue
     this.teamInfoService.deleteTeam(partyCodeInfo, user, gameName);
     // stop timer so user does not get kicked
-    clearTimeout(this.checkInTimerId);
+    // console.log('Clearing interval timer...');
+    // clearInterval(this.checkInTimerId);
+    // clearTimeout(this.checkInTimerId);
+    // clearInterval(this.checkInTime);
+    // clearTimeout(this.checkInTime);
+    // clearInterval(this.remainingTime);
+    // clearTimeout(this.remainingTime);
     // redirect user to playing page
     this.router.navigate(['/currentlyPlaying']);
   }
+  
 }
 

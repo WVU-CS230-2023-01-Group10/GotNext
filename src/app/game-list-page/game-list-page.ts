@@ -53,7 +53,7 @@ export class GameListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chosenGame('nullGameName');
+    //this.chosenGame('nullGameName');
     const partyCode = this.partyCodeService.code;
     const username = this.userInfoService.FloatingUser;
     console.log(partyCode,username);
