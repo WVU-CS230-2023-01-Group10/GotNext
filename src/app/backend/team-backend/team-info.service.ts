@@ -8,7 +8,7 @@ import { FloatingUserInfoService } from "../floatinguser-backend/floatinguser-in
 import { QueuePageService } from "../fetching-data/queue-data/game-page.service";
 import { CodeInfoService } from "../partycode-backend/code-info.service";
 import { Router } from "@angular/router";
-import { Subject, map } from "rxjs";
+import { Subject, map, take } from "rxjs";
 import { GameInfoService } from "../game-backend/game-info.service";
 
 @Injectable({providedIn: 'root'})
@@ -47,21 +47,21 @@ export class TeamInfoService {
     const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/Teams`).query.ref;
     ref.child(team).remove();
     // update player counter
-    this.playerCount = this.playerCount--;
+    this.updatePlayerCount(partyCodeInfo, gameName, "dec");
   }
 
-/**
- * allows user to exit Queue and return to game list page, removes user from game & team nodes
- * @param partyCodeInfo code of current party
- * @param team username of player
- * @param gameName game selected
- */
-exitQueue(partyCodeInfo: string, team: string, gameName: string) {
-  const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo}/Games/${gameName}/Teams`).query.ref;
-  ref.child(team).remove();
-  // update player count
-  this.playerCount = this.playerCount--;
-}
+  /**
+   * allows user to exit Queue and return to game list page, removes user from game & team nodes
+   * @param partyCodeInfo code of current party
+   * @param team username of player
+   * @param gameName game selected
+   */
+  exitQueue(partyCodeInfo: CodeInfo, team: string, gameName: string) {
+    const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/Teams`).query.ref;
+    ref.child(team).remove();
+    // update player counter
+    this.updatePlayerCount(partyCodeInfo, gameName, "dec");
+  }
 
   /**
    * adds the two teams who are currently playing to a separate node
@@ -119,37 +119,30 @@ exitQueue(partyCodeInfo: string, team: string, gameName: string) {
     ref.child(team).remove();
   }
 
-  // TODO: Issue with updating player count
+  /**
+   * updates the player count in the RealTime database for the specified game
+   * @param partyCodeInfo party code for the party to be edited
+   * @param gameName name of game for count to be edited
+   * @param mode "inc" increments the count by 1, "dec" decrements the count by 1
+   */
   updatePlayerCount(partyCodeInfo: CodeInfo, gameName: string, mode: string) {
-    var count: number = -1;
+    // get ref of the player count
+    const countRef = this.db.object(`Party/${partyCodeInfo.Partycode}/Games/${gameName}`);
 
-    // determine increment or decrement
-    if (mode === "inc") {
-      console.log("inc")
-      this.db.list<number>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/NumPlayers`).valueChanges()
-      .pipe(
-        map(values => values[0]) // Assuming NumPlayers is a single-value array, extract the first value
-      )
-      .subscribe(value => {
-        if (typeof value === 'number') {
-          count = value + 1;
-          console.log(count, value)
-          const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/NumPlayers`).query.ref;
-          ref.set(count);
+    // make changes on ref
+    countRef.snapshotChanges()
+      .pipe(take(1)) // add the take(1) operator to automatically unsubscribe after the first emission
+      .subscribe(data => {
+        // get current count
+        let currentCount = Number(data.payload.child('NumPlayers').val());
+        if (mode === "inc") {
+          // if mode is increment, add 1 to count
+          currentCount++;
+        } else if (mode === "dec") {
+          // if mode is decrement, sub 1 from count
+          currentCount--;
         }
+        countRef.update({ NumPlayers: currentCount }); 
       });
-    } else if (mode === "dec") {
-      this.db.list<number>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/NumPlayers`).valueChanges()
-      .pipe(
-        map(values => values[0]) // Assuming NumPlayers is a single-value array, extract the first value
-      )
-      .subscribe(value => {
-        if (typeof value === 'number') {
-          count = value - 1;
-          const ref = this.db.list<TeamInfo>(`Party/${partyCodeInfo.Partycode}/Games/${gameName}/NumPlayers`).query.ref;
-          ref.set(count);
-        }
-      });
-    }
   }
 }

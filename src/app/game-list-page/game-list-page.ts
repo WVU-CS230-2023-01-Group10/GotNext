@@ -209,7 +209,7 @@ addNewGame(event: MouseEvent) {
   }
 
   validateGameNameLength() {
-    const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+    const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName, NumPlayers: 0};
     if(this.selectedGameName.length > 15) {
       return true;
     }
