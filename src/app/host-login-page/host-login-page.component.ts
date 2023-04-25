@@ -10,6 +10,9 @@ import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatin
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { SettingsService } from '../services/settings.service';
+import { Observable } from 'rxjs';
+import { AuthResponse } from '../backend/auth/AuthResponse';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-host-login-page',
@@ -31,11 +34,13 @@ export class HostLoginPageComponent implements OnInit {
   showPartyInputLengthError: boolean = false;
 
   validPartyCodes: string[] = [];
+
+  private authObservable!: Observable<AuthResponse>;
   
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
     private hostService: HostService, private floatingUserInfo: FloatingUserInfoService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService, private authService: AuthService) {
 
   }
 
@@ -74,6 +79,16 @@ export class HostLoginPageComponent implements OnInit {
       this.showCodeTakenError = false;
       this.showUserError = false;
 
+      // auth host anonymously
+      this.authObservable = this.authService.signInAnonymously();
+      var isAuth = false;
+
+      this.authObservable.subscribe((data: AuthResponse) => {
+        if (data.idToken) {
+          isAuth = true;
+        }
+      })
+
       // calls addParty to add party info to database
       this.partyInfoService.addParty(PartyNameInfo);
 
@@ -93,7 +108,11 @@ export class HostLoginPageComponent implements OnInit {
 
       // sends username and party code to service to be checked for host validity 
       this.hostService.setIsHost(true);
-      this.router.navigate(['/gamelist']);
+        
+      // route if user was signed in
+      if (isAuth) {
+        this.router.navigate(['/gamelist']);
+      }
     }
 
     // if code not valid, show error

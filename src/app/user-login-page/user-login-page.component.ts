@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
@@ -9,6 +9,8 @@ import { CodeInfoService } from '../backend/partycode-backend/code-info.service'
 import { UserService } from '../services/user.service';
 import { HostService } from '../services/host.service';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
+import { AuthResponse } from '../backend/auth/AuthResponse';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -29,9 +31,11 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
   usernames: string[] | undefined = [];
 
   subscription: Subscription | any;
+
+  private authObservable!: Observable<AuthResponse>;
   
   constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient, private hostService: HostService,
-    private currentUserInfo: UserInfoService) {
+    private currentUserInfo: UserInfoService, private authService: AuthService) {
 
   }
 
@@ -90,7 +94,16 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
       this.currentUserInfo.currentUser = this.floatingUser;
       this.FloatingUserinfoService.FloatingUser = this.floatingUser;
       this.hostService.setIsHost(false);
-      this.router.navigate(['/gamelist']);
+
+      // auth user anonymously
+      this.authObservable = this.authService.signInAnonymously();
+
+      this.authObservable.subscribe((data: AuthResponse) => {
+        if (data.idToken) {
+          // route if user was signed in
+          this.router.navigate(['/gamelist']);
+        }
+      })
     }
     
     // if not valid after check, show error
