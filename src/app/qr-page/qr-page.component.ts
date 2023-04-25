@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QRCodeElementType } from 'angularx-qrcode';
+import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 
 @Component({
   selector: 'app-qr-page',
@@ -9,11 +10,13 @@ import { QRCodeElementType } from 'angularx-qrcode';
 export class QrPageComponent implements OnInit {
   public elementType: QRCodeElementType = "canvas"
 
-  partyCode: string = "";
+  partyCode: string = "ERROR";
+
+  constructor(private partyCodeService: CodeInfoService) {}
 
   //TODO: update party code string from attribute in backend
   ngOnInit(): void {
-    this.partyCode = "SampleCode"
+    this.partyCode = this.partyCodeService.code;
   }
 
   saveAsImage(parent: any) {
