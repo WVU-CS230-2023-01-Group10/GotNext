@@ -77,7 +77,7 @@ export class QueuePageComponent implements OnInit{
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.userInfoService.addFloatingUser(partyCodeInfo,floatingUserInfo);
     // call method to exit Queue
-    this.teamInfoService.exitQueue(partyCode,user,gameName);
+    this.teamInfoService.exitQueue(partyCodeInfo,user,gameName);
   }
 
   // set first user in queue as currently playing

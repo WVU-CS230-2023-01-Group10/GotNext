@@ -10,7 +10,7 @@
           <div class="row">
             <div class="party-name col-4 text-start">{{game.GameName}}</div>
             <div class="game-type col-3 text-start">{{game.Style}}</div>
-            <div class="player-number col-1 text-end">10/20</div>
+            <div class="player-number col-1 text-end">{{game.NumPlayers}}</div>
             <div class="col-1">
               <input class="form-check-input mx-1 radio-button" name="party" type="radio" value="" aria-label="..."
                 (click)="chosenGame(game.GameName)">

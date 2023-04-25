@@ -70,7 +70,7 @@ export class GameListComponent implements OnInit {
 }
 
 addNewGame(event: MouseEvent) {
-  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName.trim()};
+  const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName.trim(), NumPlayers: 0};
   const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
 
   // get all games from party
@@ -209,7 +209,7 @@ addNewGame(event: MouseEvent) {
   }
 
   validateGameNameLength() {
-    const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName};
+    const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName, NumPlayers: 0};
     if(this.selectedGameName.length > 15) {
       return true;
     }
