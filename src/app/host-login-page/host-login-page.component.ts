@@ -10,7 +10,7 @@ import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatin
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { SettingsService } from '../services/settings.service';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { AuthResponse } from '../backend/auth/AuthResponse';
 import { AuthService } from '../services/auth.service';
 
@@ -81,38 +81,35 @@ export class HostLoginPageComponent implements OnInit {
 
       // auth host anonymously
       this.authObservable = this.authService.signInAnonymously();
-      var isAuth = false;
 
-      this.authObservable.subscribe((data: AuthResponse) => {
+      this.authObservable.subscribe(async (data: AuthResponse) => {
+        await delay(5000);
         if (data.idToken) {
-          isAuth = true;
+          // calls addParty to add party info to database
+          this.partyInfoService.addParty(PartyNameInfo);
+
+          // sets code to be used to sort games
+          this.codeInfoService.code = this.PartyCode;
+
+          // add host to users
+          const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.Host };
+          const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
+          this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo);
+          this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
+
+          this.settingsService.addInitSettings(PartyNameInfo.PartyCode); //adds default party settings
+          // set host as floating user for game selection page
+          this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
+          console.log(this.userInfoService.username);
+
+          // sends username and party code to service to be checked for host validity 
+          this.hostService.setIsHost(true);
+            
+          // route if user was signed in
+          this.router.navigate(['/gamelist']);
         }
-      })
-
-      // calls addParty to add party info to database
-      this.partyInfoService.addParty(PartyNameInfo);
-
-      // sets code to be used to sort games
-      this.codeInfoService.code = this.PartyCode;
-
-      // add host to users
-      const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.Host };
-      const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
-      this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo);
-      this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
-
-      this.settingsService.addInitSettings(PartyNameInfo.PartyCode); //adds default party settings
-      // set host as floating user for game selection page
-      this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
-      console.log(this.userInfoService.username);
-
-      // sends username and party code to service to be checked for host validity 
-      this.hostService.setIsHost(true);
-        
-      // route if user was signed in
-      if (isAuth) {
-        this.router.navigate(['/gamelist']);
-      }
+      });
+      
     }
 
     // if code not valid, show error

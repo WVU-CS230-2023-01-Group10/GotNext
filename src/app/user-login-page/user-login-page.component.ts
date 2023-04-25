@@ -87,19 +87,22 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
       this.showInputError = false;
       this.showTakenError = false;
 
-      // calls addFloatinUser and addAllUser methods to store username in database nodes
-      this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
-      this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
-      // set username for game list page
-      this.currentUserInfo.currentUser = this.floatingUser;
-      this.FloatingUserinfoService.FloatingUser = this.floatingUser;
-      this.hostService.setIsHost(false);
-
       // auth user anonymously
       this.authObservable = this.authService.signInAnonymously();
 
       this.authObservable.subscribe((data: AuthResponse) => {
+        // check if user is authed
         if (data.idToken) {
+          // calls addFloatinUser and addAllUser methods to store username in database nodes
+          this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
+          this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
+
+          // set username for game list page
+          this.currentUserInfo.currentUser = this.floatingUser;
+          this.FloatingUserinfoService.FloatingUser = this.floatingUser;
+          
+          this.hostService.setIsHost(false);
+
           // route if user was signed in
           this.router.navigate(['/gamelist']);
         }
