@@ -24,7 +24,6 @@ export class ScanQrComponent {
   constructor(private qrcode: NgxScannerQrcodeService, private router: Router, private codeService: CodeServiceService) { 
   }
 
-  // TODO: disable the camera after scan
   public onEvent(e: ScannerQRCodeResult[]): void {
     console.log(e);
     this.data = e[0].value;
