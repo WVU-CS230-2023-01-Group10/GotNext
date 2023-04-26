@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { AuthResponse } from '../backend/auth/AuthResponse';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInAnonymously, deleteUser } from "firebase/auth";
+import { User } from '@firebase/auth-types';
 
 @Injectable({
   providedIn: 'root'
@@ -35,17 +36,19 @@ export class AuthService {
     return auth.currentUser;
   }
 
-  testNewAnonSignIn() : Observable<AuthResponse>{
+  async testNewAnonSignIn() : Promise<Observable<AuthResponse>>{
     var auth = getAuth();
-    signInAnonymously(auth).then(() => {
-      return auth.currentUser;
-    }).catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+    if (await auth.currentUser == null) {
+      signInAnonymously(auth).then(() => {
+        return auth.currentUser;
+      }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-      console.log("There was an error: ");
-      console.log(errorCode);
-    })
+        console.log("There was an error: ");
+        console.log(errorCode);
+      })
+    }
 
 
     const requestBody = {
@@ -64,11 +67,24 @@ export class AuthService {
     return auth.currentUser; // Should be Null
   }
 
-  deleteUser() {
-    const user = getAuth().currentUser;
-    user!.delete().then(() => {
-      // User deleted.
-      console.log("User Account Deleted Successful");
-    });
+  deletePassedUser(user: any) {
+    deleteUser(user);
+    return true;
+  }
+
+
+  // Return True if user is deleted, return false if they are not.
+  deleteCurrentUser() {
+    var auth = getAuth();
+    var user = auth.currentUser;
+
+    if (user == null) {
+      return false;
+    }
+
+    else {
+      deleteUser(user);
+      return true;
+    }
   }
 }
