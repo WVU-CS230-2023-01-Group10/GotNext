@@ -79,6 +79,15 @@ export class HostLoginPageComponent implements OnInit {
       this.showCodeTakenError = false;
       this.showUserError = false;
 
+      /* Here is where the issue is popping up */
+      /*
+      * After checking to see if the input fields are valid, first subscribes to the Auth
+      * src/app/services/auth.services.ts
+      * Right after subscribing, then calls are made to write to the backend
+      * However the console says the user doesnt have permission to make writes
+      * See screenshot I sent you for the console output
+      */
+
       // auth host anonymously
       this.authObservable = this.authService.signInAnonymously();
 
