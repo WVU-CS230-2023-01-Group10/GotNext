@@ -13,6 +13,7 @@ import { SettingsService } from '../services/settings.service';
 import { Observable, delay } from 'rxjs';
 import { AuthResponse } from '../backend/auth/AuthResponse';
 import { AuthService } from '../services/auth.service';
+import { UserAuthService } from '../services/user-auth.service';
 
 @Component({
   selector: 'app-host-login-page',
@@ -40,7 +41,7 @@ export class HostLoginPageComponent implements OnInit {
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
     private hostService: HostService, private floatingUserInfo: FloatingUserInfoService,
-    private settingsService: SettingsService, private authService: AuthService) {
+    private settingsService: SettingsService, private authService: AuthService, private userAuthService: UserAuthService) {
 
   }
 
@@ -79,15 +80,6 @@ export class HostLoginPageComponent implements OnInit {
       this.showCodeTakenError = false;
       this.showUserError = false;
 
-      /* Here is where the issue is popping up */
-      /*
-      * After checking to see if the input fields are valid, first subscribes to the Auth
-      * src/app/services/auth.services.ts
-      * Right after subscribing, then calls are made to write to the backend
-      * However the console says the user doesnt have permission to make writes
-      * See screenshot I sent you for the console output
-      */
-
       // auth host anonymously
       // this.authObservable = this.authService.signInAnonymously();
       this.authObservable = await this.authService.testNewAnonSignIn();
@@ -96,11 +88,12 @@ export class HostLoginPageComponent implements OnInit {
       console.log(this.authService.currentUser()); // Null if Signed Out, Should Return User if signed in.
 
       this.authObservable.subscribe(async (data: AuthResponse) => {
-        console.log("Auth called");
         console.log(data);
         await delay(5000);
         if (data.idToken) {
-          console.log("Making write calls")
+          // sends id token from auth to service (for deletion)
+          this.userAuthService.idToken = data.idToken;
+
           // calls addParty to add party info to database
           this.partyInfoService.addParty(PartyNameInfo);
 

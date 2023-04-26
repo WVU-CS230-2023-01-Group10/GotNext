@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, delay } from 'rxjs';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
@@ -11,6 +11,7 @@ import { HostService } from '../services/host.service';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { AuthResponse } from '../backend/auth/AuthResponse';
 import { AuthService } from '../services/auth.service';
+import { UserAuthService } from '../services/user-auth.service';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
   private authObservable!: Observable<AuthResponse>;
   
   constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient, private hostService: HostService,
-    private currentUserInfo: UserInfoService, private authService: AuthService) {
+    private currentUserInfo: UserInfoService, private authService: AuthService, private userAuthService: UserAuthService) {
 
   }
 
@@ -73,7 +74,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
   /**
    * allows entered usernames to be stored as floating users for a party
    */
-  onSubmit() {
+  async onSubmit() {
 
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
     const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
@@ -87,12 +88,20 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
       this.showInputError = false;
       this.showTakenError = false;
 
-      // auth user anonymously
-      this.authObservable = this.authService.signInAnonymously();
+      // auth host anonymously
+      // this.authObservable = this.authService.signInAnonymously();
+      this.authObservable = await this.authService.testNewAnonSignIn();
 
-      this.authObservable.subscribe((data: AuthResponse) => {
-        // check if user is authed
+      console.log("Current User: "); 
+      console.log(this.authService.currentUser()); // Null if Signed Out, Should Return User if signed in.
+
+      this.authObservable.subscribe(async (data: AuthResponse) => {
+        console.log(data);
+        await delay(5000);
         if (data.idToken) {
+          // sends id token from auth to service (for deletion)
+          this.userAuthService.idToken = data.idToken;
+
           // calls addFloatinUser and addAllUser methods to store username in database nodes
           this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
           this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
@@ -106,7 +115,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
           // route if user was signed in
           this.router.navigate(['/gamelist']);
         }
-      })
+      });
     }
     
     // if not valid after check, show error

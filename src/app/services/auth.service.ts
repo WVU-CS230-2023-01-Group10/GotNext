@@ -21,7 +21,7 @@ export class AuthService {
   signInAnonymously() : Observable<AuthResponse> {
     // request body: returns token
     const requestBody = {
-      "returnSecureToken": false
+      "returnSecureToken": true
     };
 
     // makes HTTP request with anonymous endpoint sending request body
@@ -49,7 +49,7 @@ export class AuthService {
 
 
     const requestBody = {
-      "returnSecureToken": false
+      "returnSecureToken": true
     };
 
     // makes HTTP request with anonymous endpoint sending request body
@@ -59,7 +59,19 @@ export class AuthService {
 
   signUserOut() {
     var auth = getAuth();
+    console.log("Signing out", auth);
     auth.signOut();
     return auth.currentUser; // Should be Null
+  }
+
+  deleteUser() {
+    //const user = firebase.auth().currentUser;
+    const user = getAuth().currentUser;
+
+ 
+    user!.delete().then(() => {
+      // User deleted.
+      console.log("User Account Deleted Successful");
+    });
   }
 }
