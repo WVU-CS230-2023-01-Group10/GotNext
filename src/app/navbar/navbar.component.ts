@@ -18,7 +18,6 @@ export class NavbarComponent {
   name = this.floatingUserInfoService.FloatingUser;
 
   signOut() {
-    // TODO: remove user from backend once leave
     this.authService.signUserOut();
     console.log(this.authService.deleteCurrentUser());
     this.router.navigate(['/']);
