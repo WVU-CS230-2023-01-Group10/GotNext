@@ -44,16 +44,27 @@ export class QueuePageComponent implements OnInit{
       this.teams = teams.sort((a, b) => a.timestamp - b.timestamp);;
       // console.log(this.teams);
       // if there are 2 or more teams and no users currently playing
-      if (this.teams.length > 1 && this.users.length == 0) {
+      // if (this.teams.length > 1 && this.users.length == 0) {
+      //   this.getFirstUser();
+      //   this.getSecondUser();
+      //   const firstTeam = this.teams[0].User1;
+      //   const isUpNow = await this.teamInfoService.checkIfInUpNow(partyCodeInfo, firstTeam, gamename);
+      //   if (isUpNow) {
+      //     console.log(`${firstTeam} is up now!`);
+      //   }
+      // }
+
+      if(this.teams.length >= 1 && this.users.length == 1) {
+        this.getFirstUser();
+      }
+      else if(this.teams.length == 1 && this.users.length == 0) {
+        this.getFirstUser();
+      }
+      else if(this.teams.length >= 2 && this.users.length == 0) {
         this.getFirstUser();
         this.getSecondUser();
-        const firstTeam = this.teams[0].User1;
-        const isUpNow = await this.teamInfoService.checkIfInUpNow(partyCodeInfo, firstTeam, gamename);
-        if (isUpNow) {
-          console.log(`${firstTeam} is up now!`);
-        }
       }
-
+      
       // check if current user is up to play
       if(await this.amIUpNow()) {
         this.displayCheckInMessage = true;
