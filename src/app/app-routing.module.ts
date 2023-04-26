@@ -4,7 +4,6 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HostLoginPageComponent } from './host-login-page/host-login-page.component';
 import { UserLoginPageComponent } from './user-login-page/user-login-page.component';
 import { GameListComponent } from './game-list-page/game-list-page';
-import { PartyLogisticsPageComponent } from './party-logistics-page/party-logistics-page.component';
 import { QueuePageComponent } from './queue-page/queue-page.component';
 import { QrPageComponent } from './qr-page/qr-page.component';
 import { PartyEntryPageComponent } from './party-entry/party-entry-page/party-entry-page.component';
@@ -26,11 +25,6 @@ const routes: Routes = [
     path: "gamelist",
     component: GameListComponent,
     title: "Player Party Page"
-  },
-  {
-    path: "partylogistics",
-    component: PartyLogisticsPageComponent,
-    title: "partyLogistics"
   },
   {
     path: "queue",
