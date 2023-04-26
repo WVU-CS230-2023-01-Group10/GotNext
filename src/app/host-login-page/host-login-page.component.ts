@@ -89,7 +89,7 @@ export class HostLoginPageComponent implements OnInit {
 
       this.authObservable.subscribe(async (data: AuthResponse) => {
         console.log(data);
-        await delay(5000);
+        await delay(1000);
         if (data.idToken) {
           // sends id token from auth to service (for deletion)
           this.userAuthService.idToken = data.idToken;
