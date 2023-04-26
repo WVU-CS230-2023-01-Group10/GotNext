@@ -4,8 +4,7 @@ import { FloatingUserInfoService } from './floatinguser-info.service';
 
 @Component({
   selector: 'app-floatinguser-backend',
-  templateUrl: './floatinguser-backend.component.html',
-  styleUrls: ['./floatinguser-backend.component.css']
+  templateUrl: './floatinguser-backend.component.html'
 })
 export class FloatinguserBackendComponent {
   myInfo: FloatingUserInfo | undefined;
@@ -14,5 +13,5 @@ export class FloatinguserBackendComponent {
   constructor(private floatinguserInfoService: FloatingUserInfoService) {
 
   }
- 
+  
 }

@@ -4,8 +4,7 @@ import { UserInfoService } from './user-info.service';
 
 @Component({
   selector: 'app-user-info',
-  templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.css']
+  templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent {
   myInfo: UserInfo | undefined;

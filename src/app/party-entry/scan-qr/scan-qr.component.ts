@@ -1,9 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScannerQRCodeConfig, NgxScannerQrcodeService, ScannerQRCodeResult } from 'ngx-scanner-qrcode';
-import { Subscription } from 'rxjs';
 import { CodeServiceService } from '../code-service.service';
-import { PartyEntryPageComponent } from '../party-entry-page/party-entry-page.component';
 
 @Component({
   selector: 'app-scan-qr',
@@ -12,7 +10,6 @@ import { PartyEntryPageComponent } from '../party-entry-page/party-entry-page.co
 })
 export class ScanQrComponent {
   data : string = '';
-  subscription: Subscription | any;
 
   public config: ScannerQRCodeConfig = {
     isBeep: false,
@@ -32,7 +29,7 @@ export class ScanQrComponent {
     this.data = e[0].value;
     console.log(this.data);
 
-    this.codeService.updateCode(this.data)
+    this.codeService.updateCode(this.data);
 
     this.router.navigate(['/partyentry'])
   }

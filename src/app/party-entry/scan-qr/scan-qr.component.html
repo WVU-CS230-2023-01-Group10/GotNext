@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-3"></div>
     <div class="col">
-        <ngx-scanner-qrcode #action="scanner" (event)="onEvent($event)"></ngx-scanner-qrcode>
+        <ngx-scanner-qrcode #action="scanner" (event)="onEvent($event)" (event)="action.stop()"></ngx-scanner-qrcode>
     </div>
     <div class="col-3"></div>
 </div>
