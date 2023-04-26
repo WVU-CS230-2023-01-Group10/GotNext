@@ -60,7 +60,7 @@ export class HostLoginPageComponent implements OnInit {
   /**
    * allows Party information to be stored through input forms
    */
-  onSubmit() {
+  async onSubmit() {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
 
     // do checks on username and code
@@ -90,8 +90,7 @@ export class HostLoginPageComponent implements OnInit {
 
       // auth host anonymously
       // this.authObservable = this.authService.signInAnonymously();
-      this.authService.signUserOut(); // You want to signout before just to makesure there is no current active session, if not done you might link two sessions together.
-      this.authObservable = this.authService.testNewAnonSignIn();
+      this.authObservable = await this.authService.testNewAnonSignIn();
 
       console.log("Current User: "); 
       console.log(this.authService.currentUser()); // Null if Signed Out, Should Return User if signed in.
