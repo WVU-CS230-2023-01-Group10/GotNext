@@ -13,21 +13,19 @@
               [colorLight]="'#ffffffff'"
               [elementType]="'canvas'"
               [errorCorrectionLevel]="'M'"
-              [imageSrc]="'./assets/IMG_4037.PNG'"
+              [imageSrc]="'./assets/cup.png'"
               [imageHeight]="125"
               [imageWidth]="125"
               [margin]="2"
               [scale]="1"
-              [title]="'A custom title attribute'"
+              [title]="'Join the Party!'"
               [width]="400"
             ></qrcode>
         </div>
 
         <div class="container">
-        <button class="btn glow-on-hover" (click)="saveAsImage(parent)">Download</button>
-
+            <button class="btn glow-on-hover" routerLink="/gamelist">Return</button>
+            <button class="btn glow-on-hover" (click)="saveAsImage(parent)">Download</button>
         </div>
-
-
     </div>
 </div>

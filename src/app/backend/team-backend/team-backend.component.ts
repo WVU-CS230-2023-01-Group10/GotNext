@@ -8,9 +8,7 @@ import { TeamInfoService } from './team-info.service';
   styleUrls: ['./team-backend.component.css']
 })
 export class TeamBackendComponent {
-  TeamInfo: TeamInfo | undefined;
-  // FloatingUserInfo: any;
-  
+  TeamInfo: TeamInfo | undefined;  
   constructor(private TeamInfoService: TeamInfoService) {
 
   }

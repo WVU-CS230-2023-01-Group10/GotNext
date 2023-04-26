@@ -8,6 +8,7 @@ import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { CodeInfoService } from '../backend/partycode-backend/code-info.service';
 import { UserService } from '../services/user.service';
 import { HostService } from '../services/host.service';
+import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 
 
 @Component({
@@ -23,13 +24,14 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
   isTaken: boolean = false;
   showInputError: boolean = false;
   showTakenError: boolean = false;
-
+  showNameLengthError: boolean = false;
   partyCode: string = '';
   usernames: string[] | undefined = [];
 
   subscription: Subscription | any;
   
-  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient, private hostService: HostService) {
+  constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient, private hostService: HostService,
+    private currentUserInfo: UserInfoService) {
 
   }
 
@@ -74,9 +76,10 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
 
     this.isValid = this.validateInput(this.floatingUser);
     this.isTaken = this.checkIfTaken(this.floatingUser);
+    this.showNameLengthError = this.validateUserNameLength();
 
     // if valid, pass input to Realtime database
-    if (this.isValid && this.isTaken) {
+    if (this.isValid && this.isTaken && (!this.showNameLengthError)) {
       this.showInputError = false;
       this.showTakenError = false;
 
@@ -84,6 +87,7 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
       this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
       this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
       // set username for game list page
+      this.currentUserInfo.currentUser = this.floatingUser;
       this.FloatingUserinfoService.FloatingUser = this.floatingUser;
       this.hostService.setIsHost(false);
       this.router.navigate(['/gamelist']);
@@ -141,6 +145,16 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
     }
 
     return true;
+  }
+
+  validateUserNameLength() {
+    const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
+    if(floatingUserInfo.FloatingUser.length > 15) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
 }

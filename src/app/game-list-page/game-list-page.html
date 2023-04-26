@@ -7,121 +7,146 @@ import 'firebase/database';
 >>>>>>> ebe58d16cd6b0918627b8fdb148a3e043562e754
 <!-- updated to use ng for loop to create a new line for each game and for each floating user -->
 <div class="flex-container">
-<div class="d-flex bd-highlight">
-  <!-- List of current games -->
-  <div class="p-2 flex-fill bd-highlight">
+  <div class="d-flex bd-highlight">
+    <!-- List of current games -->
+    <div class="p-2 flex-fill bd-highlight">
 
-    <ul class="list-group">
-      <li class="list-group-item title">Current Games</li>
-      <li class="list-group-item" *ngFor="let game of games">
-       <span class="party-name">{{game.GameName}}</span>
-          <span class="game-type">{{game.Style}}</span>
-          <span class="player-number">10/20</span>
-        <input class="form-check-input me-1 radio-button" name="party" type="radio" value="" aria-label="..." (click)="chosenGame(game.GameName)">
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div *ngIf="showGameError">
-  <p class="error">Please Select a game before entering the Queue</p>
-</div>
-
-<!-- Buttons -->
-<div class="d-flex flex-row bd-highlight mb-3" style="justify-content: center;">
-  <!-- Join Game -->
-  <div class="p-2 bd-highlight"> 
-    <button class="glow-on-hover mx-5" type="button" (click)="joinGame()">Join Game</button> 
-  </div>
-
-  <!-- Terminate Party -->
-  <div *ngIf="isHost">
-    <div class="p-2 bd-highlight">
-      <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
+      <ul class="list-group">
+        <li class="list-group-item title">Current Games</li>
+        <li class="list-group-item" *ngFor="let game of games">
+          <div class="row">
+            <div class="party-name col-4 text-start">{{game.GameName}}</div>
+            <div class="game-type col-3 text-start">{{game.Style}}</div>
+            <div class="player-number col-1 text-end">{{game.NumPlayers}}</div>
+            <div class="col-1">
+              <input class="form-check-input mx-1 radio-button" name="party" type="radio" value="" aria-label="..."
+                (click)="chosenGame(game.GameName)">
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 
-  <!-- Delete Game -->
-  <div *ngIf="isHost">
-    <div class="p-2 bd-highlight">
-      <button class="glow-on-hover mx-5" type="button" (click)="getRidOfGame()">Delete Game</button>
-    </div>
+  <div *ngIf="showGameError">
+    <p class="error">Please Select a game before entering the Queue</p>
   </div>
 
-  <!-- Create New Game -->
-  <div *ngIf="isHost">
+  <!-- Buttons -->
+  <div class="d-flex flex-row bd-highlight mb-3" style="justify-content: center;">
+    <!-- Join Game -->
     <div class="p-2 bd-highlight">
-      <!-- Button trigger modal -->
-      <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
+      <button class="glow-on-hover mx-5" type="button" (click)="joinGame()">Join Game</button>
     </div>
+
+    <!-- Terminate Party -->
+    <div *ngIf="isHost">
+      <div class="p-2 bd-highlight">
+        <button class="glow-on-hover mx-5" type="button">Terminate Party</button>
+      </div>
+    </div>
+
+    <!-- Delete Game -->
+    <div *ngIf="isHost">
+      <div class="p-2 bd-highlight">
+        <button class="glow-on-hover mx-5" type="button" (click)="getRidOfGame()">Delete Game</button>
+      </div>
+    </div>
+
+    <!-- Create New Game -->
+    <div *ngIf="isHost">
+      <div class="p-2 bd-highlight">
+        <!-- Button trigger modal -->
+        <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create
+          New Game</button>
+      </div>
+    </div>
+
+    <!-- Gen QR Code -->
+    <div class="p-2 bd-highlight">
+      <button class="glow-on-hover mx-5" type="button" routerLink="/qrpage">Generate QR Code</button>
+    </div>
+
+    <!-- Party Settings -->
+    <div *ngIf="isHost">
+      <div class="p-2 bd-highlight">
+        <!-- Button trigger modal -->
+        <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#settingsModal" type="button">Party
+          Settings</button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Gen QR Code -->
-  <div class="p-2 bd-highlight">
-    <button class="glow-on-hover mx-5" type="button">Generate QR Code</button>
-  </div> 
-</div>
-
-<<<<<<< HEAD
-<!-- host buttons -->
-<div *ngIf="isHost">
   <div class="container">
-    <button  (click)="deleteParty(partyCodeService.code)" class="glow-on-hover mx-5" type="button">Terminate Party</button>
-    <button class="glow-on-hover mx-5" type="button">Delete Game</button>
-  
-    <!-- Button trigger modal -->
-    <button class="glow-on-hover mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Create New Game</button>
-  
-  
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-=======
-<div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
->>>>>>> ebe58d16cd6b0918627b8fdb148a3e043562e754
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create a New Game</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div *ngIf="showGameStyleError">
-            <p class="error">Please Select a game type</p>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create a New Game</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="modal-body">
+            <div *ngIf="showGameStyleError">
+              <p class="error">Please Select a game type</p>
+            </div>
 
-          <p>Game Type:</p>
-          <select id="s1" [(ngModel)]="selectedGameType">
-            <option value="Blank" selected>Choose Gameplay Style</option>
-            <option value="Queue">Queue</option>
-            <option value="Round Robin">Round Robin</option>
-            <option value="Tournament">Tournament</option>
-          </select>
-          
-          <br><br>
-          <div *ngIf="showGameNameError">
-            <p class="error">Pick a valid name</p>
+            <p>Game Type:</p>
+            <select id="s1" [(ngModel)]="selectedGameType">
+              <option value="Blank" selected>Choose Gameplay Style</option>
+              <option value="Queue">Queue</option>
+              <option value="Round Robin">Round Robin</option>
+              <option value="Tournament">Tournament</option>
+            </select>
+
+            <br><br>
+            <div *ngIf="showGameNameError">
+              <p class="error">Pick a valid name</p>
+            </div>
+
+            <div *ngIf="showGameNameLengthError">
+              <p class="error">Pick a Game name less than 15 characters</p>
+            </div>
+
+            <p>Game Name:</p>
+            <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
+            <br><br>
           </div>
-          
-          <p>Game Name</p>
-          <input type="text" placeholder="Game" name="GameName" [(ngModel)]="selectedGameName">
-          <br><br>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="addNewGame($event)">Add New Game</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-dark" (click)="addNewGame($event)">Add New Game</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-
-
-
-
-
-
-
-
+  <div class="container">
+    <!-- Party Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="sampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Apply Party Settings</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Check-In Time Allowed:</p>
+            <select id="s1" [(ngModel)]="selectedCheckInTime">
+              <option value="30" selected>30 seconds</option>
+              <option value="60">1 minute</option>
+              <option value="180">3 minutes</option>
+              <option value="300">5 minutes</option>
+              <option value="600">10 minutes</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="changeCheckInTime()">Apply
+              Party Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

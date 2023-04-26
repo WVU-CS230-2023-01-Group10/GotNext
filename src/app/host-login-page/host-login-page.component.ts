@@ -9,6 +9,7 @@ import { HostService } from '../services/host.service';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
+import { SettingsService } from '../services/settings.service';
 
 @Component({
   selector: 'app-host-login-page',
@@ -25,12 +26,16 @@ export class HostLoginPageComponent implements OnInit {
   showCodeError: boolean = false;
   showCodeTakenError: boolean = false;
   showPartyError: boolean = false;
+  showInputLengthError: boolean = false;
+  showHostInputLengthError: boolean = false;
+  showPartyInputLengthError: boolean = false;
 
   validPartyCodes: string[] = [];
   
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
-    private hostService: HostService, private floatingUserInfo: FloatingUserInfoService) {
+    private hostService: HostService, private floatingUserInfo: FloatingUserInfoService,
+    private settingsService: SettingsService) {
 
   }
 
@@ -59,8 +64,12 @@ export class HostLoginPageComponent implements OnInit {
     this.isPartyValid = this.validateInput(this.PartyName);
     this.isCodeTaken = this.checkIfCodeTaken(this.PartyCode);
 
+    // check length of Host and PartyName
+    this.showHostInputLengthError = this.validateHostNameLength();
+    this.showPartyInputLengthError = this.validatePartyNameLength();
+
     // if valid, pass info to Realtime Database
-    if(this.isUserValid && this.isCodeValid && this.isCodeTaken && this.isPartyValid) {
+    if(this.isUserValid && this.isCodeValid && this.isCodeTaken && this.isPartyValid && (!this.showHostInputLengthError) && (!this.showPartyInputLengthError)) {
       this.showCodeError = false;
       this.showCodeTakenError = false;
       this.showUserError = false;
@@ -77,6 +86,7 @@ export class HostLoginPageComponent implements OnInit {
       this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo);
       this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
 
+      this.settingsService.addInitSettings(PartyNameInfo.PartyCode); //adds default party settings
       // set host as floating user for game selection page
       this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
       console.log(this.userInfoService.username);
@@ -176,5 +186,25 @@ export class HostLoginPageComponent implements OnInit {
 
     // if not, then code valid
     return true;
+  }
+
+  validateHostNameLength() {
+    const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
+    if(PartyNameInfo.Host.length > 15) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  validatePartyNameLength() {
+    const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
+    if(PartyNameInfo.PartyName.length > 15) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
