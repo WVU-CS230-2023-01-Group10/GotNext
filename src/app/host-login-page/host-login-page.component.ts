@@ -10,6 +10,10 @@ import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatin
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { SettingsService } from '../services/settings.service';
+import { Observable, delay } from 'rxjs';
+import { AuthResponse } from '../backend/auth/AuthResponse';
+import { AuthService } from '../services/auth.service';
+import { UserAuthService } from '../services/user-auth.service';
 
 @Component({
   selector: 'app-host-login-page',
@@ -31,11 +35,13 @@ export class HostLoginPageComponent implements OnInit {
   showPartyInputLengthError: boolean = false;
 
   validPartyCodes: string[] = [];
+
+  private authObservable!: Observable<AuthResponse>;
   
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
     private hostService: HostService, private floatingUserInfo: FloatingUserInfoService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService, private authService: AuthService, private userAuthService: UserAuthService) {
 
   }
 
@@ -55,7 +61,7 @@ export class HostLoginPageComponent implements OnInit {
   /**
    * allows Party information to be stored through input forms
    */
-  onSubmit() {
+  async onSubmit() {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
 
     // do checks on username and code
@@ -74,26 +80,45 @@ export class HostLoginPageComponent implements OnInit {
       this.showCodeTakenError = false;
       this.showUserError = false;
 
-      // calls addParty to add party info to database
-      this.partyInfoService.addParty(PartyNameInfo);
+      // auth host anonymously
+      // this.authObservable = this.authService.signInAnonymously();
+      this.authObservable = await this.authService.testNewAnonSignIn();
 
-      // sets code to be used to sort games
-      this.codeInfoService.code = this.PartyCode;
+      console.log("Current User: "); 
+      console.log(this.authService.currentUser()); // Null if Signed Out, Should Return User if signed in.
 
-      // add host to users
-      const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.Host };
-      const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
-      this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo);
-      this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
+      this.authObservable.subscribe(async (data: AuthResponse) => {
+        console.log(data);
+        await delay(1000);
+        if (data.idToken) {
+          // sends id token from auth to service (for deletion)
+          this.userAuthService.idToken = data.idToken;
 
-      this.settingsService.addInitSettings(PartyNameInfo.PartyCode); //adds default party settings
-      // set host as floating user for game selection page
-      this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
-      console.log(this.userInfoService.username);
+          // calls addParty to add party info to database
+          this.partyInfoService.addParty(PartyNameInfo);
 
-      // sends username and party code to service to be checked for host validity 
-      this.hostService.setIsHost(true);
-      this.router.navigate(['/gamelist']);
+          // sets code to be used to sort games
+          this.codeInfoService.code = this.PartyCode;
+
+          // add host to users
+          const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.Host };
+          const partyCodeInfo: CodeInfo = { Partycode: this.PartyCode };
+          this.floatingUserInfo.addFloatingUser(partyCodeInfo, floatingUserInfo);
+          this.floatingUserInfo.addAllUser(partyCodeInfo, floatingUserInfo);
+
+          this.settingsService.addInitSettings(PartyNameInfo.PartyCode); //adds default party settings
+          // set host as floating user for game selection page
+          this.floatingUserInfo.FloatingUser = floatingUserInfo.FloatingUser;
+          console.log(this.userInfoService.username);
+
+          // sends username and party code to service to be checked for host validity 
+          this.hostService.setIsHost(true);
+            
+          // route if user was signed in
+          this.router.navigate(['/gamelist']);
+        }
+      });
+      
     }
 
     // if code not valid, show error
