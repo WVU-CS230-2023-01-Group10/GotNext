@@ -4,8 +4,7 @@ import { TeamInfoService } from './team-info.service';
 
 @Component({
   selector: 'app-team-backend',
-  templateUrl: './team-backend.component.html',
-  styleUrls: ['./team-backend.component.css']
+  templateUrl: './team-backend.component.html'
 })
 export class TeamBackendComponent {
   TeamInfo: TeamInfo | undefined;  

@@ -4,8 +4,7 @@ import { CodeInfoService } from './code-info.service';
 
 @Component({
   selector: 'app-partycode-backend',
-  templateUrl: './partycode-backend.component.html',
-  styleUrls: ['./partycode-backend.component.css']
+  templateUrl: './partycode-backend.component.html'
 })
 export class PartycodeBackendComponent {
   myInfo: CodeInfo | undefined;

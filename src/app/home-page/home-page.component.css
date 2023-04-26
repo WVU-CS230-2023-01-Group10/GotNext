@@ -2,15 +2,14 @@ img {
     padding-left: 60px;
     height: 400px;
     display: block;
-    margin: 20px auto 0px auto;;
+    margin: 20px auto 0px auto;
     width: 450px;
 }
 
 div {
     margin: auto;
-    width: 50%;
     padding: 10px;
-    width: 400px
+    width: 400px;
 }
 
 .container {
