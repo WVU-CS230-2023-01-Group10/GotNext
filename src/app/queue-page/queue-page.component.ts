@@ -22,9 +22,17 @@ export class QueuePageComponent implements OnInit{
   teams: TeamInfo[] = [];
   displayCheckInMessage: boolean = false;
   isCheckedIn: boolean = false;
+  private timer: NodeJS.Timer;
 
   constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
-    private gameInfoService: GameInfoService, private currentUserInfo: UserInfoService, private router: Router) {}
+    private gameInfoService: GameInfoService, private currentUserInfo: UserInfoService, private router: Router) 
+  {   
+    // call the function every 1/2 seconds
+    this.timer = setInterval(() => {
+    // checks for updates in queue
+    this.updateQueue();
+    }, 500); // interval is in milliseconds, so 500 ms = 1/2 seconds
+  }
 
   ngOnInit(): void {
 
@@ -40,20 +48,27 @@ export class QueuePageComponent implements OnInit{
       console.log("Getting Current users");
       console.log(this.users);
     });
+  
+  }
+
+  updateQueue() {
+    const partyCode = this.partyCodeService.code;
+    const gamename = this.queuePageService.getSelectedGameName();
     this.queuePageService.getTeams(partyCode, gamename).subscribe(async (teams) => {
       this.teams = teams.sort((a, b) => a.timestamp - b.timestamp);;
-      // console.log(this.teams);
-      // if there are 2 or more teams and no users currently playing
-      if (this.teams.length > 1 && this.users.length == 0) {
+      // teams corresponds to # of players in queue
+      // users corresponds to # of players currently playing
+      if(this.teams.length >= 1 && this.users.length == 1) {
+        this.getFirstUser();
+      }
+      else if(this.teams.length == 1 && this.users.length == 0) {
+        this.getFirstUser();
+      }
+      else if(this.teams.length >= 2 && this.users.length == 0) {
         this.getFirstUser();
         this.getSecondUser();
-        const firstTeam = this.teams[0].User1;
-        const isUpNow = await this.teamInfoService.checkIfInUpNow(partyCodeInfo, firstTeam, gamename);
-        if (isUpNow) {
-          console.log(`${firstTeam} is up now!`);
-        }
       }
-
+      
       // check if current user is up to play
       if(await this.amIUpNow()) {
         this.displayCheckInMessage = true;
@@ -61,7 +76,6 @@ export class QueuePageComponent implements OnInit{
       console.log(this.displayCheckInMessage);
       
     });
-  
   }
 
   /**
@@ -127,6 +141,7 @@ export class QueuePageComponent implements OnInit{
     // reroute to playing/exit page
     this.router.navigate(['/currentlyPlaying']);
   }
+  
   
   }
 
