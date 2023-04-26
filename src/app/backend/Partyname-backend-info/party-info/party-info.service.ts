@@ -37,7 +37,7 @@ export class PartyInfoService {
   /**
    * check if party has been terminated
    * @param partyCodeInfo 
-   * @returns false if party no longer exists
+   * @returns false if party no longer exists or true if party still exists
    */
   async checkIfPartyTerminated(partyCodeInfo: CodeInfo): Promise<boolean> {
     const ref = this.db.list<CodeInfo>(`Party/${partyCodeInfo.Partycode}`).query.ref;

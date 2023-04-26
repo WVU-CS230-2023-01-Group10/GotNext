@@ -43,13 +43,16 @@ export class GameListComponent implements OnInit {
   showPartyTerminatedMessage: boolean = false;
   errorOccuredCreatingGame: boolean = false; // 
   selectedCheckInTime: number = 300;
+  private timer: NodeJS.Timer | undefined;
 
   isHost: boolean = false;
 
   constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
     private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
     private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService, private router: Router,
-    private settingsService: SettingsService, private partyInfoService: PartyInfoService) {}
+    private settingsService: SettingsService, private partyInfoService: PartyInfoService) {
+      
+    }
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
@@ -64,25 +67,18 @@ export class GameListComponent implements OnInit {
     console.log(partyCode,username);
     this.gamePageService.getGames(partyCode).subscribe((games) => {
       this.games = games;
+     
+    // call the function every 1/2 seconds
+    this.timer = setInterval(() => {
+      // checks if given party still exists
+      this.getPartyStatus();
+      }, 3000); // interval is in milliseconds, so 500 ms = 1/2 seconds  
     });
 
     // get host username and party code from host login
     this.hostService.getIsHost().subscribe(bool => {
       this.isHost = bool;
     });    
-
-   // console.log('isPartyTerminated():', await this.isPartyTerminated());
-
-   this.partyInfoService.getParties(partyCode).subscribe(async (parties) => {
-    this.parties = parties;
-
-    // checks if party has been terminated
-  if(await this.isPartyTerminated()) {
-    this.showPartyTerminatedMessage = true;
-  } else {
-    this.showPartyTerminatedMessage = false;
-  }
-  });
     
 }
 
@@ -238,9 +234,8 @@ addNewGame(event: MouseEvent) {
   // checks if party has been terminated
   async isPartyTerminated() {
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
-    console.log(this.partyCodeService.code);
-    // if party no longer exists
-    if(await this.partyInfoService.checkIfPartyTerminated(partyCodeInfo)) {
+    // if party no longer exists checkIfPartyTerminated will return false
+    if(await this.partyInfoService.checkIfPartyTerminated(partyCodeInfo) === false) {
       return true;
     }
     else {
@@ -256,9 +251,33 @@ addNewGame(event: MouseEvent) {
   // delete party
   terminateParty() {
     const partyCode = this.partyCodeService.code;
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.partyInfoService.deleteParty(partyCode);
     this.router.navigate(['']);
+    console.log(partyCodeInfo);
+    console.log(this.partyInfoService.checkIfPartyTerminated(partyCodeInfo));
+
   }
 
+  getPartyStatus() {
+    const partyCode = this.partyCodeService.code;
+    this.partyInfoService.getParties(partyCode).subscribe(async (parties) => {
+      this.parties = parties;
+  
+      // checks if party has been terminated
+      const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+      this.partyInfoService.checkIfPartyTerminated(partyCodeInfo)
+      .then((isTerminated) => {
+        if (isTerminated === false) {
+          // party still exists
+          this.showPartyTerminatedMessage = false;
+        } else {
+          // party terminated
+          this.showPartyTerminatedMessage = true;
+        }
+      });
+    })
+    
+  }
 }
 
