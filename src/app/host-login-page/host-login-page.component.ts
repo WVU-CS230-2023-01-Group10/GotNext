@@ -89,7 +89,12 @@ export class HostLoginPageComponent implements OnInit {
       */
 
       // auth host anonymously
-      this.authObservable = this.authService.signInAnonymously();
+      // this.authObservable = this.authService.signInAnonymously();
+      this.authService.signUserOut(); // You want to signout before just to makesure there is no current active session, if not done you might link two sessions together.
+      this.authObservable = this.authService.testNewAnonSignIn();
+
+      console.log("Current User: "); 
+      console.log(this.authService.currentUser()); // Null if Signed Out, Should Return User if signed in.
 
       this.authObservable.subscribe(async (data: AuthResponse) => {
         console.log("Auth called");
