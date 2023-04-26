@@ -92,8 +92,11 @@ export class HostLoginPageComponent implements OnInit {
       this.authObservable = this.authService.signInAnonymously();
 
       this.authObservable.subscribe(async (data: AuthResponse) => {
+        console.log("Auth called");
+        console.log(data);
         await delay(5000);
         if (data.idToken) {
+          console.log("Making write calls")
           // calls addParty to add party info to database
           this.partyInfoService.addParty(PartyNameInfo);
 
