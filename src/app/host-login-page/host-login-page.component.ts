@@ -183,7 +183,6 @@ export class HostLoginPageComponent implements OnInit {
 
   /**
    * Checks if inputted code is numeric between 4-6 characters
-   * // TODO: return error type enum and reduce methods needed
    * @param code code to be checked
    * @returns boolean value if code is a valid input
    */
@@ -231,6 +230,10 @@ export class HostLoginPageComponent implements OnInit {
     return true;
   }
 
+  /**
+   * validates that the host name length is below 15 characters
+   * @returns true if there is an error
+   */
   validateHostNameLength(): boolean {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
     if(PartyNameInfo.Host.length > 15) {
@@ -241,6 +244,10 @@ export class HostLoginPageComponent implements OnInit {
     }
   }
 
+  /**
+   * validates that the party name length is below 15 characters
+   * @returns true if there is an error
+   */
   validatePartyNameLength(): boolean {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
     if(PartyNameInfo.PartyName.length > 15) {
