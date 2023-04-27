@@ -216,7 +216,7 @@ export class GameListComponent implements OnInit {
 
   /**
    * validates the selected game and ensures it is a valid game to join
-   * @returns boolean value if the game selection is valid
+   * @returns true if the game selection is valid
    */
   validateGameSelection(): boolean {
     if (this.queuePageService.getSelectedGameName() != "nullGameName" && this.queuePageService.getSelectedGameName() != "Blank Name") {

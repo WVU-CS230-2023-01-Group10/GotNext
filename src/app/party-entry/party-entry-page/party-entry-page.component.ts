@@ -5,7 +5,14 @@ import { Subscription } from 'rxjs';
 import { CodeInfoService } from 'src/app/backend/partycode-backend/code-info.service';
 import { UserService } from 'src/app/services/user.service';
 import { CodeServiceService } from '../code-service.service';
-import { PartyCodeModel } from './partycode.model';
+
+/**
+ * Typescript file to handle events and enter users into specified party
+ * @file party-entry-page.component.ts
+ * @author Ian Jackson
+ * @author Nathan Mullins
+ * @date Mar 20, 2023
+ */
 
 @Component({
   selector: 'app-party-entry-page',
@@ -13,11 +20,18 @@ import { PartyCodeModel } from './partycode.model';
   styleUrls: ['./party-entry-page.component.css']
 })
 export class PartyEntryPageComponent implements OnInit, OnDestroy {
+  // party code the user entered
   partyCode: string = '';
+
+  /* boolean values to handle input errors */
   isValid: boolean = false;
   showError: boolean = false;
+
+  // array to hold the party codes taken
   validPartyCodes: string[] = [];
-  subscription: Subscription|any;
+
+  // subscription instance to communicate with backend
+  subscription: Subscription | any;
 
   constructor(private router: Router, private codeService: CodeServiceService, private http: HttpClient, private CodeInfoService: CodeInfoService, private userService: UserService) {
 
@@ -37,6 +51,7 @@ export class PartyEntryPageComponent implements OnInit, OnDestroy {
     // set input element to the party code sent to service
     (<HTMLInputElement>document.getElementById("partyCode")).setAttribute("value", this.partyCode);
 
+    // gets the list of used party codes from the backend
     this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party.json').subscribe(data => {
       this.validPartyCodes = Object.keys(data);
     });
