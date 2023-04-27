@@ -15,6 +15,16 @@ import { AuthResponse } from '../backend/auth/AuthResponse';
 import { AuthService } from '../services/auth.service';
 import { UserAuthService } from '../services/user-auth.service';
 
+/**
+ * Typescript file to handle events and login in host to the app
+ * @file game-list-page.ts
+ * @author Ian Jackson
+ * @author Nathan Mullins
+ * @author Samuel Moody
+ * @author Daniel Madden
+ * @date Mar 6, 2023
+ */
+
 @Component({
   selector: 'app-host-login-page',
   templateUrl: './host-login-page.component.html',
@@ -22,6 +32,7 @@ import { UserAuthService } from '../services/user-auth.service';
 })
 
 export class HostLoginPageComponent implements OnInit {
+  /* boolean values to handle input errors */
   isUserValid: boolean = false;
   isCodeValid: boolean = false;
   isCodeTaken: boolean = false;
@@ -34,16 +45,26 @@ export class HostLoginPageComponent implements OnInit {
   showHostInputLengthError: boolean = false;
   showPartyInputLengthError: boolean = false;
 
+  /* strings to hold input values */
+  PartyName: string = '';
+  Host: string = '';
+  PartyCode: string = '';
+
+  /* define and initialize arrays of data */
   validPartyCodes: string[] = [];
 
+  // instance of an Observable of AuthResponse type
   private authObservable!: Observable<AuthResponse>;
   
+  /**
+   * constructor for the GameListComponent
+   * defines a variety of services and components
+   * TODO: look at reducing the amount of services needed
+   */
   constructor(private userInfoService: UserInfoService, private partyInfoService: PartyInfoService, 
     private codeInfoService: CodeInfoService, private router: Router, private http: HttpClient,
     private hostService: HostService, private floatingUserInfo: FloatingUserInfoService,
-    private settingsService: SettingsService, private authService: AuthService, private userAuthService: UserAuthService) {
-
-  }
+    private settingsService: SettingsService, private authService: AuthService, private userAuthService: UserAuthService) {}
 
   /**
    * Runs on initialization, gets all party codes
@@ -53,10 +74,6 @@ export class HostLoginPageComponent implements OnInit {
       this.validPartyCodes = Object.keys(data);
     });
   }
-
-   PartyName: string = '';
-   Host: string = '';
-   PartyCode: string = '';
 
   /**
    * allows Party information to be stored through input forms
@@ -166,6 +183,7 @@ export class HostLoginPageComponent implements OnInit {
 
   /**
    * Checks if inputted code is numeric between 4-6 characters
+   * // TODO: return error type enum and reduce methods needed
    * @param code code to be checked
    * @returns boolean value if code is a valid input
    */
@@ -213,7 +231,7 @@ export class HostLoginPageComponent implements OnInit {
     return true;
   }
 
-  validateHostNameLength() {
+  validateHostNameLength(): boolean {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
     if(PartyNameInfo.Host.length > 15) {
       return true;
@@ -223,7 +241,7 @@ export class HostLoginPageComponent implements OnInit {
     }
   }
 
-  validatePartyNameLength() {
+  validatePartyNameLength(): boolean {
     const PartyNameInfo: PartyInfo = { Host: this.Host, PartyCode: this.PartyCode, PartyName: this.PartyName };
     if(PartyNameInfo.PartyName.length > 15) {
       return true;
