@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
+import { PartyInfoService } from '../backend/Partyname-backend-info/party-info/party-info.service';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class GameListComponent implements OnInit {
   constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
     private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
     private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService, private router: Router,
-    private settingsService: SettingsService) {}
+    private settingsService: SettingsService, private partyInfoService: PartyInfoService) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
@@ -216,6 +217,14 @@ addNewGame(event: MouseEvent) {
     else {
       return false;
     }
+  }
+
+  // delete party
+  terminateParty() {
+    const partyCode = this.partyCodeService.code;
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    this.partyInfoService.deleteParty(partyCode);
+    this.router.navigate(['']);
   }
 }
 
