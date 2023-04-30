@@ -1,57 +1,67 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FloatingUserInfo } from "./floatinguser-info.model";
 import { AngularFireDatabase } from "@angular/fire/compat/database";
-import {query, ref, set} from 'firebase/database';
 import { CodeInfo } from "../partycode-backend/code-info-model";
 import { TeamInfo } from "../team-backend/team-info.model";
 
+/**
+ * Typescript file to handle events, floating user services, and to manipulate data in the realtime database
+ * @file floatinguser-info.service.ts
+ * @author Nathan Mullins
+ * @date Mar 3, 2023
+ */
+
 @Injectable({providedIn: 'root'})
 export class FloatingUserInfoService {
-  constructor(private http:HttpClient, private db:AngularFireDatabase) {
-    
-  }
-  // var to update username in navbar
+  /* define and initialize for username of floating user, floating users belong to a party but have not yet chosen a game */
   FloatingUser: string='Username';
 
-/**
- * adds user to chosen party under FloatingUser node within a specific party
- * @param FloatingUser user in a specific party who has not chosen a game
- */
-addFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: FloatingUserInfo) {
-  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/FloatingUsers`).query.ref;
-  ref.child(floatingUserInfo.FloatingUser).set(floatingUserInfo);
-}
+  /**
+   * constructor for the FlaotingUserInfoService
+   * defines the Angular Fire Databse
+   */
+  constructor(private db:AngularFireDatabase) {}
 
-/**
- * removes user from FloatingUser nodes
- * @param FloatingUser user in a specific party who has not chosen a game
- */
-deleteFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: TeamInfo) {
-  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/FloatingUsers`).query.ref;
-  ref.child(floatingUserInfo.User1).remove();
-}
+  /**
+   * adds user to chosen party under FloatingUser node in Realtime database
+   * @param partyCodeInfo party code for specified party
+   * @param floatingUserInfo username of floating user 
+   */
+  addFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: FloatingUserInfo) {
+    const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/FloatingUsers`).query.ref;
+    ref.child(floatingUserInfo.FloatingUser).set(floatingUserInfo);
+  }
+
+  /**
+   * removes user from FloatingUser node in Realtime database
+   * @param partyCodeInfo party code for specified party
+   * @param floatingUserInfo username of floating user
+   */
+  deleteFloatingUser(partyCodeInfo: CodeInfo, floatingUserInfo: TeamInfo) {
+    const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/FloatingUsers`).query.ref;
+    ref.child(floatingUserInfo.User1).remove();
+  }
 
 
 
-/**
- * adds user to a node containing all users 
- * @param FloatingUser 
- */
-addAllUser(partyCodeInfo: CodeInfo, AllUsers: FloatingUserInfo) {
-  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
-  ref.child(AllUsers.FloatingUser).set(AllUsers);
-}
+  /**
+   * adds user to a node containing all users within a party in Realtime database
+   * @param partyCodeInfo party code for specified party
+   * @param AllUsers contains username of a user within a specified party
+   */
+  addAllUser(partyCodeInfo: CodeInfo, AllUsers: FloatingUserInfo) {
+    const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
+    ref.child(AllUsers.FloatingUser).set(AllUsers);
+  }
 
-/**
- * remove user from AllUser node
- * @param partyCodeInfo 
- * @param floatingUserInfo 
- */
-deleteAllUser(partyCodeInfo: CodeInfo, floatingUserInfo: string) {
-  const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
-  ref.child(floatingUserInfo).remove();
-}
-
+  /**
+   * removes user from a node containing all users within a party in Realtime database
+   * @param partyCodeInfo party code for specified party
+   * @param AllUsers contains username of a user within a specified party
+   */
+  deleteAllUser(partyCodeInfo: CodeInfo, floatingUserInfo: string) {
+    const ref = this.db.list<FloatingUserInfo>(`Party/${partyCodeInfo.Partycode}/AllUsers`).query.ref;
+    ref.child(floatingUserInfo).remove();
+  }
 
 }
