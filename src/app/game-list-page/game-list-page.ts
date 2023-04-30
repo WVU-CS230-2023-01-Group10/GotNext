@@ -61,21 +61,10 @@ export class GameListComponent implements OnInit {
     this.gamePageService.getGames(partyCode).subscribe((games) => {
       const filteredGames = games.filter(game => game.GameName !== 'nullGameName');
       this.games = filteredGames;
+    }
+    )}
+  
 
-      // Delete all the branches titled "nullGameName"
-      for (let i = 0; i < filteredGames.length; i++) {
-        const gameId = filteredGames[i].$key;
-        this.gamePageService.getGames(partyCode).subscribe((branches) => {
-          for (let j = 0; j < branches.length; j++) {
-            const branchName = branches[j].$key;
-            if (branchName === 'nullGameName') {
-              this.gamePageService.deleteGame(partyCode, branchName);
-            }
-          }
-        });
-      }
-    });
-}
 
 
 
@@ -84,6 +73,12 @@ addNewGame(event: MouseEvent) {
   const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName.trim(), NumPlayers: 0};
   const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
 
+  if (gameInfo.GameName === 'nullGameName') {
+    this.http.delete('https://got-next-app-default-rtdb.firebaseio.com/Party/' + partyCodeInfo.Partycode + '/Games/nullGameName.json').subscribe(() => {
+      console.log('Deleted nullGameName');
+    });
+    return;
+  }
   // get all games from party
   this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party/' + partyCodeInfo.Partycode + '/Games.json').subscribe(data => {
     if (data) {
