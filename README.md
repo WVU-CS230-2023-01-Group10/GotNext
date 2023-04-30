@@ -34,6 +34,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app a
 ## Contributors 
 Ian Jackson | Nathan Mullins | Bryn Shunney | Samuel Moody | Grant Stumpf | Daniel Mancini | Joel Robertson
 
-<a href="https://github.com/WVU-CS230-2023-01-Group10/GotNext/graphs/contributors">
+<a href="https://github.com/WVU-CS230-2023-01-Group10/GotNext/graphs/contributors" align="center">
   <img src="https://contrib.rocks/image?repo=WVU-CS230-2023-01-Group10/GotNext" />
 </a>
