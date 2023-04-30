@@ -14,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 import { UserAuthService } from '../services/user-auth.service';
 
 /**
- * Typescript file to handle events and pull data for the Game List page
+ * Typescript file to handle events and pull data for the User Login Page
  * @file user-login-page.component.ts
  * @author Ian Jackson
  * @author Nathan Mullins
