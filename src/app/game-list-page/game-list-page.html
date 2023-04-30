@@ -29,7 +29,8 @@
   <div class="d-flex flex-row bd-highlight mb-3" style="justify-content: center;">
     <!-- Join Game -->
     <div class="p-2 bd-highlight">
-      <button class="glow-on-hover mx-5" type="button" (click)="joinGame()">Join Game</button>
+      <button class="glow-on-hover mx-5" type="button" (click)="joinGame()" [disabled]="!selectedGame || selectedGame === 'nullGameName'" 
+      [ngClass]="{'btn-disabled': selectedGame === 'nullGameName', 'glow-on-hover': selectedGame != 'nullGameName'}">Join Game</button>
     </div>
 
     <!-- Terminate Party -->
@@ -43,7 +44,8 @@
     <div *ngIf="isHost">
       <div class="p-2 bd-highlight">
         <button class="glow-on-hover mx-5" type="button" data-bs-toggle="modal" data-bs-target="#gameModal"
-          [disabled]="!selectedGame || selectedGame === 'nullGameName'">
+          [disabled]="!selectedGame || selectedGame === 'nullGameName'" 
+          [ngClass]="{'btn-disabled': selectedGame === 'nullGameName', 'glow-on-hover': selectedGame != 'nullGameName'}">
           Delete Game
         </button>
       </div>
