@@ -12,7 +12,7 @@
             <div class="game-type col-3 text-start">{{game.Style}}</div>
             <div class="player-number col-1 text-end">{{game.NumPlayers}}</div>
             <div class="col-1">
-              <input class="form-check-input mx-1 radio-button" name="party" type="radio" value="" aria-label="..."
+              <input class="form-check-input mx-1 radio-button" name="party" type="radio" [value]="game.GameName" [checked]="selectedGame === game.GameName" aria-label="..."
                 (click)="chosenGame(game.GameName)">
             </div>
           </div>
@@ -42,9 +42,13 @@
     <!-- Delete Game -->
     <div *ngIf="isHost">
       <div class="p-2 bd-highlight">
-        <button class="glow-on-hover mx-5" type="button" data-bs-toggle="modal" data-bs-target="#gameModal">Delete Game</button>
+        <button class="glow-on-hover mx-5" type="button" data-bs-toggle="modal" data-bs-target="#gameModal"
+          [disabled]="!selectedGame || selectedGame === 'nullGameName'">
+          Delete Game
+        </button>
       </div>
     </div>
+
 
     <!-- Create New Game -->
     <div *ngIf="isHost">
@@ -109,7 +113,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="addNewGame($event)">Add New Game</button>
+            <button type="button" class="btn btn-dark" (click)="addNewGame($event)">Add New Game</button>
           </div>
         </div>
       </div>

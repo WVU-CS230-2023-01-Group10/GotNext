@@ -40,6 +40,8 @@ export class GameListComponent implements OnInit {
   showGameNameLengthError: boolean = false; // length of game name too long
   errorOccuredCreatingGame: boolean = false; // 
   selectedCheckInTime: number = 300;
+  selectedGame: string = 'nullGameName'; // variable for selected game
+
 
   isHost: boolean = false;
 
@@ -52,6 +54,8 @@ export class GameListComponent implements OnInit {
   chosenGame(gameName: string) {
     this.queuePageService.setSelectedGameName(gameName);
     this.GameInfoService.setSelectedGameName(gameName);
+    this.selectedGame = gameName;
+    
   }
 
   ngOnInit(): void {
@@ -158,6 +162,9 @@ addNewGame(event: MouseEvent) {
   getRidOfGame(){
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.GameInfoService.deleteGame(partyCodeInfo);
+
+    // Reset the selectedGame variable to null
+    this.selectedGame = 'nullGameName';
   }
   
   changeCheckInTime(){
