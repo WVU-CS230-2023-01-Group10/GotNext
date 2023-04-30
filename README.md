@@ -32,10 +32,8 @@ App is currently deployed at: https://got-next-app.web.app/
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app automatically updates if you change any of the source files.
 
 ## Contributors 
-- Ian Jackson
-- Bryn Shunney
-- Nathan Mullins
-- Daniel Mancini
-- Grant Stumpf
-- Samuel Moody
-- Joel Robertson
+Ian Jackson | Nathan Mullins | Bryn Shunney | Samuel Moody | Grant Stumpf | Daniel Mancini | Joel Robertson
+
+<a href="https://github.com/WVU-CS230-2023-01-Group10/GotNext/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=WVU-CS230-2023-01-Group10/GotNext" />
+</a>
