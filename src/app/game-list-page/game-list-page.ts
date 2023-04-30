@@ -59,15 +59,26 @@ export class GameListComponent implements OnInit {
     const username = this.userInfoService.FloatingUser;
     console.log(partyCode,username);
     this.gamePageService.getGames(partyCode).subscribe((games) => {
-      this.games = games;
-    });
+      const filteredGames = games.filter(game => game.GameName !== 'nullGameName');
+      this.games = filteredGames;
 
-    // get host username and party code from host login
-    this.hostService.getIsHost().subscribe(bool => {
-      this.isHost = bool;
-    });    
-    
+      // Delete all the branches titled "nullGameName"
+      for (let i = 0; i < filteredGames.length; i++) {
+        const gameId = filteredGames[i].$key;
+        this.gamePageService.getGames(partyCode).subscribe((branches) => {
+          for (let j = 0; j < branches.length; j++) {
+            const branchName = branches[j].$key;
+            if (branchName === 'nullGameName') {
+              this.gamePageService.deleteGame(partyCode, branchName);
+            }
+          }
+        });
+      }
+    });
 }
+
+
+
 
 addNewGame(event: MouseEvent) {
   const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName.trim(), NumPlayers: 0};
@@ -218,4 +229,5 @@ addNewGame(event: MouseEvent) {
     }
   }
 }
+
 
