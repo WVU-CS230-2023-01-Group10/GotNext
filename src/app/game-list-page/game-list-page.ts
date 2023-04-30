@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
+import { PartyInfoService } from '../backend/Partyname-backend-info/party-info/party-info.service';
 
 
 @Component({
@@ -39,18 +40,22 @@ export class GameListComponent implements OnInit {
   showGameNameLengthError: boolean = false; // length of game name too long
   errorOccuredCreatingGame: boolean = false; // 
   selectedCheckInTime: number = 300;
+  selectedGame: string = 'nullGameName'; // variable for selected game
+
 
   isHost: boolean = false;
 
   constructor(private gamePageService: GamePageService, private GameInfoService: GameInfoService, private partyCodeService: CodeInfoService, 
     private userInfoService: FloatingUserInfoService, private teamInfoService: TeamInfoService, private queuePageService: QueuePageService,
     private hostService: HostService, private http: HttpClient, private floatingUserInfo: UserInfoService, private router: Router,
-    private settingsService: SettingsService) {}
+    private settingsService: SettingsService, private partyInfoService: PartyInfoService) {}
 
   // getting selected game to join with teammate
   chosenGame(gameName: string) {
     this.queuePageService.setSelectedGameName(gameName);
     this.GameInfoService.setSelectedGameName(gameName);
+    this.selectedGame = gameName;
+    
   }
 
   ngOnInit(): void {
@@ -157,6 +162,9 @@ addNewGame(event: MouseEvent) {
   getRidOfGame(){
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.GameInfoService.deleteGame(partyCodeInfo);
+
+    // Reset the selectedGame variable to null
+    this.selectedGame = 'nullGameName';
   }
   
   changeCheckInTime(){
@@ -216,6 +224,14 @@ addNewGame(event: MouseEvent) {
     else {
       return false;
     }
+  }
+
+  // delete party
+  terminateParty() {
+    const partyCode = this.partyCodeService.code;
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    this.partyInfoService.deleteParty(partyCode);
+    this.router.navigate(['']);
   }
 }
 
