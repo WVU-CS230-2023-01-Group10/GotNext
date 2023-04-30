@@ -1,6 +1,4 @@
-<p align="center">
-  <span style="font-size:60px">GotNext</span>
-</p>
+# GotNext
 <p align="center">
   <img src="https://media0.giphy.com/media/hogmFYXmaAa8CLWsoy/giphy.gif?cid=ecf05e47gt6j3923w1mncze26fbaaht9z1b3a0t4uiai8kbq&rid=giphy.gif&ct=g" />
 </p>
