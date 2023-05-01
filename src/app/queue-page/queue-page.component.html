@@ -12,8 +12,14 @@
 <hr>
 
 <div *ngIf="displayCheckInMessage">
-  <p class="error text-center text-danger">You are up! Check in to play!</p>
-  <button class = "glow-on-hover" (click)="checkIn()" id="checkIn">Check In</button>
+  <div class="d-flex flex-column">
+    <div class="p-2">
+      <p class="error text-center text-danger">You are up! Please Check in to play! {{remainingTime}}</p>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button class = "glow-on-hover" (click)="checkIn()">Check In</button>
+      </div>
+  </div>
 </div>
 
 <div class="flex-container">
@@ -49,7 +55,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-dark" routerLink="/gamelist" (click)="exitQueue()">Yes</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal" routerLink="/gamelist" (click)="exitQueue()">Yes</button>
           <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
         </div>
       </div>

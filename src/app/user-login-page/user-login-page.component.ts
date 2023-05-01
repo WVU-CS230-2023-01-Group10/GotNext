@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, delay } from 'rxjs';
 import { FloatingUserInfo } from '../backend/floatinguser-backend/floatinguser-info.model';
 import { FloatingUserInfoService } from '../backend/floatinguser-backend/floatinguser-info.service';
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
@@ -9,7 +9,18 @@ import { CodeInfoService } from '../backend/partycode-backend/code-info.service'
 import { UserService } from '../services/user.service';
 import { HostService } from '../services/host.service';
 import { UserInfoService } from '../backend/Username-backend-info/user-info/user-info.service';
+import { AuthResponse } from '../backend/auth/AuthResponse';
+import { AuthService } from '../services/auth.service';
+import { UserAuthService } from '../services/user-auth.service';
 
+/**
+ * Typescript file to handle events and pull data for the User Login Page
+ * @file user-login-page.component.ts
+ * @author Ian Jackson
+ * @author Nathan Mullins
+ * @author Daniel Madden
+ * @date Mar 3, 2023
+ */
 
 @Component({
   selector: 'app-user-login-page',
@@ -17,20 +28,34 @@ import { UserInfoService } from '../backend/Username-backend-info/user-info/user
   styleUrls: ['./user-login-page.component.css']
 })
 
-
-
 export class UserLoginPageComponent implements OnInit, OnDestroy {
+  /* boolean values to handle input errors */
   isValid: boolean = false;
   isTaken: boolean = false;
   showInputError: boolean = false;
   showTakenError: boolean = false;
+  showNameLengthError: boolean = false;
+
+  /* define and initialize code and user for selected party */
   partyCode: string = '';
+  floatingUser: string = '';
+  MAXNAMELENGTH: number = 15;
+
+  /* define and initialize array of data */
   usernames: string[] | undefined = [];
 
+  /* define and initialize a subscription for Authentication */
   subscription: Subscription | any;
+
+  /* define Observable for Authentication */
+  private authObservable!: Observable<AuthResponse>;
   
+  /**
+   * constructor for the UserLoginPageComponent
+   * defines a variety of services and components
+   */
   constructor(private FloatingUserinfoService: FloatingUserInfoService, private PartyCodeInfoService: CodeInfoService, private router: Router, private userService: UserService, private http: HttpClient, private hostService: HostService,
-    private currentUserInfo: UserInfoService) {
+    private currentUserInfo: UserInfoService, private authService: AuthService, private userAuthService: UserAuthService) {
 
   }
 
@@ -63,32 +88,52 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
     })
   }
 
-  floatingUser: string = '';
-
   /**
    * allows entered usernames to be stored as floating users for a party
    */
-  onSubmit() {
+  async onSubmit() {
 
     const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
     const partyCodeInfo: CodeInfo = { Partycode: this.PartyCodeInfoService.code };
 
+    // validation of user input
     this.isValid = this.validateInput(this.floatingUser);
     this.isTaken = this.checkIfTaken(this.floatingUser);
+    this.showNameLengthError = this.validateUserNameLength();
 
     // if valid, pass input to Realtime database
-    if (this.isValid && this.isTaken) {
+    if (this.isValid && this.isTaken && (!this.showNameLengthError)) {
       this.showInputError = false;
       this.showTakenError = false;
 
-      // calls addFloatinUser and addAllUser methods to store username in database nodes
-      this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
-      this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
-      // set username for game list page
-      this.currentUserInfo.currentUser = this.floatingUser;
-      this.FloatingUserinfoService.FloatingUser = this.floatingUser;
-      this.hostService.setIsHost(false);
-      this.router.navigate(['/gamelist']);
+      // auth host anonymously
+      this.authObservable = await this.authService.testNewAnonSignIn();
+
+      console.log("Current User: "); 
+      console.log(this.authService.currentUser()); // Null if Signed Out, Should Return User if signed in.
+
+      this.authObservable.subscribe(async (data: AuthResponse) => {
+        console.log(data);
+        await delay(1000); // 1000ms = 1s
+        if (data.idToken) {
+          // sends id token from auth to service (for deletion)
+          this.userAuthService.idToken = data.idToken;
+
+          // calls addFloatinUser and addAllUser methods to store username in database nodes
+          this.FloatingUserinfoService.addFloatingUser(partyCodeInfo, floatingUserInfo);
+          this.FloatingUserinfoService.addAllUser(partyCodeInfo, floatingUserInfo);
+
+          // set username for game list page
+          this.currentUserInfo.currentUser = this.floatingUser;
+          this.FloatingUserinfoService.FloatingUser = this.floatingUser;
+          
+          // set host variable to false so user does not see host view on game list page
+          this.hostService.setIsHost(false);
+
+          // route if user was signed in
+          this.router.navigate(['/gamelist']);
+        }
+      });
     }
     
     // if not valid after check, show error
@@ -143,6 +188,18 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
     }
 
     return true;
+  }
+
+  /* checks if username length is greater than specified max name length characters */
+  validateUserNameLength() {
+    const floatingUserInfo: FloatingUserInfo = { FloatingUser: this.floatingUser };
+    // returns true if username > max length and false otherwise
+    if(floatingUserInfo.FloatingUser.length > this.MAXNAMELENGTH) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
 }

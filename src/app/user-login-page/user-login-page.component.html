@@ -12,6 +12,10 @@
             <p class="error">Username already taken</p>
           </div>
 
+          <div *ngIf="showNameLengthError">
+            <p class="error">Username cannot exceed 15 characters</p>
+          </div>
+
           <h1 class="h4 mb-3 fw-normal" style="margin-top: 20px">Enter your username</h1>
           
           <div class="form-floating">

@@ -25,13 +25,21 @@ export class QueuePageComponent implements OnInit{
   isCheckedIn: boolean = false;
   checkInTime: number = 999999; // time user has to check in 
   // ID to start/stop timer user has to check in
-  // checkInTimerId: ReturnType<typeof setTimeout> | undefined;
+  checkInTimerId: ReturnType<typeof setTimeout> | undefined;
   // remaining time to check in
-  // public remainingTime: number = 0;
+  public remainingTime: number = 0;
 
+  private timer: NodeJS.Timer;
 
   constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
-    private gameInfoService: GameInfoService, private currentUserInfo: UserInfoService, private router: Router, private settingService: SettingsService) {}
+    private gameInfoService: GameInfoService, private currentUserInfo: UserInfoService, private router: Router, private settingService: SettingsService) 
+  {   
+    // call the function every 1/2 seconds
+    this.timer = setInterval(() => {
+    // checks for updates in queue
+    this.updateQueue();
+    }, 1000); // interval is in milliseconds, so 500 ms = 1/2 seconds
+  }
 
   async ngOnInit(): Promise<void> {
     console.log(this.currentUserInfo.currentUser + "is in the queue");
@@ -47,11 +55,24 @@ export class QueuePageComponent implements OnInit{
       console.log("Getting Current users");
       console.log(this.users);
     });
+  
+  }
+
+  updateQueue() {
+    const partyCode = this.partyCodeService.code;
+    const gamename = this.queuePageService.getSelectedGameName();
+    const partyCodeInfo: CodeInfo = {Partycode: this.partyCodeService.code};
     this.queuePageService.getTeams(partyCode, gamename).subscribe(async (teams) => {
       this.teams = teams.sort((a, b) => a.timestamp - b.timestamp);;
-      // console.log(this.teams);
-      // if there are 2 or more teams and no users currently playing
-      if (this.teams.length > 1 && this.users.length == 0) {
+      // teams corresponds to # of players in queue
+      // users corresponds to # of players currently playing
+      if(this.teams.length >= 1 && this.users.length == 1) {
+        this.getFirstUser();
+      }
+      else if(this.teams.length == 1 && this.users.length == 0) {
+        this.getFirstUser();
+      }
+      else if(this.teams.length >= 2 && this.users.length == 0) {
         this.getFirstUser();
         this.getSecondUser();
         const firstTeam = this.teams[0].User1;
@@ -59,30 +80,34 @@ export class QueuePageComponent implements OnInit{
       }
 
       // // check if current user is up to play
-       if (await this.amIUpNow()) {
-         this.displayCheckInMessage = true;
-       }
-      //   this.remainingTime = this.checkInTime;
-      //   const countdown = () => {
-      //     if (this.remainingTime > 0) {
-      //       this.remainingTime--;
-      //       setTimeout(countdown, 1000);
-      //     } else {
-      //       // if user does not check in, remove them from party
-      //       // remove user from UpNow node, Teams node, and AllUsers node
-      //       this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
-      //       this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
-      //       this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
-      //       this.router.navigate(['']);
-      //     }
-      //   };
-      //   countdown();
-      // }
-      // console.log(this.displayCheckInMessage);
+      if (await this.amIUpNow()) {
+        this.displayCheckInMessage = true;
+      }
+      this.remainingTime = this.checkInTime;
+      const countdown = () => {
+        if (this.remainingTime > 0) {
+          this.remainingTime--;
+          setTimeout(countdown, 1000);
+        } else {
+          // if user does not check in, remove them from party
+          // remove user from UpNow node, Teams node, and AllUsers node
+          // this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+          // this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+          // this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
+          this.router.navigate(['']);
+        }
+      };
+      countdown();
+      console.log(this.displayCheckInMessage);
       
+      
+      // check if current user is up to play
+      if(await this.amIUpNow()) {
+        this.displayCheckInMessage = true;
+      }
+      console.log(this.displayCheckInMessage);
       
     });
-  
   }
 
   /**
@@ -98,7 +123,7 @@ export class QueuePageComponent implements OnInit{
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.userInfoService.addFloatingUser(partyCodeInfo,floatingUserInfo);
     // call method to exit Queue
-    this.teamInfoService.exitQueue(partyCode,user,gameName);
+    this.teamInfoService.exitQueue(partyCodeInfo,user,gameName);
   }
 
   // set first user in queue as currently playing
@@ -147,15 +172,16 @@ export class QueuePageComponent implements OnInit{
     this.teamInfoService.deleteTeam(partyCodeInfo, user, gameName);
     // stop timer so user does not get kicked
     // console.log('Clearing interval timer...');
-    // clearInterval(this.checkInTimerId);
-    // clearTimeout(this.checkInTimerId);
-    // clearInterval(this.checkInTime);
-    // clearTimeout(this.checkInTime);
-    // clearInterval(this.remainingTime);
-    // clearTimeout(this.remainingTime);
+    clearInterval(this.checkInTimerId);
+    clearTimeout(this.checkInTimerId);
+    clearInterval(this.checkInTime);
+    clearTimeout(this.checkInTime);
+    clearInterval(this.remainingTime);
+    clearTimeout(this.remainingTime);
     // redirect user to playing page
     this.router.navigate(['/currentlyPlaying']);
   }
+  
   
 }
 
