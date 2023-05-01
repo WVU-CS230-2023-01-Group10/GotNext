@@ -23,6 +23,7 @@ export class GamePageService {
       map(users => users.filter(user => user.FloatingUser !== currentUser))
     );
   }
-  
-  
+  deleteGame(partyCode: string, gameKey: string): Promise<void> {
+    return this.db.object(`Party/${partyCode}/Games/${gameKey}`).remove();
+  }
 }

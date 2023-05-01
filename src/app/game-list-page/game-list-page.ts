@@ -64,20 +64,26 @@ export class GameListComponent implements OnInit {
     const username = this.userInfoService.FloatingUser;
     console.log(partyCode,username);
     this.gamePageService.getGames(partyCode).subscribe((games) => {
-      this.games = games;
-    });
+      const filteredGames = games.filter(game => game.GameName !== 'nullGameName');
+      this.games = filteredGames;
+    }
+    )}
+  
 
-    // get host username and party code from host login
-    this.hostService.getIsHost().subscribe(bool => {
-      this.isHost = bool;
-    });    
-    
-}
+
+
+
 
 addNewGame(event: MouseEvent) {
   const gameInfo: GameInfo = { Style: this.selectedGameType, GameName: this.selectedGameName.trim(), NumPlayers: 0};
   const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
 
+  if (gameInfo.GameName === 'nullGameName') {
+    this.http.delete('https://got-next-app-default-rtdb.firebaseio.com/Party/' + partyCodeInfo.Partycode + '/Games/nullGameName.json').subscribe(() => {
+      console.log('Deleted nullGameName');
+    });
+    return;
+  }
   // get all games from party
   this.http.get<{ [key: string]: any }>('https://got-next-app-default-rtdb.firebaseio.com/Party/' + partyCodeInfo.Partycode + '/Games.json').subscribe(data => {
     if (data) {
@@ -234,4 +240,5 @@ addNewGame(event: MouseEvent) {
     this.router.navigate(['']);
   }
 }
+
 
