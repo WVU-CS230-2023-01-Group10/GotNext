@@ -45,5 +45,23 @@ export class GameInfoService {
   deleteGame(partyCodeInfo: CodeInfo){
     this.db.object('Party/' + partyCodeInfo.Partycode + '/Games/' + this.selectedGameName).remove();
   }
+  
+  deleteNullGameNameBranches(partyCodeInfo: CodeInfo) {
+    const ref = this.db.list<GameInfo>(`Party/${partyCodeInfo.Partycode}/Games`).query.ref;
+    ref.once('value', snapshot => {
+      snapshot.forEach(childSnapshot => {
+        const gameName = childSnapshot.key;
+        if (gameName === 'nullGameName') {
+          childSnapshot.ref.remove();
+        }
+      });
+    });
+  }
+  
+
+
+  
+  
+  
 
 }

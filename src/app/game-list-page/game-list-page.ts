@@ -84,6 +84,9 @@ addNewGame(event: MouseEvent) {
     if (data) {
       this.gameNames = Object.keys(data);
     }
+    if(gameInfo.GameName === "nullGameName"){
+      this.GameInfoService.deleteNullGameNameBranches(partyCodeInfo);
+    }
   });
 
   event.preventDefault();
@@ -163,6 +166,7 @@ addNewGame(event: MouseEvent) {
   getRidOfGame(){
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     this.GameInfoService.deleteGame(partyCodeInfo);
+    this.GameInfoService.deleteNullGameNameBranches(partyCodeInfo);
   }
   
   changeCheckInTime(){
