@@ -50,7 +50,7 @@ export class HostLoginPageComponent implements OnInit {
   Host: string = '';
   PartyCode: string = '';
 
-  /* define and initialize arrays of data */
+  // define and initialize arrays of data
   validPartyCodes: string[] = [];
 
   // instance of an Observable of AuthResponse type

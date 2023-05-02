@@ -41,13 +41,13 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
   floatingUser: string = '';
   MAXNAMELENGTH: number = 15;
 
-  /* define and initialize array of data */
+  // define and initialize array of data
   usernames: string[] | undefined = [];
 
-  /* define and initialize a subscription for Authentication */
+  // define and initialize a subscription for Authentication
   subscription: Subscription | any;
 
-  /* define Observable for Authentication */
+  // define Observable for Authentication
   private authObservable!: Observable<AuthResponse>;
   
   /**
@@ -183,7 +183,6 @@ export class UserLoginPageComponent implements OnInit, OnDestroy {
     for (let aUser of this.usernames!) {
       if (aUser === user) {
         return false;
-        break;
       }
     }
 
