@@ -13,28 +13,46 @@ import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
 import { delay } from 'rxjs';
+
+/**
+ * Typescript file to handle queuing the teams in FIFO order and controlling what happens to a user
+ * @file queue-page-component.ys
+ * @author Nathan Mullins
+ * @author Ian Jackson
+ * @date Mar 8, 2023
+ */
+
 @Component({
   selector: 'app-queue-page',
   templateUrl: './queue-page.component.html',
   styleUrls: ['./queue-page.component.css']
 })
+
 export class QueuePageComponent implements OnInit{
+  /* define and initialize arrays of data */
   games: GameInfo[] = [];
   users: TeamInfo[] = [];
   teams: TeamInfo[] = [];
+
+  /* boolean values to handle checked in status */
   displayCheckInMessage: boolean = false;
   isCheckedIn: boolean = false;
+
+  /* variables to handle the kick out timer */
   checkInTime: number = 999999; // time user has to check in 
-  // ID to start/stop timer user has to check in
-  checkInTimerId: ReturnType<typeof setTimeout> | undefined;
-  // remaining time to check in
-  public remainingTime: number = 0;
+  checkInTimerId: ReturnType<typeof setTimeout> | undefined; // ID to start/stop timer user has to check in
+  public remainingTime: number = 0; // remaining time to check in
   private queueTimer: NodeJS.Timer;
   private upNowTimer: NodeJS.Timer;
 
-  constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
-    private gameInfoService: GameInfoService, private currentUserInfo: UserInfoService, private router: Router, private settingService: SettingsService) 
-  {   
+  /**
+   * constructor for the QueuePageComponent
+   * defines a variety of services and components
+   * TODO: look at reducing the amount of services needed
+   */
+  constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, 
+    private gamePageService: GamePageService, private queuePageService: QueuePageService, private gameInfoService: GameInfoService, 
+    private currentUserInfo: UserInfoService, private router: Router, private settingService: SettingsService) {   
     // call the function every 1/2 seconds
     this.queueTimer = setInterval(() => {
     // checks for updates in queue
@@ -47,6 +65,11 @@ export class QueuePageComponent implements OnInit{
   
   }
 
+  /**
+   * Runs on initialization
+   * Gets the teams in the game
+   * Check if a user is up to play and handle timer events if they are
+   */
   async ngOnInit(): Promise<void> {
     console.log(this.currentUserInfo.currentUser + "is in the queue");
 
@@ -96,6 +119,11 @@ export class QueuePageComponent implements OnInit{
   
   }
 
+  /**
+   * updates the queue of the game
+   * sorts in FIFO order
+   * checks if user is up to play
+   */
   updateQueue() {
     const partyCode = this.partyCodeService.code;
     const gamename = this.queuePageService.getSelectedGameName();
@@ -148,7 +176,9 @@ export class QueuePageComponent implements OnInit{
     this.teamInfoService.exitQueue(partyCodeInfo,user,gameName);
   }
 
-  // set first user in queue as currently playing
+  /**
+   * set first user in queue as currently playing
+   */
   getFirstUser() {
       // get information on party, game, and team
       const gameName = this.gameInfoService.selectedGameName;
@@ -157,7 +187,9 @@ export class QueuePageComponent implements OnInit{
       this.teamInfoService.addUpNow(partyCodeInfo, firstTeam, gameName);
   }
 
-  // set second user in queue as currently playing
+  /**
+   * set second user in queue as currently playing
+   */
   getSecondUser() {
     if(this.teams.length >= 2) {
       // get information on party, game, and team
@@ -168,8 +200,11 @@ export class QueuePageComponent implements OnInit{
     }
   }
 
-  // checks if current user is up to play
-  async amIUpNow() {
+  /**
+   * checks if current user is up to play
+   * @returns true if the user is up to play
+   */
+  async amIUpNow(): Promise<boolean> {
     const gameName = this.gameInfoService.selectedGameName;
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     // if player in UpNow is equal to current User
@@ -181,7 +216,9 @@ export class QueuePageComponent implements OnInit{
     }
   }
 
-  // puts user in CurrentlyPlaying node 
+  /**
+   * puts user in CurrentlyPlaying node 
+   */
   checkIn() {
     const gameName = this.gameInfoService.selectedGameName;
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
