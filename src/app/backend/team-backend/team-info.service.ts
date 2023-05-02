@@ -33,13 +33,13 @@ export class TeamInfoService {
     
   }
 
-  /* define and initialize user for a team */
+  // define and initialize user for a team
   User1: string='Not set yet';
 
-  /* define and initialize integer value to keep track of number of players in each game */
+  // define and initialize integer value to keep track of number of players in each game
   playerCount: number = 0;
 
-   /* define and initialize integer value to store time in which team was created */
+  // define and initialize integer value to store time in which team was created
   timestamp: number = 0;
 
   /**

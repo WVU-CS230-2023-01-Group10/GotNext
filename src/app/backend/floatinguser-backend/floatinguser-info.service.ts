@@ -13,7 +13,7 @@ import { TeamInfo } from "../team-backend/team-info.model";
 
 @Injectable({providedIn: 'root'})
 export class FloatingUserInfoService {
-  /* define and initialize for username of floating user, floating users belong to a party but have not yet chosen a game */
+  // define and initialize for username of floating user, floating users belong to a party but have not yet chosen a game
   FloatingUser: string='Username';
 
   /**

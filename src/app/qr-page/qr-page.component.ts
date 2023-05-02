@@ -17,7 +17,8 @@ import { CodeInfoService } from '../backend/partycode-backend/code-info.service'
 export class QrPageComponent implements OnInit {
   public elementType: QRCodeElementType = "canvas"
 
-  partyCode: string = "ERROR"; //default value for partyCode before it gets formally set
+  // default value for partyCode before it gets formally set
+  partyCode: string = "ERROR";
 
   constructor(private partyCodeService: CodeInfoService) {}
   /**
