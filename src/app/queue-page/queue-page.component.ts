@@ -29,17 +29,22 @@ export class QueuePageComponent implements OnInit{
   checkInTimerId: ReturnType<typeof setTimeout> | undefined;
   // remaining time to check in
   public remainingTime: number = 0;
-  private timer: NodeJS.Timer;
+  private queueTimer: NodeJS.Timer;
+  private upNowTimer: NodeJS.Timer;
 
   constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
     private gameInfoService: GameInfoService, private currentUserInfo: UserInfoService, private router: Router, private settingService: SettingsService) 
   {   
     // call the function every 1/2 seconds
-    this.timer = setInterval(() => {
+    this.queueTimer = setInterval(() => {
     // checks for updates in queue
     this.updateQueue();
     }, 1000); // interval is in milliseconds, so 1000 ms = 1 seconds
 
+    this.upNowTimer = setInterval(() => {
+      this.validateUpNow();
+    }, 5000);
+  
   }
 
   async ngOnInit(): Promise<void> {
@@ -79,6 +84,8 @@ export class QueuePageComponent implements OnInit{
         this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
         this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
         this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
+        // reset timer
+        this.remainingTime = this.checkInTime;
         // route user back to home page
         this.router.navigate(['']);
 
@@ -116,6 +123,9 @@ export class QueuePageComponent implements OnInit{
       // check if current user is up to play
       if(await this.amIUpNow()) {
         this.displayCheckInMessage = true;
+      } else {
+        // ensures check in time for users will be correct
+        this.remainingTime = this.checkInTime;
       }
       console.log(this.displayCheckInMessage);
       
@@ -188,6 +198,24 @@ export class QueuePageComponent implements OnInit{
     this.remainingTime = 999999;
     // redirect user to playing page
     this.router.navigate(['/currentlyPlaying']);
+  }
+
+  /**
+   * checks if user is in both UpNow node and All Users, deletes user from UpNow if not in both
+   */
+  validateUpNow() {
+    const gameName = this.gameInfoService.selectedGameName;
+    const partyCode = this.partyCodeService.code;
+    const user = this.currentUserInfo.currentUser;
+    const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
+    
+    this.teamInfoService.checkUserInUpNowAndAllUsers(partyCode, gameName, user).subscribe(result => {
+      if(result === false) {
+        console.log("user present in both nodes");
+      } else {
+        this.teamInfoService.deleteUpNow(partyCodeInfo, user, gameName);
+      }
+    })
   }
   
   
