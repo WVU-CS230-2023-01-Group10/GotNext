@@ -24,6 +24,13 @@ export class SettingsService{
         var ref = this.db.list<PartyInfo>("Party/"+Partynumstr+"/Settings/checkInTime").query.ref;
         ref.set(time);
     }
+
+    async getCheckInTime(Partynumstr: string): Promise<number> {
+        const ref = this.db.list<PartyInfo>(`Party/${Partynumstr}/Settings/checkInTime`).query.ref;
+        const snapshot = await ref.once('value');
+        return snapshot.val() as number;
+      }
+      
 }
 
 
