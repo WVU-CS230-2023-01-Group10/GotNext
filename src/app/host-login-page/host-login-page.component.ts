@@ -92,7 +92,7 @@ export class HostLoginPageComponent implements OnInit {
     this.showPartyInputLengthError = this.validatePartyNameLength();
 
     // if valid, pass info to Realtime Database
-    if(this.isUserValid && this.isCodeValid && this.isCodeTaken && this.isPartyValid && (!this.showHostInputLengthError) && (!this.showPartyInputLengthError)) {
+    if(this.isUserValid && this.isCodeValid && this.isCodeTaken && this.isPartyValid && (this.showHostInputLengthError === false) && (this.showPartyInputLengthError === false)) {
       this.showCodeError = false;
       this.showCodeTakenError = false;
       this.showUserError = false;

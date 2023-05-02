@@ -23,4 +23,12 @@ export class PartyInfoService {
     ref.child(Party.PartyCode).set(Party);
   }
   
+  /**
+  * delete Party from databse
+  * @param Party contains party name, party code, and host name
+  */
+  deleteParty(PartyCode: string) {
+    var ref = this.db.list<PartyInfo>("Party/").query.ref;
+    ref.child(PartyCode).remove();
+  }
 }
