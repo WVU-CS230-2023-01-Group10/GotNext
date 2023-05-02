@@ -6,7 +6,7 @@ import { FloatingUserInfoService } from "../floatinguser-backend/floatinguser-in
 import { QueuePageService } from "../fetching-data/queue-data/game-page.service";
 import { CodeInfoService } from "../partycode-backend/code-info.service";
 import { Router } from "@angular/router";
-import { take } from "rxjs";
+import { Observable, combineLatest, map, take } from "rxjs";
 import { GameInfoService } from "../game-backend/game-info.service";
 
 /**
@@ -163,5 +163,31 @@ export class TeamInfoService {
         }
         countRef.update({ NumPlayers: currentCount }); 
       });
+  }
+
+  /**
+   * compares username in UpNow node and AllUsers node in Realtime database
+   * @param partyCode party code of current party
+   * @param gameName name of game user is currently in
+   * @param username name of player
+   * @returns true if username is in both nodes, false if not
+   */
+  checkUserInUpNowAndAllUsers(partyCode: string, gameName: string, username: string): Observable<boolean> {
+    // Get the values of the UpNow and AllUsers nodes
+    const upNow$ = this.db.object(`Party/${partyCode}/Games/${gameName}/UpNow`).valueChanges();
+    const allUsers$ = this.db.object(`Party/${partyCode}/AllUsers/${username}`).valueChanges();
+
+    // Combine the values and compare them
+    return combineLatest([upNow$, allUsers$]).pipe(
+      map(([upNow, allUsers]) => {
+        // if username in both nodes
+        if (upNow && allUsers) {
+          return allUsers.hasOwnProperty(upNow.toString());
+        } else {
+          // username not in both nodes
+          return false;
+        }
+      })
+    );
   }
 }
