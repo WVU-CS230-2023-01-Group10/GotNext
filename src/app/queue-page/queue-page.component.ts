@@ -12,6 +12,7 @@ import { QueuePageService } from '../backend/fetching-data/queue-data/game-page.
 import { CodeInfo } from '../backend/partycode-backend/code-info-model';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
+import { delay } from 'rxjs';
 @Component({
   selector: 'app-queue-page',
   templateUrl: './queue-page.component.html',
@@ -28,7 +29,6 @@ export class QueuePageComponent implements OnInit{
   checkInTimerId: ReturnType<typeof setTimeout> | undefined;
   // remaining time to check in
   public remainingTime: number = 0;
-
   private timer: NodeJS.Timer;
 
   constructor(private teamInfoService: TeamInfoService, private partyCodeService: CodeInfoService, private userInfoService: FloatingUserInfoService, private gamePageService: GamePageService, private queuePageService: QueuePageService,
@@ -38,7 +38,8 @@ export class QueuePageComponent implements OnInit{
     this.timer = setInterval(() => {
     // checks for updates in queue
     this.updateQueue();
-    }, 1000); // interval is in milliseconds, so 500 ms = 1/2 seconds
+    }, 1000); // interval is in milliseconds, so 1000 ms = 1 seconds
+
   }
 
   async ngOnInit(): Promise<void> {
@@ -55,6 +56,36 @@ export class QueuePageComponent implements OnInit{
       console.log("Getting Current users");
       console.log(this.users);
     });
+
+    // check if current user is up to play
+    await delay(1000); // 1000ms = 1s
+    if (await this.amIUpNow()) {
+      this.displayCheckInMessage = true;
+    }
+    // set time for players to check in
+    this.remainingTime = this.checkInTime;
+    // decreases timer each second
+    const countdown = () => {
+      if (this.remainingTime > 0) {
+        this.remainingTime--;
+        setTimeout(countdown, 1000); // 1000ms = 1s
+      } 
+      else {
+        // clear timer for check in
+        clearInterval(this.remainingTime);
+        clearTimeout(this.remainingTime);
+        // if user does not check in, remove them from party
+        // remove user from UpNow node, Teams node, and AllUsers node
+        this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+        this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+        this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
+        // route user back to home page
+        this.router.navigate(['']);
+
+        this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
+      }
+    };
+    countdown();
   
   }
 
@@ -79,25 +110,6 @@ export class QueuePageComponent implements OnInit{
         const isUpNow = await this.teamInfoService.checkIfInUpNow(partyCodeInfo, firstTeam, gamename);
       }
 
-      // // check if current user is up to play
-      if (await this.amIUpNow()) {
-        this.displayCheckInMessage = true;
-      }
-      this.remainingTime = this.checkInTime;
-      const countdown = () => {
-        if (this.remainingTime > 0) {
-          this.remainingTime--;
-          setTimeout(countdown, 1000);
-        } else {
-          // if user does not check in, remove them from party
-          // remove user from UpNow node, Teams node, and AllUsers node
-          // this.teamInfoService.deleteUpNow(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
-          // this.teamInfoService.deleteTeam(partyCodeInfo, this.currentUserInfo.currentUser, gamename);
-          // this.userInfoService.deleteAllUser(partyCodeInfo, this.currentUserInfo.currentUser);
-          this.router.navigate(['']);
-        }
-      };
-      countdown();
       console.log(this.displayCheckInMessage);
       
       
@@ -164,20 +176,16 @@ export class QueuePageComponent implements OnInit{
     const gameName = this.gameInfoService.selectedGameName;
     const partyCodeInfo: CodeInfo = { Partycode: this.partyCodeService.code };
     const user = this.currentUserInfo.currentUser;
-    // add user to currently playing node
-    this.teamInfoService.addCurrentlyPlaying(partyCodeInfo, user, gameName);
-    // remove user from up now node if checked in
-    this.teamInfoService.deleteUpNow(partyCodeInfo, user, gameName);
     // remove team from queue
     this.teamInfoService.deleteTeam(partyCodeInfo, user, gameName);
+    // remove user from up now node if checked in
+    this.teamInfoService.deleteUpNow(partyCodeInfo, user, gameName);
+    // add user to currently playing node
+    this.teamInfoService.addCurrentlyPlaying(partyCodeInfo, user, gameName);
     // stop timer so user does not get kicked
-    // console.log('Clearing interval timer...');
-    clearInterval(this.checkInTimerId);
-    clearTimeout(this.checkInTimerId);
-    clearInterval(this.checkInTime);
-    clearTimeout(this.checkInTime);
     clearInterval(this.remainingTime);
     clearTimeout(this.remainingTime);
+    this.remainingTime = 999999;
     // redirect user to playing page
     this.router.navigate(['/currentlyPlaying']);
   }
